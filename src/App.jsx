@@ -3721,7 +3721,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
   }, []);
 
   const connectPCO = () => {
-    window.location.href = "/auth/pco/connect";
+    window.location.href = "/.netlify/functions/pco-connect";
   };
 
   const disconnectPCO = () => {
