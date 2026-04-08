@@ -1,5 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 
+// Map PCO section names to our section types
+const mapSectionType = (name) => {
+  const n = (name || '').toLowerCase().trim();
+  if (n.includes('intro')) return 'intro';
+  if (n.includes('verse')) return 'verse';
+  if (n.includes('pre') || n.includes('pre-chorus') || n.includes('prechorus')) return 'prechorus';
+  if (n.includes('chorus') || n.includes('refrain')) return 'chorus';
+  if (n.includes('bridge')) return 'bridge';
+  if (n.includes('tag') || n.includes('hook')) return 'tag';
+  if (n.includes('outro') || n.includes('ending')) return 'outro';
+  if (n.includes('turn') || n.includes('turnaround')) return 'turnaround';
+  if (n.includes('instrumental') || n.includes('interlude')) return 'instrumental';
+  if (n.includes('breakdown')) return 'breakdown';
+  if (n.includes('vamp') || n.includes('loop')) return 'vamp';
+  return 'verse';
+};
+
+const DEFAULT_BARS = { intro: 8, verse: 16, prechorus: 8, chorus: 16, bridge: 8, tag: 8, outro: 8, turnaround: 4, instrumental: 16, breakdown: 8, vamp: 8 };
+
 export const handler = async (event) => {
   const { pco_user_id } = event.queryStringParameters || {};
   if (!pco_user_id) return jsonError(400, 'Missing pco_user_id');
@@ -11,7 +30,6 @@ export const handler = async (event) => {
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  // 1. Get stored token
   const { data: conn, error: fetchError } = await supabase
     .from('pco_connections')
     .select('*')
@@ -20,7 +38,6 @@ export const handler = async (event) => {
 
   if (fetchError || !conn) return jsonError(404, 'No PCO connection found');
 
-  // 2. Refresh token if expired
   let accessToken = conn.access_token;
   if (new Date(conn.expires_at) < new Date()) {
     const refreshed = await refreshToken(conn.refresh_token, clientId, clientSecret);
@@ -33,57 +50,76 @@ export const handler = async (event) => {
     }).eq('pco_user_id', pco_user_id);
   }
 
-  const pcoFetch = (path) => fetch(
+  const pcoGet = (path) => fetch(
     `https://api.planningcenteronline.com/services/v2${path}`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
   ).then(r => r.json());
 
-  // 3. Get service types — only Sunday Service and worship collectives
-  const stData = await pcoFetch('/service_types?per_page=50');
-  const allTypes = stData?.data || [];
-  
-  const worshipTypes = allTypes.filter(st => {
+  // Get service types — worship only
+  const stData = await pcoGet('/service_types?per_page=50');
+  const worshipTypes = (stData?.data || []).filter(st => {
     const name = st.attributes?.name?.toLowerCase() || '';
-    return name.includes('sunday service') || 
+    return name.includes('sunday service') ||
            name.includes('worship collective') ||
            name.includes('sunday worship');
   });
 
-  console.log('Filtered worship types:', worshipTypes.map(st => st.attributes?.name));
-
-  // 4. Fetch upcoming plans for each type
   const plans = [];
   for (const st of worshipTypes.slice(0, 3)) {
-    const plansData = await pcoFetch(
+    const plansData = await pcoGet(
       `/service_types/${st.id}/plans?filter=future&per_page=6&order=sort_date`
     );
 
     for (const plan of (plansData?.data || [])) {
       const attrs = plan.attributes;
 
-      // 5. Fetch items for this plan separately
-      const itemsData = await pcoFetch(
+      // Fetch plan items
+      const itemsData = await pcoGet(
         `/service_types/${st.id}/plans/${plan.id}/items?per_page=50`
       );
-      
       const allItems = itemsData?.data || [];
-      console.log(`Plan ${attrs?.dates} items:`, allItems.map(i => ({
-        item_type: i.attributes?.item_type,
-        title: i.attributes?.title,
-        key: i.attributes?.key_name,
-      })));
 
-      // Filter to song items only
-      const songItems = allItems
-        .filter(i => i.attributes?.item_type === 'song')
-        .map(i => ({
-          title: i.attributes?.title || 'Untitled',
-          key: i.attributes?.key_name || '',
-          bpm: i.attributes?.length || 0,
-          sequence: i.attributes?.sequence || 0,
-          arrangementName: i.attributes?.arrangement_name || '',
-        }))
-        .sort((a, b) => a.sequence - b.sequence);
+      // Build song list with arrangement sections
+      const songItems = [];
+      for (const item of allItems) {
+        if (item.attributes?.item_type !== 'song') continue;
+
+        const title = item.attributes?.title || 'Untitled';
+        const keyName = item.attributes?.key_name || '';
+        const bpm = null; // Will fetch from arrangement if linked
+        const arrangementName = item.attributes?.arrangement_name || '';
+
+        // Try to fetch arrangement sections if song is linked
+        let sections = [];
+        const songId = item.relationships?.song?.data?.id;
+        const arrangementId = item.relationships?.arrangement?.data?.id;
+
+        if (songId && arrangementId) {
+          try {
+            const sectionsData = await pcoGet(
+              `/songs/${songId}/arrangements/${arrangementId}/sections?per_page=50`
+            );
+            sections = (sectionsData?.data || []).map((sec, i) => {
+              const label = sec.attributes?.label || sec.attributes?.name || `Section ${i + 1}`;
+              const type = mapSectionType(label);
+              return { label, type, bars: DEFAULT_BARS[type] || 8 };
+            });
+          } catch (e) {
+            // sections stays empty — Live Mode will use defaults
+          }
+        }
+
+        songItems.push({
+          title,
+          key: keyName,
+          bpm: item.attributes?.length ? Math.round(item.attributes.length) : 120,
+          sequence: item.attributes?.sequence || 0,
+          arrangementName,
+          sections,
+        });
+      }
+
+      songItems.sort((a, b) => a.sequence - b.sequence);
 
       plans.push({
         id: plan.id,
