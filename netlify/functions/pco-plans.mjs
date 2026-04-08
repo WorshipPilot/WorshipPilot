@@ -49,7 +49,9 @@ export const handler = async (event) => {
     return !name.includes('kids') && 
            !name.includes('children') && 
            !name.includes('events') &&
-           !name.includes('event');
+           !name.includes('event') &&
+           !name.includes('youth') &&
+           !name.includes('small group');
   });
 
   console.log('Worship service types:', worshipTypes.map(st => st.attributes?.name));
