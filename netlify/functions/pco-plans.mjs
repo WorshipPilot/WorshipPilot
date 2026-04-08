@@ -92,6 +92,7 @@ export const handler = async (event) => {
         // Fetch arrangement to get BPM and sections
         let sections = [];
         let bpm = 120;
+        let timeSig = '4/4';
         const songId = item.relationships?.song?.data?.id;
         const arrangementId = item.relationships?.arrangement?.data?.id;
 
@@ -103,6 +104,9 @@ export const handler = async (event) => {
             );
             const arrAttrs = arrangementData?.data?.attributes;
             if (arrAttrs?.bpm) bpm = Math.round(arrAttrs.bpm);
+            // Get time signature
+            const meter = arrAttrs?.meter || '4/4';
+            if (meter) timeSig = meter;
 
             // Fetch sections
             const sectionsData = await pcoGet(
@@ -124,6 +128,7 @@ export const handler = async (event) => {
           title,
           key: keyName,
           bpm,
+          timeSig,
           sequence: item.attributes?.sequence || 0,
           arrangementName,
           sections,
