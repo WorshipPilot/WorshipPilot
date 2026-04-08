@@ -3517,9 +3517,9 @@ const SongBlock = ({ block, index, song, onNotesChange, onRemove, onMoveUp, onMo
           <span style={{ fontSize: 10, fontWeight: 800, color: "#fff" }}>{index + 1}</span>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif" }}>{song?.title || "Unknown Song"}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif" }}>{song?.title || block.pcoTitle || "Unknown Song"}</div>
           <div style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-            {song ? `Key of ${song.key} · ${song.bpm} BPM` : ""}
+            {song ? `Key of ${song.key} · ${song.bpm} BPM` : block.pcoKey ? `Key of ${block.pcoKey} · from PCO` : ""}
             {hasNotes && <span style={{ marginLeft: 8, color: COLORS.accent }}>● notes</span>}
           </div>
         </div>
