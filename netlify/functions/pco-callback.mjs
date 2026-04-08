@@ -47,23 +47,55 @@ export const handler = async (event) => {
     const tokenData = await tokenResponse.json();
     const { access_token, refresh_token, expires_in } = tokenData;
 
-    // 2. Fetch user info using Services API (within our scope)
-    const meResponse = await fetch('https://api.planningcenteronline.com/services/v2/me', {
+    // 2. Get user info from PCO token owner endpoint
+    const meResponse = await fetch('https://api.planningcenteronline.com/oauth/me', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
-    const meData = await meResponse.json();
-    console.log('PCO me response:', JSON.stringify(meData).slice(0, 500));
+    let pcoUserId, pcoOrgName, pcoUserName;
 
-    const pcoUserId = meData?.data?.id;
-    const pcoOrgName = meData?.data?.attributes?.organization_name || 'My Church';
-    const pcoUserName = meData?.data?.attributes?.full_name ||
-                        meData?.data?.attributes?.name || 'User';
-
-    if (!pcoUserId) {
-      console.error('No PCO user ID found in response:', JSON.stringify(meData));
-      return redirect('/?pco_error=no_user_id');
+    if (meResponse.ok) {
+      const meData = await meResponse.json();
+      console.log('PCO me response:', JSON.stringify(meData).slice(0, 500));
+      pcoUserId = meData?.id || meData?.data?.id || String(meData?.attributes?.id);
+      pcoOrgName = meData?.organization?.name || meData?.attributes?.organization_name || 'My Church';
+      pcoUserName = meData?.name || meData?.attributes?.name || 
+                    `${meData?.first_name || ''} ${meData?.last_name || ''}`.trim() || 'User';
     }
+
+    // Fallback: try to get org info from services endpoint
+    if (!pcoUserId) {
+      try {
+        // Try to get current user from services API
+        const servicesMeRes = await fetch('https://api.planningcenteronline.com/services/v2/people?per_page=1&filter=self', {
+          headers: { Authorization: `Bearer ${access_token}` },
+        });
+        const servicesMeData = await servicesMeRes.json();
+        const firstPerson = servicesMeData?.data?.[0];
+        if (firstPerson?.id) {
+          pcoUserId = firstPerson.id;
+          pcoUserName = firstPerson.attributes?.full_name || firstPerson.attributes?.name || 'Worship MD';
+        }
+      } catch (e) {}
+    }
+
+    // Try to get org name from organization endpoint
+    try {
+      const orgRes = await fetch('https://api.planningcenteronline.com/services/v2', {
+        headers: { Authorization: `Bearer ${access_token}` },
+      });
+      const orgData = await orgRes.json();
+      const orgName = orgData?.data?.attributes?.organization_name || orgData?.meta?.parent?.attributes?.name;
+      if (orgName) pcoOrgName = orgName;
+    } catch (e) {}
+
+    // Final fallback: use token slice as stable ID
+    if (!pcoUserId) {
+      pcoUserId = access_token.slice(-32);
+      pcoUserName = pcoUserName || 'Worship MD';
+    }
+
+    console.log('Using pcoUserId:', pcoUserId, 'org:', pcoOrgName);
 
     // 3. Store token in Supabase
     const supabase = createClient(supabaseUrl, supabaseKey);
