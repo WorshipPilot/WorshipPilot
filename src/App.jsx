@@ -4253,6 +4253,8 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   };
 
   const [showSetlist, setShowSetlist] = useState(false);
+  const [fullscreen, setFullscreen] = useState(false);
+  const [showMoreControls, setShowMoreControls] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiSuggestion, setAiSuggestion] = useState(null);
 
@@ -4335,7 +4337,123 @@ Do not add any preamble or explanation — just the bullet points.`;
   };
 
   return (
-    <div className="fade-in" style={{ maxWidth: 540, margin: "0 auto", minHeight: "100%", background: LIVE.bgGrad, padding: "16px 16px 40px" }}>
+    <div className="fade-in" style={{ maxWidth: fullscreen ? "100vw" : 540, margin: "0 auto", minHeight: "100%", background: LIVE.bgGrad, padding: fullscreen ? "0" : "16px 16px 40px", position: fullscreen ? "fixed" : "relative", top: fullscreen ? 0 : "auto", left: fullscreen ? 0 : "auto", right: fullscreen ? 0 : "auto", bottom: fullscreen ? 0 : "auto", zIndex: fullscreen ? 9999 : "auto", overflowY: fullscreen ? "auto" : "visible" }}>
+
+    {fullscreen ? (
+      /* ── FULLSCREEN MODE ── */
+      <div style={{ display: "flex", flexDirection: "column", height: "100dvh", padding: "12px 14px 20px", background: LIVE.bgGrad }}>
+
+        {/* Fullscreen top bar — compact */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexShrink: 0 }}>
+          <div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, color: LIVE.text }}>{song.title}</div>
+            <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM · {songIndex + 1}/{totalSongs}</div>
+          </div>
+          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, color: isPlaying ? "#4CAF7D" : LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>{isPlaying ? "● LIVE" : "○"}</div>
+            {!isPlaying ? (
+              <button onClick={handlePlay} style={{ width: 44, height: 40, borderRadius: 10, border: "none", background: COLORS.accent, color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>▶</button>
+            ) : (
+              <button onClick={handlePause} style={{ width: 44, height: 40, borderRadius: 10, border: "none", background: COLORS.accent, color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⏸</button>
+            )}
+            <button onClick={handleReset} style={{ width: 36, height: 40, borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⟳</button>
+            <button onClick={() => setFullscreen(false)} style={{ width: 36, height: 40, borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
+          </div>
+        </div>
+
+        {/* Fullscreen main card — takes most of screen */}
+        <div style={{ flex: 1, background: LIVE.surface, border: `2px solid ${secColor}50`, borderRadius: 20, padding: "20px 20px 16px", marginBottom: 10, position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4, background: secColor, borderRadius: "20px 20px 0 0" }} />
+
+          {/* Section label + bar counter */}
+          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 12, marginTop: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: secColor, boxShadow: `0 0 10px ${secColor}` }} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: secColor }}>{section.label}</div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 42, fontWeight: 700, color: nearingEnd ? COLORS.accent : LIVE.text, lineHeight: 1, transition: "color 0.3s" }}>
+                {currentBarDisplay}
+              </div>
+              <div style={{ fontSize: 11, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>of {totalBarsEffectiveDisplay}</div>
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div style={{ marginBottom: 16 }}>{renderTimeline()}</div>
+
+          {/* MD Notes — BIG */}
+          {section.note ? (
+            <div style={{ flex: 1, borderLeft: `4px solid ${secColor}`, paddingLeft: 16 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: LIVE.textDim, marginBottom: 10 }}>MD Notes</div>
+              <div style={{ fontSize: 20, color: LIVE.text, lineHeight: 1.6, fontFamily: "'Inter', sans-serif", fontWeight: 500 }}>
+                {section.note}
+              </div>
+            </div>
+          ) : (
+            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 13, color: LIVE.textDim, marginBottom: 6 }}>No MD notes for this section</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
+                  {suggestions.map((s, i) => (
+                    <span key={i} style={{ fontSize: 13, padding: "5px 12px", borderRadius: 20, background: "rgba(255,255,255,0.06)", border: `1px solid ${LIVE.border}`, color: LIVE.textMuted }}>{s}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Fullscreen next section strip */}
+        {nextSection ? (
+          <div style={{ background: nearingEnd ? `${COLORS.accent}18` : LIVE.surface, border: `1px solid ${nearingEnd ? COLORS.accent : LIVE.border}`, borderRadius: 14, padding: "10px 16px", marginBottom: 10, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.3s" }}>
+            <div>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: nearingEnd ? COLORS.accent : LIVE.textDim, marginBottom: 2 }}>{nearingEnd ? "⚡ Stand by for" : "Up next"}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ width: 7, height: 7, borderRadius: "50%", background: segColor(nextSection.type) }} />
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted }}>{nextSection.label}</div>
+              </div>
+              {nextSection.note && nearingEnd && (
+                <div style={{ fontSize: 12, color: COLORS.accent, marginTop: 2, paddingLeft: 15 }}>{nextSection.note.split('\n')[0]}</div>
+              )}
+            </div>
+            {nearingEnd && remaining > 0 && (
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 36, fontWeight: 700, color: COLORS.accent }}>{Math.ceil(remaining / 1000)}s</div>
+            )}
+          </div>
+        ) : (
+          <div style={{ border: `1px solid ${LIVE.border}`, borderRadius: 14, padding: "10px 16px", marginBottom: 10, textAlign: "center", flexShrink: 0 }}>
+            <div style={{ fontSize: 12, color: LIVE.textDim }}>{songIndex < totalSongs - 1 ? `Last section — ${songs[songIndex + 1]?.title} follows` : "Service complete"}</div>
+          </div>
+        )}
+
+        {/* Fullscreen controls — compact bottom row */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: 6, flexShrink: 0 }}>
+          <button onClick={goPrevSection} disabled={sectionIndex === 0} style={{ padding: "12px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: sectionIndex === 0 ? LIVE.textDim : LIVE.text, fontSize: 18, cursor: sectionIndex === 0 ? "default" : "pointer", opacity: sectionIndex === 0 ? 0.25 : 1 }}>◂</button>
+          <button onClick={handleToggleLoop} style={{ padding: "12px 4px", borderRadius: 10, border: `1px solid ${liveLoopActive ? "#4A90D9" : LIVE.border}`, background: liveLoopActive ? "rgba(74,144,217,0.15)" : "transparent", color: liveLoopActive ? "#4A90D9" : LIVE.textMuted, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>Loop</button>
+          <button onClick={handleExtendOne} style={{ padding: "12px 4px", borderRadius: 10, border: `1px solid ${liveExtraRepeats > 0 ? COLORS.accentDim : LIVE.border}`, background: liveExtraRepeats > 0 ? COLORS.accentGlow : "transparent", color: liveExtraRepeats > 0 ? COLORS.accent : LIVE.textMuted, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>+1</button>
+          <button onClick={() => setShowMoreControls(o => !o)} style={{ padding: "12px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>More</button>
+          <button onClick={goNextSection} disabled={sectionIndex === totalSections - 1} style={{ padding: "12px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: sectionIndex === totalSections - 1 ? LIVE.textDim : LIVE.text, fontSize: 18, cursor: sectionIndex === totalSections - 1 ? "default" : "pointer", opacity: sectionIndex === totalSections - 1 ? 0.25 : 1 }}>▸</button>
+        </div>
+
+        {/* More controls panel */}
+        {showMoreControls && (
+          <div className="fade-in" style={{ marginTop: 8, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
+            <button onClick={goPrevSong} disabled={songIndex === 0} style={{ padding: "10px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 11, fontWeight: 600, cursor: "pointer", opacity: songIndex === 0 ? 0.3 : 1 }}>◂◂ Song</button>
+            <button onClick={goNextSong} disabled={songIndex === totalSongs - 1} style={{ padding: "10px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 11, fontWeight: 600, cursor: "pointer", opacity: songIndex === totalSongs - 1 ? 0.3 : 1 }}>Song ▸▸</button>
+            <button onClick={() => { tap("Kill Track"); }} style={{ padding: "10px 4px", borderRadius: 10, border: `1px solid rgba(192,57,74,0.3)`, background: "rgba(192,57,74,0.08)", color: COLORS.red, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>Kill Track</button>
+            {["verse","chorus","bridge"].map(type => (
+              <button key={type} onClick={() => jumpToType(type)} style={{ padding: "10px 4px", borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", textTransform: "capitalize" }}>{type}</button>
+            ))}
+            <button onClick={() => { tap("Count In"); }} style={{ padding: "10px 4px", borderRadius: 10, border: `1px solid rgba(192,57,74,0.3)`, background: "rgba(192,57,74,0.08)", color: COLORS.red, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>Count In</button>
+          </div>
+        )}
+      </div>
+
+    ) : (
+
+      /* ── NORMAL MODE ── */
+      <div>
 
       {/* ── TOP BAR ── */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, paddingBottom: 14, borderBottom: `1px solid ${LIVE.border}` }}>
@@ -4358,6 +4476,7 @@ Do not add any preamble or explanation — just the bullet points.`;
             <button onClick={handlePause} style={{ width: 40, height: 36, borderRadius: 10, border: "none", background: COLORS.accent, color: "#fff", fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⏸</button>
           )}
           <button onClick={handleReset} style={{ width: 36, height: 36, borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⟳</button>
+          <button onClick={() => setFullscreen(true)} title="Fullscreen" style={{ width: 36, height: 36, borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 13, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⛶</button>
         </div>
       </div>
 
@@ -4534,6 +4653,8 @@ Do not add any preamble or explanation — just the bullet points.`;
           <div style={{ fontSize: 10, color: LIVE.textDim }}>Called: <span style={{ fontWeight: 700, color: COLORS.accent }}>{lastCommand}</span></div>
         </div>
       )}
+    </div>
+    )} {/* end normal mode */}
     </div>
   );
 };
