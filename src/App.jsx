@@ -4115,7 +4115,6 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const totalBarsEffective = section.bars * (section.repeatCount + liveExtraRepeats);
   const currentBarPos      = Math.min(Math.floor(progress * totalBarsEffective), totalBarsEffective - 1);
   const nearingEnd         = isPlaying && (totalBarsEffective - currentBarPos) <= headsUpBarsBefore;
-  const beatPosition       = beatTick % 4;
 
   const startBeatInterval = (bpm) => {
     if (beatRef.current) clearInterval(beatRef.current);
@@ -4233,36 +4232,101 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
     setLastCommand(type.charAt(0).toUpperCase() + type.slice(1));
   };
 
-  const cmdGroups = [
-    { label: "Navigation", cmds: [{ label: "Verse", action: () => jumpToType("verse") },{ label: "Chorus", action: () => jumpToType("chorus") },{ label: "Bridge", action: () => jumpToType("bridge") },{ label: "Top", action: () => jumpToType("top") }] },
-    { label: "Flow",       cmds: ["Vamp","Tag","Hold"].map(c => ({ label: c, action: () => tap(c) })) },
-    { label: "Dynamics",   cmds: ["Build","Pull Back","Pads Only","Full Band"].map(c => ({ label: c, action: () => tap(c) })) },
-    { label: "Emergency",  cmds: ["Kill Track","Reset","Count In"].map(c => ({ label: c, action: () => tap(c) })) },
-  ];
+  // AI-suggested cues per section type
+  const getAISuggestions = (secType, secIndex, totalSecs, songBpm) => {
+    const isFirst = secIndex === 0;
+    const isLast = secIndex === totalSecs - 1;
+    const suggestions = {
+      intro:          ["All in on the 1", "Stand by for verse", isFirst ? "Set the energy" : ""].filter(Boolean),
+      verse:          ["Drop dynamics", "Watch the click", "Stand by for chorus"],
+      prechorus:      ["Stand by for chorus", "Build it", "Layer in"],
+      chorus:         ["Full band", "Big snap", isLast ? "Last chorus" : "Stand by for bridge"].filter(Boolean),
+      bridge:         ["Start low", "Pads only if WL extends", "Stand by — on me"],
+      tag:            ["Last time", "Tag it", "Watch for ending"],
+      outro:          ["Soft landing", "Cold stop", "Watch WL"],
+      turnaround:     ["On the 1", "Follow the click", "Stand by"],
+      instrumental:   ["Follow the track", "Light groove", "Watch WL"],
+      breakdown:      ["Strip it down", "Keys and vocals", "Pads only"],
+      vamp:           ["Vamp here", "Follow WL", "I'll call the exit"],
+    };
+    return suggestions[secType] || ["Follow the track", "Watch WL", "Stay locked in"];
+  };
 
-  const hasOverrides = liveLoopActive || liveExtraRepeats > 0 || !!liveEndingMode;
-  const totalBarsEffectiveDisplay = section.bars * (section.repeatCount + liveExtraRepeats);
-  const currentBarDisplay = isPlaying ? Math.min(Math.floor(progress * totalBarsEffectiveDisplay) + 1, totalBarsEffectiveDisplay) : 1;
+  const [showSetlist, setShowSetlist] = useState(false);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState(null);
 
-  const segColor = nearingEnd ? COLORS.accent : sectionColor(section.type);
+  const fetchAISuggestion = async () => {
+    if (aiLoading) return;
+    setAiLoading(true);
+    setAiSuggestion(null);
+    try {
+      const prompt = `You are an expert Music Director for a contemporary worship team. Generate a brief MD note for this song section.
+
+Song: ${song.title}
+Key: ${song.key}
+BPM: ${song.bpm}
+Section: ${section.label} (${section.type})
+Position: Section ${sectionIndex + 1} of ${totalSections}
+${sectionIndex === 0 ? 'This is the opening section.' : ''}
+${sectionIndex === totalSections - 1 ? 'This is the final section.' : ''}
+${nextSection ? `Next section: ${nextSection.label}` : 'This is the last section of the song.'}
+
+Write 2-3 short, punchy MD notes for this section. Each note should be on its own line starting with "•". 
+Focus on: dynamics, what to call, band instructions, WL coordination, or transition cues.
+Keep each note under 10 words. Use language from the Evolve MD vocabulary (Build, Pull back, Pads only, Stand by, Full band, Big snap, Loop, Watch WL, etc).
+Do not add any preamble or explanation — just the bullet points.`;
+
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 200,
+          messages: [{ role: "user", content: prompt }]
+        })
+      });
+      const data = await res.json();
+      const text = data?.content?.[0]?.text || "";
+      setAiSuggestion(text.trim());
+    } catch (e) {
+      setAiSuggestion("• Full band energy\n• Watch WL for extensions\n• Stand by for next section");
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  const suggestions = getAISuggestions(section.type, sectionIndex, totalSections, song.bpm);
+  const segColor = (type) => ({
+    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#E8A838",
+    bridge:"#CF6679", tag:"#B8720A", outro:"#5A8FA0", turnaround:"#8A9B6A",
+    instrumental:"#4A8AAA", breakdown:"#9A6AAA", vamp:"#6A9A6A"
+  }[type] || "#6B9FD4");
+
+  const secColor = segColor(section.type);
   const lighten = (hex, amt) => { const n=parseInt(hex.slice(1),16); const r=Math.min(255,(n>>16)+amt); const g=Math.min(255,((n>>8)&0xff)+amt); const b=Math.min(255,(n&0xff)+amt); return `#${r.toString(16).padStart(2,"0")}${g.toString(16).padStart(2,"0")}${b.toString(16).padStart(2,"0")}`; };
 
-  // Bar timeline renderer (unchanged logic)
+  const totalBarsEffectiveDisplay = section.bars * (section.repeatCount + liveExtraRepeats);
+  const currentBarDisplay = isPlaying ? Math.min(Math.floor(progress * totalBarsEffectiveDisplay) + 1, totalBarsEffectiveDisplay) : 1;
+  const hasOverrides = liveLoopActive || liveExtraRepeats > 0 || !!liveEndingMode;
+  const beatPosition = beatTick % 4;
+
+  const PULSE_STRONG = lighten(secColor, 60);
+  const PULSE_WEAK   = lighten(secColor, 30);
+
   const renderTimeline = () => {
     const totalBars = totalBarsEffectiveDisplay;
     const currentBar = Math.min(Math.floor(progress * totalBars), totalBars - 1);
-    const PULSE_STRONG = lighten(segColor, 60);
-    const PULSE_WEAK   = lighten(segColor, 30);
     return (
-      <div style={{ display: "flex", gap: 2, height: 4, userSelect: "none" }}>
-        {Array.from({ length: totalBars }).map((_, i) => {
+      <div style={{ display: "flex", gap: 2, height: 5, userSelect: "none" }}>
+        {Array.from({ length: Math.min(totalBars, 32) }).map((_, i) => {
           const isCurrent = i === currentBar && isPlaying;
           const isPast = i < currentBar;
           const isDownbeat = beatPosition === 0;
-          const currentFill = isCurrent && beatActive ? (isDownbeat ? PULSE_STRONG : PULSE_WEAK) : `${segColor}AA`;
+          const currentFill = isCurrent && beatActive ? (isDownbeat ? PULSE_STRONG : PULSE_WEAK) : `${secColor}AA`;
           return (
-            <div key={i} style={{ flex: 1, borderRadius: 2, position: "relative", overflow: "hidden", background: LIVE.border, border: isCurrent ? `1px solid ${beatActive ? PULSE_WEAK : segColor}` : "1px solid transparent", transition: "border 0.15s" }}>
-              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: isPast ? "100%" : isCurrent ? `${((progress * totalBars) - currentBar) * 100}%` : "0%", background: isCurrent ? currentFill : isPast ? `${segColor}CC` : "transparent", transition: isCurrent && !beatActive ? "width 0.1s linear" : "none" }} />
+            <div key={i} style={{ flex: 1, borderRadius: 2, position: "relative", overflow: "hidden", background: "rgba(255,255,255,0.08)", border: isCurrent ? `1px solid ${beatActive ? PULSE_WEAK : secColor}` : "1px solid transparent" }}>
+              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: isPast ? "100%" : isCurrent ? `${((progress * totalBars) - currentBar) * 100}%` : "0%", background: isCurrent ? currentFill : isPast ? `${secColor}CC` : "transparent", transition: isCurrent && !beatActive ? "width 0.1s linear" : "none" }} />
             </div>
           );
         })}
@@ -4271,208 +4335,202 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   };
 
   return (
-    <div className="fade-in" style={{ maxWidth: 540, margin: "0 auto", background: LIVE.bgGrad, minHeight: "100%", padding: "20px 18px", borderRadius: 0 }}>
+    <div className="fade-in" style={{ maxWidth: 540, margin: "0 auto", minHeight: "100%", background: LIVE.bgGrad, padding: "16px 16px 40px" }}>
 
-      {/* ── TOP BAR: song context + transport — minimal ── */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: setlistOpen ? 0 : 20, paddingBottom: 14, borderBottom: `1px solid ${LIVE.border}` }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <button onClick={() => setSetlistOpen(o => !o)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left", width: "100%" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, fontWeight: 600, color: LIVE.text }}>{song.title}</div>
-              <span style={{ fontSize: 10, color: LIVE.textDim, marginTop: 1 }}>{setlistOpen ? "▲" : "▼"}</span>
-            </div>
-            <div style={{ fontSize: 10, color: LIVE.textDim, marginTop: 1, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM · Song {songIndex + 1} of {totalSongs}</div>
-          </button>
-        </div>
-        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, color: isPlaying ? "#4CAF7D" : LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>{isPlaying ? "● LIVE" : "○ PAUSED"}</div>
+      {/* ── TOP BAR ── */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, paddingBottom: 14, borderBottom: `1px solid ${LIVE.border}` }}>
+        <button onClick={() => setShowSetlist(o => !o)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left", flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 700, color: LIVE.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</div>
+            <span style={{ fontSize: 9, color: LIVE.textDim }}>{showSetlist ? "▲" : "▼"}</span>
+          </div>
+          <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace", marginTop: 2 }}>
+            Key of {song.key} · {song.bpm} BPM · {songIndex + 1}/{totalSongs}
+          </div>
+        </button>
+        <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, color: isPlaying ? "#4CAF7D" : LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+            {isPlaying ? "● LIVE" : "○ PAUSED"}
+          </div>
           {!isPlaying ? (
-            <button onClick={handlePlay} style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${COLORS.accentDim}`, background: COLORS.accentGlow, color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>▶</button>
+            <button onClick={handlePlay} style={{ width: 40, height: 36, borderRadius: 10, border: "none", background: COLORS.accent, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>▶</button>
           ) : (
-            <button onClick={handlePause} style={{ padding: "7px 16px", borderRadius: 8, border: `1px solid ${COLORS.accentDim}`, background: COLORS.accentGlow, color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>⏸</button>
+            <button onClick={handlePause} style={{ width: 40, height: 36, borderRadius: 10, border: "none", background: COLORS.accent, color: "#fff", fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⏸</button>
           )}
-          <button onClick={handleReset} style={{ padding: "7px 10px", borderRadius: 8, border: `1px solid ${LIVE.border}`, background: LIVE.surface, color: LIVE.textMuted, fontSize: 12, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>⟳</button>
+          <button onClick={handleReset} style={{ width: 36, height: 36, borderRadius: 10, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textMuted, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>⟳</button>
         </div>
       </div>
 
-      {/* ── SETLIST OVERVIEW (collapsible) ── */}
-      {setlistOpen && (
-        <div className="fade-in" style={{ marginBottom: 20, paddingTop: 12, borderBottom: `1px solid ${LIVE.border}`, paddingBottom: 14 }}>
+      {/* ── SETLIST DROPDOWN ── */}
+      {showSetlist && (
+        <div className="fade-in" style={{ marginBottom: 16, background: LIVE.surface, border: `1px solid ${LIVE.border}`, borderRadius: 14, overflow: "hidden" }}>
           {songs.map((s, si) => (
-            <button key={s.id} onClick={() => { jumpSong(si); setSetlistOpen(false); }}
-              style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "10px 12px", borderRadius: 10, marginBottom: 4, border: `1px solid ${si === songIndex ? COLORS.accent : LIVE.border}`, background: si === songIndex ? "rgba(192,122,12,0.1)" : "transparent", cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}>
-              <div style={{ width: 22, height: 22, borderRadius: "50%", background: si === songIndex ? COLORS.accent : LIVE.border, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <span style={{ fontSize: 10, fontWeight: 700, color: si === songIndex ? "#fff" : LIVE.textDim }}>{si + 1}</span>
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 14, fontWeight: 600, color: si === songIndex ? LIVE.text : LIVE.textMuted }}>{s.title}</div>
-                <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {s.key} · {s.bpm} BPM · {s.sections.length} sections</div>
-              </div>
-              {si === songIndex && <span style={{ fontSize: 10, fontWeight: 700, color: COLORS.accent }}>NOW</span>}
-            </button>
+            <div key={si}>
+              <button onClick={() => { jumpSong(si); setShowSetlist(false); }}
+                style={{ width: "100%", padding: "10px 14px", background: si === songIndex ? `${COLORS.accent}18` : "transparent", border: "none", borderBottom: si < songs.length - 1 ? `1px solid ${LIVE.border}` : "none", cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif" }}>
+                <span style={{ fontSize: 10, color: si === songIndex ? COLORS.accent : LIVE.textDim, marginRight: 8, fontWeight: 700 }}>{si + 1}</span>
+                <span style={{ fontSize: 13, color: si === songIndex ? COLORS.accent : LIVE.text, fontWeight: si === songIndex ? 700 : 400 }}>{s.title}</span>
+                <span style={{ fontSize: 10, color: LIVE.textDim, marginLeft: 8 }}>Key of {s.key}</span>
+              </button>
+            </div>
           ))}
         </div>
       )}
 
-      {/* ── LIVE MODE FIRST-TIME HINT ── */}
-      {!liveHintDismissed && (
-        <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "rgba(192,122,12,0.12)", border: "1px solid rgba(192,122,12,0.3)", borderRadius: 12, marginBottom: 16 }}>
-          <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>💡</span>
-          <span style={{ fontSize: 12, color: LIVE.text, lineHeight: 1.5, flex: 1 }}>Tap ▶ when your track fires. <strong style={{ color: COLORS.accent }}>Current Cue</strong> is your call to the band. The heads-up card warns you what's coming. Tap the song title above to see your full setlist.</span>
-          <button onClick={() => { setLiveHintDismissed(true); try { localStorage.setItem("wp-hint-live-mode","1"); } catch {} }} style={{ background: "none", border: "none", color: LIVE.textDim, cursor: "pointer", fontSize: 14, flexShrink: 0, padding: 0 }}>✕</button>
-        </div>
-      )}
+      {/* ── MAIN SECTION CARD ── */}
+      <div style={{ background: LIVE.surface, border: `2px solid ${secColor}40`, borderRadius: 20, padding: "20px 18px", marginBottom: 12, position: "relative", overflow: "hidden" }}>
+        {/* Section color accent bar */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: secColor, borderRadius: "20px 20px 0 0" }} />
 
-      {/* ── TIER 1 PRIMARY: Section label + Call + Bar position ── */}
-      <div style={{ background: LIVE.card, border: `2px solid ${nearingEnd ? COLORS.accent : segColor}`, borderRadius: 20, padding: "24px 22px", marginBottom: 10, boxShadow: isPlaying ? `0 0 32px ${nearingEnd ? COLORS.accent : segColor}18` : "none", transition: "border-color 0.3s, box-shadow 0.3s" }}>
-
-        {/* Section type pill + position */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <div style={{ width: 7, height: 7, borderRadius: "50%", background: segColor }} />
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: segColor }}>{section.type}</div>
+        {/* Section label + bar count */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 14, marginTop: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: secColor, flexShrink: 0, boxShadow: `0 0 8px ${secColor}` }} />
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: secColor }}>{section.label}</div>
           </div>
-          <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>{sectionIndex + 1} / {totalSections}</div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 28, fontWeight: 700, color: nearingEnd ? COLORS.accent : LIVE.text, lineHeight: 1, transition: "color 0.3s" }}>
+              {currentBarDisplay}
+            </div>
+            <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>
+              of {totalBarsEffectiveDisplay} bars{liveExtraRepeats > 0 ? ` (+${liveExtraRepeats})` : ""}
+            </div>
+          </div>
         </div>
 
-        {/* 1. SECTION LABEL — largest element */}
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 52, fontWeight: 700, color: LIVE.text, lineHeight: 0.95, marginBottom: 16, letterSpacing: "-1px" }}>
-          {section.label}
-        </div>
+        {/* Timeline */}
+        <div style={{ marginBottom: 18 }}>{renderTimeline()}</div>
 
-        {/* 2. CURRENT CALL — the MD's cue, prominent */}
+        {/* MD Notes — the main content */}
         {section.note ? (
-          <div style={{ marginBottom: 16, padding: "12px 16px", background: LIVE.surface, borderRadius: 12, borderLeft: `3px solid ${segColor}` }}>
-            <div style={{ fontSize: 17, color: LIVE.text, fontWeight: 600, lineHeight: 1.4 }}>{section.note}</div>
+          <div style={{ marginBottom: 14 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: LIVE.textDim, marginBottom: 8 }}>MD Notes</div>
+            <div style={{ fontSize: 15, color: LIVE.text, lineHeight: 1.7, fontFamily: "'Inter', sans-serif", fontWeight: 500, borderLeft: `3px solid ${secColor}`, paddingLeft: 12 }}>
+              {section.note}
+            </div>
           </div>
         ) : (
-          <div style={{ marginBottom: 16, padding: "12px 16px", background: LIVE.surface, borderRadius: 12, borderLeft: `3px solid ${LIVE.border}` }}>
-            <div style={{ fontSize: 14, color: LIVE.textDim, fontStyle: "italic" }}>No cue set for this section</div>
+          <div style={{ marginBottom: 14, padding: "10px 12px", borderRadius: 10, background: "rgba(255,255,255,0.04)", border: `1px dashed ${LIVE.border}` }}>
+            <div style={{ fontSize: 12, color: LIVE.textDim, fontStyle: "italic" }}>No MD notes for this section — add them in Song Builder</div>
           </div>
         )}
 
-        {/* 3. BAR POSITION */}
-        <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 10 }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 26, fontWeight: 700, color: nearingEnd ? COLORS.accent : LIVE.textMuted, transition: "color 0.3s", lineHeight: 1 }}>
-            Bar {currentBarDisplay}
+        {/* AI Suggested Calls */}
+        <div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: LIVE.textDim }}>Suggested Calls</div>
+            <button onClick={fetchAISuggestion} disabled={aiLoading}
+              style={{ fontSize: 9, fontWeight: 700, padding: "3px 8px", borderRadius: 6, border: `1px solid ${COLORS.accentDim}`, background: COLORS.accentGlow, color: COLORS.accent, cursor: aiLoading ? "default" : "pointer", fontFamily: "'Inter', sans-serif", opacity: aiLoading ? 0.6 : 1 }}>
+              {aiLoading ? "..." : "✦ AI"}
+            </button>
           </div>
-          <div style={{ fontSize: 13, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-            of {totalBarsEffectiveDisplay}{liveExtraRepeats > 0 ? ` (+${liveExtraRepeats})` : ""}
-          </div>
-          {liveLoopActive && <div style={{ fontSize: 10, fontWeight: 700, color: "#4A90D9", marginLeft: 2 }}>⟳</div>}
+          {aiSuggestion ? (
+            <div style={{ fontSize: 12, color: LIVE.textMuted, lineHeight: 1.8, fontFamily: "'Inter', sans-serif" }}>
+              {aiSuggestion.split('\n').filter(l => l.trim()).map((line, i) => (
+                <div key={i} style={{ display: "flex", gap: 6, alignItems: "flex-start" }}>
+                  <span style={{ color: COLORS.accent, flexShrink: 0 }}>•</span>
+                  <span>{line.replace(/^[•\-\*]\s*/, '')}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+              {suggestions.map((s, i) => (
+                <span key={i} style={{ fontSize: 11, padding: "4px 10px", borderRadius: 20, background: "rgba(255,255,255,0.06)", border: `1px solid ${LIVE.border}`, color: LIVE.textMuted, fontFamily: "'Inter', sans-serif" }}>{s}</span>
+              ))}
+            </div>
+          )}
         </div>
-
-        {/* Timeline bar */}
-        {renderTimeline()}
       </div>
 
-      {/* ── TIER 2 SECONDARY: Heads-up / Next section ── */}
+      {/* ── NEXT SECTION STRIP ── */}
       {nextSection ? (
-        <div style={{ background: nearingEnd ? `${COLORS.accent}0E` : LIVE.surface, border: `1px solid ${nearingEnd ? COLORS.accent : LIVE.border}`, borderRadius: 14, padding: "14px 18px", marginBottom: 12, transition: "all 0.3s" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: nearingEnd ? COLORS.accent : LIVE.textDim, marginBottom: 5 }}>
-                {nearingEnd ? "⚡ Stand by for" : "Up next"}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: section.headsUp ? 5 : 0 }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: sectionColor(nextSection.type), flexShrink: 0 }} />
-                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: nearingEnd ? 26 : 20, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted, transition: "all 0.3s" }}>{nextSection.label}</div>
-              </div>
-              {section.headsUp && (
-                <div style={{ fontSize: 13, color: nearingEnd ? COLORS.accent : LIVE.textDim, fontWeight: nearingEnd ? 600 : 400, paddingLeft: 14 }}>{section.headsUp}</div>
-              )}
+        <div style={{ background: nearingEnd ? `${COLORS.accent}12` : LIVE.surface, border: `1px solid ${nearingEnd ? COLORS.accent : LIVE.border}`, borderRadius: 14, padding: "12px 16px", marginBottom: 12, transition: "all 0.3s", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: nearingEnd ? COLORS.accent : LIVE.textDim, marginBottom: 4 }}>
+              {nearingEnd ? "⚡ Stand by for" : "Up next"}
             </div>
-            {nearingEnd && remaining > 0 && (
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 24, fontWeight: 700, color: COLORS.accent, flexShrink: 0, marginLeft: 12 }}>{Math.ceil(remaining / 1000)}s</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: segColor(nextSection.type) }} />
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted, transition: "all 0.3s" }}>{nextSection.label}</div>
+            </div>
+            {nextSection.note && nearingEnd && (
+              <div style={{ fontSize: 11, color: COLORS.accent, marginTop: 4, paddingLeft: 14 }}>{nextSection.note.split('\n')[0]}</div>
             )}
           </div>
+          {nearingEnd && remaining > 0 && (
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 28, fontWeight: 700, color: COLORS.accent }}>{Math.ceil(remaining / 1000)}s</div>
+          )}
         </div>
       ) : (
-        <div style={{ border: `1px solid ${LIVE.border}`, borderRadius: 14, padding: "11px 18px", marginBottom: 12, textAlign: "center" }}>
-          <div style={{ fontSize: 12, color: LIVE.textDim }}>{songIndex < totalSongs - 1 ? "Last section — next song follows" : "Service complete"}</div>
+        <div style={{ border: `1px solid ${LIVE.border}`, borderRadius: 14, padding: "10px 16px", marginBottom: 12, textAlign: "center" }}>
+          <div style={{ fontSize: 11, color: LIVE.textDim }}>{songIndex < totalSongs - 1 ? `Last section — ${songs[songIndex + 1].title} follows` : "Service complete"}</div>
         </div>
       )}
 
-      {/* ── TIER 3 TERTIARY: Options (small, contextual) ── */}
-      {section.options?.length > 0 && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-          {section.options.map((opt, i) => (
-            <button key={i} onClick={() => tap(opt)} style={{ padding: "5px 12px", borderRadius: 8, background: "transparent", border: `1px solid ${LIVE.border}`, color: LIVE.textDim, fontSize: 12, cursor: "pointer", fontFamily: "'Inter', sans-serif", fontWeight: 500, transition: "border-color 0.15s" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = segColor}
-              onMouseLeave={e => e.currentTarget.style.borderColor = LIVE.border}>
-              {opt}
+      {/* ── CONTROLS ── */}
+      <div style={{ borderTop: `1px solid ${LIVE.border}`, paddingTop: 14, marginBottom: 10 }}>
+
+        {/* Override status */}
+        {hasOverrides && (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10, padding: "6px 10px", borderRadius: 8, background: "rgba(74,144,217,0.08)", border: `1px solid rgba(74,144,217,0.2)` }}>
+            {liveLoopActive && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: "rgba(74,144,217,0.15)", color: "#4A90D9" }}>⟳ LOOP</span>}
+            {liveExtraRepeats > 0 && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: COLORS.accentGlow, color: COLORS.accent }}>+{liveExtraRepeats}</span>}
+            {liveEndingMode && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: "rgba(46,125,82,0.12)", color: "#4CAF7D" }}>END: {liveEndingMode.toUpperCase()}</span>}
+            <button onClick={clearAllOverrides} style={{ marginLeft: "auto", padding: "2px 8px", borderRadius: 6, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 10, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Clear</button>
+          </div>
+        )}
+
+        {/* Primary override controls */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6, marginBottom: 6 }}>
+          {[
+            { label: liveLoopActive ? "⟳ Loop ON" : "Loop", action: handleToggleLoop, active: liveLoopActive, activeColor: "#4A90D9" },
+            { label: "Extend +1", action: handleExtendOne, active: liveExtraRepeats > 0, activeColor: COLORS.accent },
+            { label: liveEndingMode === "soft" ? "✓ Soft End" : liveEndingMode === "clean" ? "✓ Clean End" : "Set Ending", action: () => {
+              if (!liveEndingMode) handleEndSoft();
+              else if (liveEndingMode === "soft") handleEndClean();
+              else setLiveEndingMode(null);
+            }, active: !!liveEndingMode, activeColor: "#4CAF7D" },
+          ].map((btn, i) => (
+            <button key={i} onClick={btn.action} style={{ padding: "9px 6px", borderRadius: 9, border: `1px solid ${btn.active ? btn.activeColor : LIVE.border}`, background: btn.active ? `${btn.activeColor}18` : "transparent", color: btn.active ? btn.activeColor : LIVE.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{btn.label}</button>
+          ))}
+        </div>
+
+        {/* Section/Song navigation */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginBottom: 6 }}>
+          {[
+            { label: "◂◂ Song", action: goPrevSong, disabled: songIndex === 0 },
+            { label: "◂ Prev", action: goPrevSection, disabled: sectionIndex === 0 },
+            { label: "Next ▸", action: goNextSection, disabled: sectionIndex === totalSections - 1 },
+            { label: "Song ▸▸", action: goNextSong, disabled: songIndex === totalSongs - 1 },
+          ].map((btn, i) => (
+            <button key={i} onClick={btn.action} disabled={btn.disabled} style={{ padding: "9px 4px", borderRadius: 9, border: `1px solid ${LIVE.border}`, background: "transparent", color: btn.disabled ? LIVE.textDim : LIVE.textMuted, fontSize: 10, fontWeight: 600, cursor: btn.disabled ? "default" : "pointer", fontFamily: "'Inter', sans-serif", opacity: btn.disabled ? 0.25 : 1 }}>
+              {btn.label}
             </button>
           ))}
         </div>
-      )}
 
-      {/* ── DIVIDER ── */}
-      <div style={{ borderTop: `1px solid ${LIVE.border}`, marginBottom: 14 }} />
-
-      {/* ── TIER 4 LOW: Controls — de-emphasized ── */}
-
-      {/* Override status strip (only when active) */}
-      {hasOverrides && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 12px", borderRadius: 8, marginBottom: 10, background: "rgba(74,144,217,0.06)", border: `1px solid rgba(74,144,217,0.2)` }}>
-          <div style={{ display: "flex", gap: 5, flex: 1, flexWrap: "wrap" }}>
-            {liveLoopActive && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: "rgba(74,144,217,0.15)", color: "#4A90D9" }}>⟳ LOOP</span>}
-            {liveExtraRepeats > 0 && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: COLORS.accentGlow, color: COLORS.accent }}>+{liveExtraRepeats} repeat</span>}
-            {liveEndingMode && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 20, background: "rgba(46,125,82,0.12)", color: "#4CAF7D" }}>END: {liveEndingMode.toUpperCase()}</span>}
-          </div>
-          <button onClick={clearAllOverrides} style={{ padding: "2px 8px", borderRadius: 6, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 10, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Clear</button>
+        {/* Jump-to nav */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 5 }}>
+          {["verse","chorus","bridge","top"].map(type => (
+            <button key={type} onClick={() => jumpToType(type)} style={{ padding: "7px 4px", borderRadius: 8, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 10, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", textTransform: "capitalize" }}>
+              {type === "top" ? "↑ Top" : type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          ))}
         </div>
-      )}
-
-      {/* Override + jump controls */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5, marginBottom: 5 }}>
-        <button onClick={handleExtendOne} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${liveExtraRepeats > 0 ? COLORS.accentDim : LIVE.border}`, background: liveExtraRepeats > 0 ? COLORS.accentGlow : "transparent", color: liveExtraRepeats > 0 ? COLORS.accent : LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Extend +1</button>
-        <button onClick={handleToggleLoop} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${liveLoopActive ? "#4A90D9" : LIVE.border}`, background: liveLoopActive ? "rgba(74,144,217,0.1)" : "transparent", color: liveLoopActive ? "#4A90D9" : LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{liveLoopActive ? "⟳ Loop ON" : "Loop"}</button>
-        <button onClick={handleNextChorus} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>→ Chorus</button>
-      </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5, marginBottom: 12 }}>
-        <button onClick={handleSkipOutro} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${LIVE.border}`, background: "transparent", color: LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>→ Outro</button>
-        <button onClick={handleEndSoft} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${liveEndingMode === "soft" ? "#4CAF7D" : LIVE.border}`, background: liveEndingMode === "soft" ? "rgba(46,125,82,0.1)" : "transparent", color: liveEndingMode === "soft" ? "#4CAF7D" : LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{liveEndingMode === "soft" ? "✓ Soft" : "End Soft"}</button>
-        <button onClick={handleEndClean} style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${liveEndingMode === "clean" ? "#4CAF7D" : LIVE.border}`, background: liveEndingMode === "clean" ? "rgba(46,125,82,0.1)" : "transparent", color: liveEndingMode === "clean" ? "#4CAF7D" : LIVE.textDim, fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{liveEndingMode === "clean" ? "✓ Clean" : "End Clean"}</button>
       </div>
 
-      {/* Section / Song nav */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 5, marginBottom: 14 }}>
-        {[
-          { label: "◂◂ Song",   action: goPrevSong,    disabled: songIndex === 0 },
-          { label: "◂ Prev",    action: goPrevSection, disabled: sectionIndex === 0 },
-          { label: "Next ▸",    action: goNextSection, disabled: sectionIndex === totalSections - 1 },
-          { label: "Song ▸▸",  action: goNextSong,    disabled: songIndex === totalSongs - 1 },
-        ].map((btn, i) => (
-          <button key={i} onClick={btn.action} disabled={btn.disabled}
-            style={{ padding: "8px 4px", borderRadius: 7, border: `1px solid ${LIVE.border}`, background: "transparent", color: btn.disabled ? LIVE.textDim : LIVE.textMuted, fontSize: 10, fontWeight: 600, cursor: btn.disabled ? "default" : "pointer", fontFamily: "'Inter', sans-serif", opacity: btn.disabled ? 0.25 : 1 }}>
-            {btn.label}
-          </button>
+      {/* ── EMERGENCY CALLS ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 6 }}>
+        {["Kill Track", "Count In", "Reset"].map(cmd => (
+          <button key={cmd} onClick={() => { tap(cmd); if (cmd === "Reset") handleReset(); }} style={{ padding: "9px 4px", borderRadius: 9, border: `1px solid rgba(192,57,74,0.3)`, background: "rgba(192,57,74,0.06)", color: COLORS.red, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>{cmd}</button>
         ))}
       </div>
 
-      {/* Command call groups — quietest tier */}
-      {cmdGroups.map((group, gi) => (
-        <div key={gi} style={{ marginBottom: 8 }}>
-          <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: LIVE.textDim, marginBottom: 4, opacity: 0.4 }}>{group.label}</div>
-          <div style={{ display: "grid", gridTemplateColumns: `repeat(${group.cmds.length <= 3 ? group.cmds.length : 4}, 1fr)`, gap: 4 }}>
-            {group.cmds.map((cmd, ci) => {
-              const isEmergency = group.label === "Emergency";
-              const isActive = lastCommand === cmd.label;
-              return (
-                <button key={ci} onClick={cmd.action}
-                  style={{ padding: "7px 4px", borderRadius: 7, fontSize: 10, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", transition: "all 0.1s", border: isActive ? `1.5px solid ${COLORS.accent}` : isEmergency ? `1px solid rgba(192,57,74,0.25)` : `1px solid ${LIVE.border}`, background: isActive ? COLORS.accentGlow : isEmergency ? "rgba(192,57,74,0.06)" : "transparent", color: isActive ? COLORS.accent : isEmergency ? COLORS.red : LIVE.textDim }}>
-                  {cmd.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ))}
-
       {/* Last command echo */}
       {lastCommand && (
-        <div style={{ marginTop: 10, padding: "7px 12px", borderRadius: 8, background: COLORS.accentGlow, border: `1px solid ${COLORS.accentDim}`, display: "flex", alignItems: "center", gap: 7 }}>
-          <div style={{ width: 5, height: 5, borderRadius: "50%", background: COLORS.accent, boxShadow: `0 0 5px ${COLORS.accent}` }} />
+        <div style={{ marginTop: 12, padding: "7px 12px", borderRadius: 8, background: COLORS.accentGlow, border: `1px solid ${COLORS.accentDim}`, display: "flex", alignItems: "center", gap: 7 }}>
+          <div style={{ width: 5, height: 5, borderRadius: "50%", background: COLORS.accent }} />
           <div style={{ fontSize: 10, color: LIVE.textDim }}>Called: <span style={{ fontWeight: 700, color: COLORS.accent }}>{lastCommand}</span></div>
         </div>
       )}
