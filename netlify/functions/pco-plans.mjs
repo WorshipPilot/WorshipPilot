@@ -1,9 +1,7 @@
-// Netlify function: fetches plans the user is scheduled on from PCO
 import { createClient } from '@supabase/supabase-js';
 
 export const handler = async (event) => {
   const { pco_user_id } = event.queryStringParameters || {};
-
   if (!pco_user_id) return jsonError(400, 'Missing pco_user_id');
 
   const supabaseUrl = process.env.VITE_SUPABASE_URL;
@@ -35,64 +33,55 @@ export const handler = async (event) => {
     }).eq('pco_user_id', pco_user_id);
   }
 
-  // 3. Fetch service types first to get IDs
-  const stRes = await fetch(
-    'https://api.planningcenteronline.com/services/v2/service_types?per_page=50',
+  const pcoFetch = (path) => fetch(
+    `https://api.planningcenteronline.com/services/v2${path}`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
-  );
-  const stData = await stRes.json();
-  const serviceTypes = stData?.data || [];
+  ).then(r => r.json());
 
-  // Filter to worship-related service types only (exclude Events, Kids, etc.)
-  const worshipTypes = serviceTypes.filter(st => {
+  // 3. Get service types — only Sunday Service and worship collectives
+  const stData = await pcoFetch('/service_types?per_page=50');
+  const allTypes = stData?.data || [];
+  
+  const worshipTypes = allTypes.filter(st => {
     const name = st.attributes?.name?.toLowerCase() || '';
-    return !name.includes('kids') && 
-           !name.includes('children') && 
-           !name.includes('events') &&
-           !name.includes('event') &&
-           !name.includes('youth') &&
-           !name.includes('small group');
+    return name.includes('sunday service') || 
+           name.includes('worship collective') ||
+           name.includes('sunday worship');
   });
 
-  console.log('Worship service types:', worshipTypes.map(st => st.attributes?.name));
+  console.log('Filtered worship types:', worshipTypes.map(st => st.attributes?.name));
 
-  // 4. Fetch upcoming plans for each worship service type, including items and songs
+  // 4. Fetch upcoming plans for each type
   const plans = [];
-  for (const st of worshipTypes.slice(0, 5)) {
-    const plansRes = await fetch(
-      `https://api.planningcenteronline.com/services/v2/service_types/${st.id}/plans?filter=future&per_page=10&include=items&order=sort_date`,
-      { headers: { Authorization: `Bearer ${accessToken}` } }
+  for (const st of worshipTypes.slice(0, 3)) {
+    const plansData = await pcoFetch(
+      `/service_types/${st.id}/plans?filter=future&per_page=6&order=sort_date`
     );
-    const plansData = await plansRes.json();
-    const included = plansData?.included || [];
 
     for (const plan of (plansData?.data || [])) {
       const attrs = plan.attributes;
 
-      // Get song items from included data
-      const itemIds = plan.relationships?.items?.data?.map(i => i.id) || [];
-      const allItems = included.filter(i => itemIds.includes(i.id));
+      // 5. Fetch items for this plan separately
+      const itemsData = await pcoFetch(
+        `/service_types/${st.id}/plans/${plan.id}/items?per_page=50`
+      );
       
-      // Log all item types for debugging
-      console.log('Plan items types:', allItems.map(i => ({ 
-        type: i.type, 
+      const allItems = itemsData?.data || [];
+      console.log(`Plan ${attrs?.dates} items:`, allItems.map(i => ({
         item_type: i.attributes?.item_type,
-        title: i.attributes?.title 
+        title: i.attributes?.title,
+        key: i.attributes?.key_name,
       })));
 
+      // Filter to song items only
       const songItems = allItems
-        .filter(i => {
-          const itemType = i.attributes?.item_type?.toLowerCase() || '';
-          const title = i.attributes?.title || '';
-          // PCO uses 'song' item_type for songs, but also check for linked song
-          return itemType === 'song' || 
-                 i.attributes?.linked_song_id ||
-                 (itemType === '' && i.attributes?.key_name);
-        })
+        .filter(i => i.attributes?.item_type === 'song')
         .map(i => ({
           title: i.attributes?.title || 'Untitled',
           key: i.attributes?.key_name || '',
+          bpm: i.attributes?.length || 0,
           sequence: i.attributes?.sequence || 0,
+          arrangementName: i.attributes?.arrangement_name || '',
         }))
         .sort((a, b) => a.sequence - b.sequence);
 
@@ -109,17 +98,12 @@ export const handler = async (event) => {
     }
   }
 
-  // Sort by date
   plans.sort((a, b) => new Date(a.sortDate) - new Date(b.sortDate));
 
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      org: conn.pco_org_name,
-      name: conn.pco_user_name,
-      plans,
-    }),
+    body: JSON.stringify({ org: conn.pco_org_name, name: conn.pco_user_name, plans }),
   };
 };
 
