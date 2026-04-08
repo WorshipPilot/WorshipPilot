@@ -2171,56 +2171,82 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
   const currentWeek = ONBOARDING_WEEKS[currentStep.weekIdx];
   const trainingDone = completedCount >= MD_MODULES.length;
   const isFirstVisit = completedCount === 0;
+  const progressPct = Math.round((completedCount / MD_MODULES.length) * 100);
 
   return (
     <div className="fade-in">
 
-      {/* ── CINEMATIC HERO BANNER ── */}
-      <div className="hero-banner">
+      {/* ── HERO BANNER ── */}
+      <div className="hero-banner" style={{ marginBottom: 24 }}>
         <div className="hero-stage-line" />
+        {/* Mic illustration inside hero */}
+        <div style={{ position: "absolute", bottom: -10, right: 0, opacity: 0.07, pointerEvents: "none", userSelect: "none" }}>
+          <svg viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="160" height="272">
+            <rect x="65" y="10" width="70" height="110" rx="35" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+            <line x1="65" y1="38" x2="135" y2="38" stroke="#C07A0C" strokeWidth="2.5"/>
+            <line x1="65" y1="55" x2="135" y2="55" stroke="#C07A0C" strokeWidth="2.5"/>
+            <line x1="65" y1="72" x2="135" y2="72" stroke="#C07A0C" strokeWidth="2.5"/>
+            <line x1="67" y1="89" x2="133" y2="89" stroke="#C07A0C" strokeWidth="2.5"/>
+            <line x1="73" y1="104" x2="127" y2="104" stroke="#C07A0C" strokeWidth="2.5"/>
+            <rect x="88" y="120" width="24" height="60" rx="4" fill="none" stroke="#C07A0C" strokeWidth="4"/>
+            <line x1="100" y1="180" x2="100" y2="270" stroke="#C07A0C" strokeWidth="5"/>
+            <ellipse cx="100" cy="275" rx="55" ry="12" fill="none" stroke="#C07A0C" strokeWidth="4"/>
+            <line x1="45" y1="275" x2="22" y2="310" stroke="#C07A0C" strokeWidth="4"/>
+            <line x1="155" y1="275" x2="178" y2="310" stroke="#C07A0C" strokeWidth="4"/>
+            <line x1="100" y1="275" x2="100" y2="320" stroke="#C07A0C" strokeWidth="4"/>
+            <path d="M148 42 Q165 65 148 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
+            <path d="M158 30 Q182 65 158 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+            <path d="M52 42 Q35 65 52 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
+            <path d="M42 30 Q18 65 42 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+          </svg>
+        </div>
         <div className="hero-banner-inner">
-          {/* Eyebrow */}
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 16, fontFamily: "'Outfit', sans-serif", opacity: 0.9 }}>WorshipPilot</div>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 14, fontFamily: "'Outfit', sans-serif", opacity: 0.9 }}>WorshipPilot</div>
 
           {isFirstVisit ? (
             <>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 32, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 10, letterSpacing: "-0.5px" }}>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 30, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 8, letterSpacing: "-0.5px" }}>
                 Most teams don't lack talent.<br />They lack clarity.
               </div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.accent, marginBottom: 16, letterSpacing: 0.2 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: COLORS.accent, marginBottom: 14, letterSpacing: 0.3 }}>
                 Playback handles the audio. WorshipPilot handles the leadership.
               </div>
-              <div style={{ fontSize: 14, color: "rgba(240,235,225,0.6)", lineHeight: 1.7, maxWidth: 480, marginBottom: 24 }}>
-                When cues are unclear, the whole band feels it. WorshipPilot trains MDs systematically and equips them to lead with confidence every Sunday — in rehearsal, at home, and on stage.
+              <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.65, maxWidth: 440, marginBottom: 22 }}>
+                When cues are unclear, the whole band feels it. Train systematically. Lead with confidence every Sunday.
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage("starthere")}
-                  style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
+                <button onClick={() => setPage("starthere")} style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
                   Start Your MD Training →
                 </button>
-                <button onClick={() => setPage("services")}
-                  style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.8)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                <button onClick={() => setPage("services")} style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
                   ↓ Import from PCO
                 </button>
               </div>
             </>
           ) : (
             <>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 28, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.2, marginBottom: 8, letterSpacing: "-0.3px" }}>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.2, marginBottom: 6 }}>
                 {trainingDone ? "Ready to lead." : "Welcome back."}
               </div>
-              <div style={{ fontSize: 14, color: "rgba(240,235,225,0.55)", marginBottom: 20, lineHeight: 1.5 }}>
-                {trainingDone
-                  ? "All modules complete. Keep your edge with scenarios and Live Mode."
-                  : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} — ${currentStep.phase}. ${currentWeek.benchmark}`}
+              <div style={{ fontSize: 13, color: "rgba(240,235,225,0.5)", marginBottom: 16, lineHeight: 1.5 }}>
+                {trainingDone ? "All modules complete. Keep sharp with scenarios and Live Mode." : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} — ${currentStep.phase}`}
               </div>
+              {!trainingDone && (
+                <div style={{ marginBottom: 18 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(240,235,225,0.4)" }}>Training progress</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: COLORS.accent }}>{progressPct}%</span>
+                  </div>
+                  <div style={{ height: 4, borderRadius: 4, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accentGradient, borderRadius: 4, transition: "width 0.6s ease" }} />
+                  </div>
+                </div>
+              )}
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage(trainingDone ? "coaching" : "training")}
-                  style={{ padding: "10px 20px", borderRadius: 10, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
+                <button onClick={() => setPage(trainingDone ? "coaching" : "training")} style={{ padding: "10px 20px", borderRadius: 10, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
                   {trainingDone ? "Practice scenarios →" : "Continue training →"}
                 </button>
-                <button onClick={() => setPage("live")}
-                  style={{ padding: "10px 18px", borderRadius: 10, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                <button onClick={() => setPage("live")} style={{ padding: "10px 18px", borderRadius: 10, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
                   ▶ Live Mode
                 </button>
               </div>
@@ -2229,84 +2255,105 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         </div>
       </div>
 
-      {/* ── PRIMARY ACTIONS — only shown for returning users ── */}
-      {!isFirstVisit && (
-        <div className="two-col" style={{ marginBottom: 24 }}>
-          {/* Training CTA */}
-          <button onClick={() => setPage("training")}
-            style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", padding: "22px 22px", background: COLORS.navy, border: "none", borderRadius: 18, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowMd, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
-            onMouseEnter={e => { e.currentTarget.style.background = COLORS.navyMid; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
-            onMouseLeave={e => { e.currentTarget.style.background = COLORS.navy; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}>
-            <div style={{ position: "absolute", top: -30, right: -20, width: 160, height: 120, background: "radial-gradient(ellipse, rgba(192,122,12,0.15) 0%, transparent 65%)", pointerEvents: "none" }} />
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(192,122,12,0.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, position: "relative" }}>
-              <Icon name="training" size={18} color={COLORS.accent} />
-            </div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>
-              {trainingDone ? "Training" : `Step ${currentStep.step} of ${JOURNEY_STEPS.length}`}
-            </div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
-              {trainingDone ? "Review Modules" : currentWeek.title}
-            </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>
-              {trainingDone ? "All modules complete" : currentWeek.benchmark}
-            </div>
-          </button>
-          {/* Live Mode CTA */}
-          <button onClick={() => setPage("live")}
-            style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", padding: "22px 22px", background: COLORS.card, border: `1.5px solid ${COLORS.border}`, borderRadius: 18, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-2px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-              <Icon name="live" size={18} color={COLORS.accent} />
-            </div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>Live Mode</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, marginBottom: 4 }}>Practice like Sunday feels. Lead before you step on stage.</div>
-            <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Section cues, bar position, MD notes, and heads-up warnings — everything you need, right when you need it.</div>
-          </button>
-        </div>
-      )}
+      {/* ── QUICK ACTION CARDS — visible to all users ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
 
-        {/* ── RESOURCES & TOOLS ── */}
-        <div className="section-divider" />
-        <div className="section-label">Resources & Tools</div>
+        {/* Training card */}
+        <button onClick={() => setPage("training")}
+          style={{ display: "flex", flexDirection: "column", padding: "18px 18px", background: COLORS.navy, border: "none", borderRadius: 16, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowMd, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
+          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}>
+          <div style={{ position: "absolute", top: -20, right: -10, width: 120, height: 90, background: "radial-gradient(ellipse, rgba(192,122,12,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ width: 32, height: 32, borderRadius: 9, background: "rgba(192,122,12,0.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+            <Icon name="training" size={16} color={COLORS.accent} />
+          </div>
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "'Outfit', sans-serif" }}>
+            {isFirstVisit ? "Start here" : trainingDone ? "Complete" : `Step ${currentStep.step}/${JOURNEY_STEPS.length}`}
+          </div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 3 }}>
+            {isFirstVisit ? "MD Training" : trainingDone ? "Review Training" : currentWeek.title}
+          </div>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.4 }}>
+            {isFirstVisit ? "5-step MD pathway" : trainingDone ? "All modules complete" : currentWeek.benchmark}
+          </div>
+          {!isFirstVisit && !trainingDone && (
+            <div style={{ marginTop: 10, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.1)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accent, borderRadius: 3 }} />
+            </div>
+          )}
+        </button>
 
-        {/* Tool grid with mic illustration behind */}
-        <div style={{ position: "relative", overflow: "hidden" }}>
-          <IllustrationMic />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 8, position: "relative", zIndex: 1 }}>
-          {[
-            { icon: "coaching",  title: "Scenarios",        sub: "7 MD situations",  page: "coaching" },
-            { icon: "vocab",     title: "Vocabulary",       sub: "All calls",        page: "vocab" },
-            { icon: "live",      title: "Live Mode",        sub: "Run a service",    page: "live" },
-            { icon: "videos",    title: "Video Reference",  sub: "40 curated videos",page: "videos" },
-            { icon: "manual",    title: "System Manual",    sub: "10 parts",         page: "manual" },
-            { icon: "builder",   title: "Song Builder",     sub: "Build your set",   page: "builder" },
-            { icon: "services",  title: "Services",         sub: "Set lists",        page: "services" },
-            { icon: "onboarding",title: "Onboarding",       sub: "5-week incubator", page: "onboarding" },
-            { icon: "roadmap",   title: "Roadmap",          sub: "Implementation",   page: "roadmap" },
-          ].map((item, i) => (
-            <button key={i} onClick={() => setPage(item.page)}
-              style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-              <div style={{ width: 32, height: 32, borderRadius: 9, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.12)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <Icon name={item.icon} size={16} color={COLORS.accent} />
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: COLORS.navy, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.title}</div>
-                <div style={{ fontSize: 11, color: COLORS.textDim }}>{item.sub}</div>
-              </div>
-            </button>
-          ))}
+        {/* Live Mode card */}
+        <button onClick={() => setPage("live")}
+          style={{ display: "flex", flexDirection: "column", padding: "18px 18px", background: COLORS.card, border: `1.5px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-2px)"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
+          <div style={{ width: 32, height: 32, borderRadius: 9, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+            <Icon name="live" size={16} color={COLORS.accent} />
+          </div>
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "'Outfit', sans-serif" }}>Live Mode</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, marginBottom: 3 }}>Practice for Sunday</div>
+          <div style={{ fontSize: 11, color: COLORS.textDim, lineHeight: 1.4 }}>Cues, bar position, MD notes — in real time</div>
+          {/* Mini waveform decoration */}
+          <div style={{ display: "flex", gap: 2, marginTop: 12, alignItems: "flex-end", height: 16, opacity: 0.25 }}>
+            {[40,70,100,85,60,90,100,75,50,80,95,65].map((h, i) => (
+              <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 1, background: COLORS.accent }} />
+            ))}
+          </div>
+        </button>
+      </div>
+
+      {/* ── PCO IMPORT SHORTCUT — shown when not connected ── */}
+      <button onClick={() => setPage("services")}
+        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", marginBottom: 24, background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 10, background: "#3D7BF420", border: "1px solid #3D7BF440", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#3D7BF4" fillOpacity="0.2"/><text x="20" y="26" textAnchor="middle" fill="#3D7BF4" fontSize="16" fontWeight="800" fontFamily="Arial">P</text></svg>
+          </div>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>Planning Center</div>
+            <div style={{ fontSize: 11, color: COLORS.textDim }}>Import upcoming services and song data</div>
           </div>
         </div>
+        <div style={{ fontSize: 13, color: COLORS.accent, fontWeight: 700 }}>Connect →</div>
+      </button>
 
-        {/* Scripture verse */}
-        <ScriptureVerse page="dashboard" />
+      {/* ── TOOLS GRID ── */}
+      <div style={{ marginBottom: 6 }}>
+        <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim, marginBottom: 12 }}>All Tools</div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+          {[
+            { icon: "coaching",   title: "Scenarios",     sub: "7 situations", page: "coaching" },
+            { icon: "vocab",      title: "Vocabulary",    sub: "All calls",    page: "vocab" },
+            { icon: "videos",     title: "Videos",        sub: "40 curated",   page: "videos" },
+            { icon: "manual",     title: "Manual",        sub: "10 parts",     page: "manual" },
+            { icon: "builder",    title: "Song Builder",  sub: "Build songs",  page: "builder" },
+            { icon: "services",   title: "Services",      sub: "Set lists",    page: "services" },
+            { icon: "onboarding", title: "Onboarding",    sub: "5-week path",  page: "onboarding" },
+            { icon: "roadmap",    title: "Roadmap",       sub: "Roll it out",  page: "roadmap" },
+            { icon: "training",   title: "Training",      sub: "MD pathway",   page: "training" },
+          ].map((item, i) => (
+            <button key={i} onClick={() => setPage(item.page)}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "14px 8px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s", textAlign: "center" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.12)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon name={item.icon} size={18} color={COLORS.accent} />
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.navy, lineHeight: 1.2 }}>{item.title}</div>
+              <div style={{ fontSize: 10, color: COLORS.textDim, lineHeight: 1.2 }}>{item.sub}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── SCRIPTURE ── */}
+      <ScriptureVerse page="dashboard" />
     </div>
   );
 };
-
 // ─── VOCAB PAGE ───────────────────────────────────────────────────────────────
 
 const VocabPage = () => {
@@ -3430,6 +3477,7 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
   const [songTitle, setSongTitle] = useState(editing?.title || "New Song");
   const [songKey, setSongKey] = useState(editing?.key || "G");
   const [songBpm, setSongBpm] = useState(editing?.bpm || 72);
+  const [songTimeSig, setSongTimeSig] = useState(editing?.timeSig || '4/4');
   const [sections, setSections] = useState(editing?.sections || [mkSection("intro",0),mkSection("verse",1),mkSection("chorus",2),mkSection("verse",3),mkSection("chorus",4),mkSection("bridge",5),mkSection("chorus",6),mkSection("outro",7)]);
   const [addType, setAddType] = useState("verse");
   const [saved, setSaved] = useState(false);
@@ -3443,7 +3491,7 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
   const KEYS = ["C","Db","D","Eb","E","F","F#","G","Ab","A","Bb","B"];
 
   const handleSave = () => {
-    const song = { id: editing?.id || mkId(), title: songTitle || "Untitled Song", key: songKey, bpm: songBpm, sections };
+    const song = { id: editing?.id || mkId(), title: songTitle || "Untitled Song", key: songKey, bpm: songBpm, timeSig: songTimeSig, sections };
     onSaveSong(song);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
@@ -3465,7 +3513,7 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
               <div key={s.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: COLORS.card, border: `1px solid ${s.id === editSongId ? COLORS.accent : COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy }}>{s.title}</div>
-                  <div style={{ fontSize: 11, color: COLORS.textDim }}>Key of {s.key} · {s.bpm} BPM · {s.sections.length} sections</div>
+                  <div style={{ fontSize: 11, color: COLORS.textDim }}>Key of {s.key} · {s.bpm} BPM{s.timeSig && s.timeSig !== "4/4" ? ` · ${s.timeSig}` : ""} · {s.sections.length} sections</div>
                 </div>
                 <button onClick={() => onDuplicateSong && onDuplicateSong(s)} className="btn btn-ghost" style={{ padding: "5px 12px", fontSize: 12 }}>Copy</button>
                 <button onClick={() => setPage && setPage("builder", s.id)} className="btn btn-primary" style={{ padding: "5px 14px", fontSize: 12 }}>Edit</button>
@@ -3493,11 +3541,21 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: COLORS.textDim, textTransform: "uppercase", marginBottom: 5 }}>BPM</div>
             <input type="number" value={songBpm} onChange={e => setSongBpm(Number(e.target.value))} min={40} max={220} className="field-input" style={{ width: 72 }} />
           </div>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: COLORS.textDim, textTransform: "uppercase", marginBottom: 5 }}>Time Sig</div>
+            <select value={songTimeSig} onChange={e => setSongTimeSig(e.target.value)} className="field-input" style={{ width: "auto" }}>
+              <option value="4/4">4/4</option>
+              <option value="6/8">6/8</option>
+              <option value="3/4">3/4</option>
+              <option value="2/4">2/4</option>
+              <option value="12/8">12/8</option>
+            </select>
+          </div>
         </div>
         <div style={{ display: "flex", gap: 16, marginTop: 14, paddingTop: 14, borderTop: `1px solid ${COLORS.border}` }}>
           <div style={{ fontSize: 12, color: COLORS.textMuted }}><span style={{ fontWeight: 700, color: COLORS.accent }}>{sections.length}</span> sections</div>
           <div style={{ fontSize: 12, color: COLORS.textMuted }}><span style={{ fontWeight: 700, color: COLORS.accent }}>{totalBars}</span> total bars</div>
-          <div style={{ fontSize: 12, color: COLORS.textMuted }}><span style={{ fontWeight: 700, color: COLORS.accent }}>{Math.round((totalBars / songBpm) * 4 * 10) / 10}</span> min est.</div>
+          <div style={{ fontSize: 12, color: COLORS.textMuted }}><span style={{ fontWeight: 700, color: COLORS.accent }}>{Math.round((totalBars / songBpm) * (songTimeSig === "6/8" || songTimeSig === "12/8" ? 6 : songTimeSig === "3/4" ? 3 : songTimeSig === "2/4" ? 2 : 4) * 10) / 10}</span> min est.</div>
         </div>
       </div>
 
@@ -3917,6 +3975,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
         pcoTitle: song.title,
         pcoKey: song.key || '',
         pcoBpm: song.bpm || 120,
+        pcoTimeSig: song.timeSig || '4/4',
         pcoSections: song.sections || [],
       }));
     });
@@ -4268,6 +4327,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
                 title: b.pcoTitle,
                 key: b.pcoKey || '',
                 bpm: b.pcoBpm || 120,
+                timeSig: b.pcoTimeSig || '4/4',
                 sections: buildSections(b.pcoSections),
               };
             }
@@ -4288,9 +4348,35 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const [liveExtraRepeats, setLiveExtraRepeats] = useState(0);
   const [liveEndingMode, setLiveEndingMode]     = useState(null);
   const [setlistOpen, setSetlistOpen] = useState(false);
+  const [metronomeSound, setMetronomeSound] = useState(false);
   const [liveHintDismissed, setLiveHintDismissed] = useState(() => {
     try { return !!localStorage.getItem("wp-hint-live-mode"); } catch { return false; }
   });
+
+  // Web Audio context for metronome click
+  const audioCtxRef = useRef(null);
+  const getAudioCtx = () => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtxRef.current;
+  };
+  const playClick = (isDownbeat) => {
+    try {
+      const ctx = getAudioCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.frequency.value = isDownbeat ? 1200 : 800;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(isDownbeat ? 0.35 : 0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } catch (e) {}
+  };
 
   const liveLoopRef         = useRef(false);
   const liveExtraRepeatsRef = useRef(0);
@@ -4301,6 +4387,9 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const progressRef         = useRef(null);
   const beatRef             = useRef(null);
   const beatCountRef        = useRef(0);
+  const songsRef            = useRef(songs); // keeps songs accessible in interval closure
+  // Keep songsRef in sync
+  songsRef.current = songs;
 
   if (!activeService || songs.length === 0) {
     return (
@@ -4324,7 +4413,26 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const totalSongs    = songs.length;
   const totalSections = song.sections.length;
 
-  const calcDuration = (sec, bpm, extraRepeats = 0) => (sec.bars * (sec.repeatCount + extraRepeats) * 4 / bpm) * 60 * 1000;
+  // beatsPerBar: 4/4=4, 6/8=6 (but BPM is dotted quarter = 2 beats), 3/4=3, 2/4=2, 12/8=12 (dotted quarter)
+  const getBeatsPerBar = (timeSig) => {
+    if (!timeSig || timeSig === '4/4' || timeSig === '2/4') return 4;
+    if (timeSig === '3/4') return 3;
+    if (timeSig === '6/8') return 6; // 6 eighth notes, but BPM = dotted quarter so ×2
+    if (timeSig === '12/8') return 12;
+    return 4;
+  };
+  const getBpmMultiplier = (timeSig) => {
+    // In 6/8 and 12/8, the BPM is usually counted in dotted quarters (= 2 eighth notes each)
+    // so effective beat duration = 60/BPM seconds per dotted quarter = 2 eighth notes
+    if (timeSig === '6/8' || timeSig === '12/8') return 2;
+    return 1;
+  };
+  const timeSig = song.timeSig || '4/4';
+  const beatsPerBar = getBeatsPerBar(timeSig);
+  const calcDuration = (sec, bpm, extraRepeats = 0) => {
+    const bpmMult = getBpmMultiplier(timeSig);
+    return (sec.bars * (sec.repeatCount + extraRepeats) * beatsPerBar / (bpm * bpmMult)) * 60 * 1000;
+  };
   const sectionDurationMs = calcDuration(section, song.bpm, liveExtraRepeats);
   const remaining = Math.max(0, sectionDurationMs - elapsedMs);
   const progress = Math.min(1, elapsedMs / sectionDurationMs);
@@ -4333,6 +4441,9 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const totalBarsEffective = section.bars * (section.repeatCount + liveExtraRepeats);
   const currentBarPos      = Math.min(Math.floor(progress * totalBarsEffective), totalBarsEffective - 1);
   const nearingEnd         = isPlaying && (totalBarsEffective - currentBarPos) <= headsUpBarsBefore;
+
+  const metronomeRef = useRef(false);
+  metronomeRef.current = metronomeSound;
 
   const startBeatInterval = (bpm) => {
     if (beatRef.current) clearInterval(beatRef.current);
@@ -4345,6 +4456,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
       setBeatTick(n => n + 1);
       setBeatActive(true);
       const isDownbeat = beatCountRef.current % 4 === 1;
+      if (metronomeRef.current) playClick(isDownbeat);
       setTimeout(() => setBeatActive(false), isDownbeat ? 160 : 85);
     }, beatDurMs);
   };
@@ -4356,15 +4468,15 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
       if (!isPlayingRef.current) return;
       const elapsed = Date.now() - sectionStartRef.current;
       setElapsedMs(elapsed);
-      const curSongs   = activeService.songIds.map(id => songLibrary.find(s => s.id === id)).filter(Boolean);
-      const curSong    = curSongs[songIdxRef.current];
+      const curSong    = songsRef.current[songIdxRef.current];
+      if (!curSong) return; // safety guard
       const curSection = curSong.sections[sectionIdxRef.current];
       const dur = calcDuration(curSection, curSong.bpm, liveExtraRepeatsRef.current);
       if (elapsed >= dur) {
         if (liveLoopRef.current) {
           sectionStartRef.current = Date.now();
           setElapsedMs(0);
-          startBeatInterval(curSong.bpm);
+          startBeatInterval(curSong.bpm, curSong.timeSig);
         } else {
           const nextIdx = sectionIdxRef.current + 1;
           if (nextIdx < curSong.sections.length) {
@@ -4374,7 +4486,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
             setElapsedMs(0);
             liveExtraRepeatsRef.current = 0;
             setLiveExtraRepeats(0);
-            startBeatInterval(curSong.bpm);
+            startBeatInterval(curSong.bpm, curSong.timeSig);
           } else {
             isPlayingRef.current = false;
             setIsPlaying(false);
@@ -4391,7 +4503,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const stopAll = () => { clearInterval(progressRef.current); clearInterval(beatRef.current); progressRef.current = null; beatRef.current = null; };
   useEffect(() => () => stopAll(), []);
 
-  const handlePlay = () => { isPlayingRef.current = true; setIsPlaying(true); startProgressInterval(); startBeatInterval(song.bpm); };
+  const handlePlay = () => { isPlayingRef.current = true; setIsPlaying(true); startProgressInterval(); startBeatInterval(song.bpm, song.timeSig); };
   const handlePause = () => { isPlayingRef.current = false; setIsPlaying(false); stopAll(); setBeatActive(false); };
   const handleReset = () => { isPlayingRef.current = false; setIsPlaying(false); stopAll(); sectionIdxRef.current = 0; setSectionIndex(0); setElapsedMs(0); setBeatTick(0); setBeatActive(false); setLastCommand(null); };
 
@@ -4534,6 +4646,87 @@ Do not add any preamble or explanation — just the bullet points.`;
   const PULSE_STRONG = lighten(secColor, 60);
   const PULSE_WEAK   = lighten(secColor, 30);
 
+  // Visual metronome — 4 beat dots, pendulum arm, and BPM display
+  const renderMetronome = () => {
+    const beat = beatTick % 4; // 0-3
+    const isDown = beatCountRef.current % 4 === 1; // true on downbeat
+    // Pendulum angle: swings left-right based on beat pair
+    const swingLeft = beat === 0 || beat === 3;
+    const angle = isPlaying ? (swingLeft ? -22 : 22) : 0;
+
+    return (
+      <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "rgba(255,255,255,0.04)", borderRadius: 12, marginBottom: 14, border: `1px solid rgba(255,255,255,0.07)` }}>
+
+        {/* Pendulum */}
+        <div style={{ position: "relative", width: 32, height: 52, flexShrink: 0 }}>
+          {/* Pivot point */}
+          <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 6, height: 6, borderRadius: "50%", background: COLORS.accent }} />
+          {/* Arm */}
+          <div style={{
+            position: "absolute", top: 3, left: "50%",
+            width: 2, height: 40,
+            background: `linear-gradient(180deg, ${COLORS.accent}, rgba(192,122,12,0.3))`,
+            borderRadius: 2,
+            transformOrigin: "top center",
+            transform: `translateX(-50%) rotate(${angle}deg)`,
+            transition: isPlaying ? `transform ${beatTick === 0 ? 0 : 0.12}s ease-out` : "none",
+          }} />
+          {/* Bob */}
+          <div style={{
+            position: "absolute", bottom: 2, left: "50%",
+            width: 12, height: 12, borderRadius: "50%",
+            background: beatActive && isPlaying ? (beatCountRef.current % 4 === 1 ? COLORS.accent : `${COLORS.accent}99`) : "rgba(192,122,12,0.3)",
+            border: `2px solid ${COLORS.accent}`,
+            transform: `translateX(-50%) rotate(${angle}deg)`,
+            transformOrigin: "top center",
+            transition: isPlaying ? "all 0.12s ease-out" : "none",
+            boxShadow: beatActive && beatCountRef.current % 4 === 1 ? `0 0 10px ${COLORS.accent}` : "none",
+          }} />
+        </div>
+
+        {/* Beat dots — 4 per bar */}
+        <div style={{ display: "flex", gap: 6, alignItems: "center", flex: 1 }}>
+          {[0, 1, 2, 3].map(i => {
+            const isCurrentBeat = isPlaying && (beatTick % 4) === i && beatActive;
+            const isDownbeatDot = i === 0;
+            return (
+              <div key={i} style={{
+                flex: 1, height: isCurrentBeat ? (isDownbeatDot ? 28 : 20) : (isDownbeatDot ? 20 : 14),
+                borderRadius: 4,
+                background: isCurrentBeat
+                  ? (isDownbeatDot ? COLORS.accent : `${COLORS.accent}CC`)
+                  : "rgba(255,255,255,0.1)",
+                transition: "all 0.06s ease-out",
+                boxShadow: isCurrentBeat && isDownbeatDot ? `0 0 12px ${COLORS.accent}80` : "none",
+              }} />
+            );
+          })}
+        </div>
+
+        {/* BPM + sound toggle */}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flexShrink: 0 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 16, fontWeight: 700, color: isPlaying ? COLORS.accent : LIVE.textMuted, lineHeight: 1 }}>
+            {song.bpm}
+          </div>
+          <div style={{ fontSize: 9, color: LIVE.textDim, letterSpacing: 1 }}>BPM</div>
+          <button onClick={() => {
+            // Resume audio context on first interaction
+            if (!metronomeSound) getAudioCtx();
+            setMetronomeSound(s => !s);
+          }} style={{
+            marginTop: 2, padding: "3px 7px", borderRadius: 6, fontSize: 9, fontWeight: 700,
+            border: `1px solid ${metronomeSound ? COLORS.accent : LIVE.border}`,
+            background: metronomeSound ? COLORS.accentGlow : "transparent",
+            color: metronomeSound ? COLORS.accent : LIVE.textDim,
+            cursor: "pointer", fontFamily: "'Inter', sans-serif", letterSpacing: 0.5,
+          }}>
+            {metronomeSound ? "♪ ON" : "♪ OFF"}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const renderTimeline = () => {
     const totalBars = totalBarsEffectiveDisplay;
     const currentBar = Math.min(Math.floor(progress * totalBars), totalBars - 1);
@@ -4565,7 +4758,7 @@ Do not add any preamble or explanation — just the bullet points.`;
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexShrink: 0 }}>
           <div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, color: LIVE.text }}>{song.title}</div>
-            <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM · {songIndex + 1}/{totalSongs}</div>
+            <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM · {song.timeSig || '4/4'} · {songIndex + 1}/{totalSongs}</div>
           </div>
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
             <div style={{ fontSize: 9, fontWeight: 700, color: isPlaying ? "#4CAF7D" : LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>{isPlaying ? "● LIVE" : "○"}</div>
@@ -4598,7 +4791,8 @@ Do not add any preamble or explanation — just the bullet points.`;
           </div>
 
           {/* Timeline */}
-          <div style={{ marginBottom: 16 }}>{renderTimeline()}</div>
+          <div style={{ marginBottom: 12 }}>{renderTimeline()}</div>
+          {renderMetronome()}
 
           {/* MD Notes — BIG */}
           {section.note ? (
@@ -4743,7 +4937,8 @@ Do not add any preamble or explanation — just the bullet points.`;
         </div>
 
         {/* Timeline */}
-        <div style={{ marginBottom: 18 }}>{renderTimeline()}</div>
+        <div style={{ marginBottom: 12 }}>{renderTimeline()}</div>
+        {renderMetronome()}
 
         {/* MD Notes — the main content */}
         {section.note ? (
