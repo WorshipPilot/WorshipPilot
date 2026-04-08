@@ -3833,23 +3833,12 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
   const [pcoError, setPcoError] = useState(null);
   const [showPcoImport, setShowPcoImport] = useState(false);
 
-  // Check for PCO callback params on mount
+  // Check for PCO callback params on mount — handled at App level
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("pco_success")) {
-      const conn = {
-        pcoUserId: params.get("pco_user_id"),
-        pcoOrg: params.get("pco_org"),
-        pcoName: params.get("pco_name"),
-      };
-      localStorage.setItem("wp-pco-connection", JSON.stringify(conn));
-      setPcoState(conn);
-      // Clean URL
-      window.history.replaceState({}, "", window.location.pathname);
-    }
-    if (params.get("pco_error")) {
-      setPcoError(`Connection failed: ${params.get("pco_error")}`);
-      window.history.replaceState({}, "", window.location.pathname);
+    // Connection state is read from localStorage on mount
+    const stored = localStorage.getItem("wp-pco-connection");
+    if (stored && !pcoState) {
+      try { setPcoState(JSON.parse(stored)); } catch {}
     }
   }, []);
 
@@ -5088,6 +5077,31 @@ export default function App() {
   const [selectedPart, setSelectedPart] = useState(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [editSongId, setEditSongId] = useState(null);
+  const [toast, setToast]           = useState(null); // { message, type: "success"|"error" }
+
+  // ── PCO OAuth callback detection (app-level) ──
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("pco_success")) {
+      const conn = {
+        pcoUserId: params.get("pco_user_id"),
+        pcoOrg: params.get("pco_org"),
+        pcoName: params.get("pco_name"),
+      };
+      try { localStorage.setItem("wp-pco-connection", JSON.stringify(conn)); } catch {}
+      window.history.replaceState({}, "", window.location.pathname);
+      // Navigate to Service Builder and show success toast
+      setPage("services");
+      setToast({ message: `Connected to ${conn.pcoOrg || "Planning Center"} — tap Import Plans to get started.`, type: "success" });
+      setTimeout(() => setToast(null), 5000);
+    }
+    if (params.get("pco_error")) {
+      window.history.replaceState({}, "", window.location.pathname);
+      setPage("services");
+      setToast({ message: `PCO connection failed. Please try again.`, type: "error" });
+      setTimeout(() => setToast(null), 4000);
+    }
+  }, []);
 
   // Role selector — shown once on first open
   const [role, setRole] = useState(() => {
@@ -5166,6 +5180,28 @@ export default function App() {
     <>
       <style>{styles}</style>
       {showRoleSelector && createPortal(<RoleSelector onSelect={handleRoleSelect} />, document.body)}
+
+      {/* ── TOAST NOTIFICATION ── */}
+      {toast && (
+        <div style={{
+          position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
+          zIndex: 99999, maxWidth: 420, width: "calc(100% - 40px)",
+          padding: "14px 18px", borderRadius: 14,
+          background: toast.type === "success" ? COLORS.navy : "#B84455",
+          border: `1px solid ${toast.type === "success" ? COLORS.accent : "rgba(255,255,255,0.2)"}`,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+          display: "flex", alignItems: "center", gap: 12,
+          animation: "fadeIn 0.3s ease",
+        }}>
+          <div style={{ width: 28, height: 28, borderRadius: "50%", background: toast.type === "success" ? COLORS.accent : "rgba(255,255,255,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <span style={{ fontSize: 13, color: "#fff" }}>{toast.type === "success" ? "✓" : "!"}</span>
+          </div>
+          <div style={{ flex: 1, fontSize: 13, color: "#fff", fontFamily: "'Inter', sans-serif", fontWeight: 500, lineHeight: 1.4 }}>
+            {toast.message}
+          </div>
+          <button onClick={() => setToast(null)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", fontSize: 16, cursor: "pointer", flexShrink: 0, padding: 0 }}>✕</button>
+        </div>
+      )}
       <div className="app-container">
         <nav className="sidebar">
           <div className="sidebar-logo">WP</div>
