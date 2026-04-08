@@ -2198,9 +2198,9 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
                   style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
                   Start Your MD Training →
                 </button>
-                <button onClick={() => setPage("live")}
-                  style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.8)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", backdropFilter: "blur(8px)" }}>
-                  ▶ Train for Sunday
+                <button onClick={() => setPage("services")}
+                  style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.8)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                  ↓ Import from PCO
                 </button>
               </div>
             </>
@@ -2229,30 +2229,28 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         </div>
       </div>
 
-      {/* ── PRIMARY ACTIONS ── */}
-      <div className="section-label" style={{ marginBottom: 12 }}>Your tools</div>
-      <div className="two-col" style={{ marginBottom: 32 }}>
-        {/* Training CTA */}
-        <button onClick={() => setPage("training")}
-          style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", padding: "22px 22px", background: COLORS.navy, border: "none", borderRadius: 18, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowMd, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
-          onMouseEnter={e => { e.currentTarget.style.background = COLORS.navyMid; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
-          onMouseLeave={e => { e.currentTarget.style.background = COLORS.navy; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}>
-          {/* Ambient glow inside card */}
-          <div style={{ position: "absolute", top: -30, right: -20, width: 160, height: 120, background: "radial-gradient(ellipse, rgba(192,122,12,0.15) 0%, transparent 65%)", pointerEvents: "none" }} />
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(192,122,12,0.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, position: "relative" }}>
-            <Icon name="training" size={18} color={COLORS.accent} />
-          </div>
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>
-            {isFirstVisit ? "Start Here" : trainingDone ? "Training" : `Step ${currentStep.step} of ${JOURNEY_STEPS.length}`}
-          </div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
-            {isFirstVisit ? "Begin MD Training" : trainingDone ? "Review Modules" : currentWeek.title}
-          </div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>
-            {isFirstVisit ? "Work through the 5-step MD pathway" : trainingDone ? "All modules complete" : currentWeek.benchmark}
-          </div>
-        </button>
-
+      {/* ── PRIMARY ACTIONS — only shown for returning users ── */}
+      {!isFirstVisit && (
+        <div className="two-col" style={{ marginBottom: 24 }}>
+          {/* Training CTA */}
+          <button onClick={() => setPage("training")}
+            style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", padding: "22px 22px", background: COLORS.navy, border: "none", borderRadius: 18, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowMd, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
+            onMouseEnter={e => { e.currentTarget.style.background = COLORS.navyMid; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
+            onMouseLeave={e => { e.currentTarget.style.background = COLORS.navy; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}>
+            <div style={{ position: "absolute", top: -30, right: -20, width: 160, height: 120, background: "radial-gradient(ellipse, rgba(192,122,12,0.15) 0%, transparent 65%)", pointerEvents: "none" }} />
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(192,122,12,0.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14, position: "relative" }}>
+              <Icon name="training" size={18} color={COLORS.accent} />
+            </div>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>
+              {trainingDone ? "Training" : `Step ${currentStep.step} of ${JOURNEY_STEPS.length}`}
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
+              {trainingDone ? "Review Modules" : currentWeek.title}
+            </div>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>
+              {trainingDone ? "All modules complete" : currentWeek.benchmark}
+            </div>
+          </button>
           {/* Live Mode CTA */}
           <button onClick={() => setPage("live")}
             style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", padding: "22px 22px", background: COLORS.card, border: `1.5px solid ${COLORS.border}`, borderRadius: 18, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left" }}
@@ -2266,33 +2264,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
             <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Section cues, bar position, MD notes, and heads-up warnings — everything you need, right when you need it.</div>
           </button>
         </div>
-
-        {/* ── LIVE MODE SPOTLIGHT ── */}
-        <div className="feature-spotlight" style={{ marginBottom: 32 }}>
-          <div className="feature-spotlight-inner">
-            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-              <div style={{ flex: 1, minWidth: 200 }}>
-                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10, fontFamily: "'Outfit', sans-serif" }}>Real-time MD execution</div>
-                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 700, color: "#F0EBE1", marginBottom: 8, lineHeight: 1.2 }}>Live Mode</div>
-                <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.65, maxWidth: 340 }}>
-                  Your MD notes, current section, bar position, and upcoming cues — on your phone, on your mic stand, exactly when it matters. Replace your notes app. Lead with clarity.
-                </div>
-              </div>
-              <button onClick={() => setPage("live")}
-                style={{ padding: "12px 22px", borderRadius: 12, border: "1px solid rgba(192,122,12,0.4)", background: "rgba(192,122,12,0.12)", color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", flexShrink: 0, alignSelf: "center", transition: "all 0.15s" }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(192,122,12,0.22)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "rgba(192,122,12,0.12)"; }}>
-                ▶ Open Live Mode →
-              </button>
-            </div>
-            {/* Mini bar visualizer — purely decorative */}
-            <div style={{ display: "flex", gap: 3, marginTop: 20, alignItems: "flex-end", height: 28 }}>
-              {[40,60,80,100,85,70,90,100,75,55,80,95,60,40,70,85,100,90,65,50].map((h, i) => (
-                <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i < 8 ? `rgba(192,122,12,${0.3 + h/250})` : `rgba(192,122,12,${0.08 + h/500})`, transition: "height 0.3s" }} />
-              ))}
-            </div>
-          </div>
-        </div>
+      )}
 
         {/* ── RESOURCES & TOOLS ── */}
         <div className="section-divider" />
@@ -2303,9 +2275,9 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           <IllustrationMic />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 8, position: "relative", zIndex: 1 }}>
           {[
-            { icon: "training",  title: "MD Training",      sub: "5-step pathway",   page: "training" },
             { icon: "coaching",  title: "Scenarios",        sub: "7 MD situations",  page: "coaching" },
             { icon: "vocab",     title: "Vocabulary",       sub: "All calls",        page: "vocab" },
+            { icon: "live",      title: "Live Mode",        sub: "Run a service",    page: "live" },
             { icon: "videos",    title: "Video Reference",  sub: "40 curated videos",page: "videos" },
             { icon: "manual",    title: "System Manual",    sub: "10 parts",         page: "manual" },
             { icon: "builder",   title: "Song Builder",     sub: "Build your set",   page: "builder" },
@@ -3683,9 +3655,24 @@ const SongBlock = ({ block, index, song, songLibrary, onSaveSong, onNotesChange,
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif" }}>{song?.title || block.pcoTitle || "Unknown Song"}</div>
-          <div style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>
-            {song ? `Key of ${song.key} · ${song.bpm} BPM` : block.pcoKey ? `Key of ${block.pcoKey} · from PCO` : ""}
-            {hasNotes && <span style={{ marginLeft: 8, color: COLORS.accent }}>● notes</span>}
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+            {song ? (
+              <span style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM</span>
+            ) : block.pcoKey ? (
+              <>
+                <span style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {block.pcoKey}</span>
+                <span style={{ fontSize: 10, color: COLORS.textDim }}>·</span>
+                <input
+                  type="number"
+                  defaultValue={block.pcoBpm || 120}
+                  onBlur={e => { const bpm = parseInt(e.target.value) || 120; onNotesChange({ ...block.notes, _pcoBpm: bpm }); }}
+                  onClick={e => e.stopPropagation()}
+                  style={{ width: 52, fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: COLORS.accent, background: COLORS.accentLight, border: `1px solid ${COLORS.accentDim}`, borderRadius: 5, padding: "1px 5px", textAlign: "center", outline: "none" }}
+                />
+                <span style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>BPM · from PCO</span>
+              </>
+            ) : null}
+            {hasNotes && <span style={{ fontSize: 11, marginLeft: 4, color: COLORS.accent }}>● notes</span>}
           </div>
         </div>
         <div style={{ display: "flex", gap: 3, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
@@ -3861,6 +3848,18 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
   const [editTitle, setEditTitle] = useState("");
   const [addSongId, setAddSongId] = useState(songLibrary[0]?.id || "");
   const [copied, setCopied] = useState(false);
+  const [justSetActive, setJustSetActive] = useState(false);
+  const serviceListRef = useRef(null);
+
+  const handleSetActive = (id) => {
+    onSetActive(id);
+    setJustSetActive(true);
+    setTimeout(() => setJustSetActive(false), 2500);
+    // Scroll service list into view
+    if (serviceListRef.current) {
+      serviceListRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   // ── PCO Integration state ──
   const [pcoState, setPcoState] = useState(() => {
@@ -4041,7 +4040,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>Connected to {pcoState.pcoOrg}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>Connected to {pcoState.pcoOrg && pcoState.pcoOrg !== "My Church" ? pcoState.pcoOrg : "Planning Center"}</div>
                   <div style={{ fontSize: 11, color: COLORS.textMuted }}>{pcoState.pcoName}</div>
                 </div>
               </div>
@@ -4091,7 +4090,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
       </div>
 
       {/* Service list */}
-      <div className="section-label">Services</div>
+      <div className="section-label" ref={serviceListRef}>Services</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 16 }}>
         {services.map(svc => (
           <div key={svc.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px", background: COLORS.card, border: `1px solid ${selectedServiceId === svc.id ? COLORS.accent : COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow }}>
@@ -4105,6 +4104,31 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
           </div>
         ))}
         <button onClick={createService} className="btn btn-ghost" style={{ width: "100%", justifyContent: "center" }}>+ New Service</button>
+        {services.length > 3 && (() => {
+          const seen = new Set();
+          const dupeCount = services.filter(s => {
+            if (seen.has(s.title)) return true;
+            seen.add(s.title);
+            return false;
+          }).length;
+          return dupeCount > 0 ? (
+            <button onClick={() => {
+              const seen2 = new Set();
+              const deduped = services.filter(s => {
+                if (seen2.has(s.title)) return false;
+                seen2.add(s.title);
+                return true;
+              });
+              deduped.forEach(s => onSaveService(s));
+              // Remove all then re-add deduped — use a different approach: just keep IDs
+              const keepIds = new Set(deduped.map(s => s.id));
+              services.filter(s => !keepIds.has(s.id)).forEach(s => onDeleteService(s.id));
+            }}
+              className="btn btn-ghost" style={{ width: "100%", justifyContent: "center", color: COLORS.red, borderColor: "rgba(192,57,74,0.2)", fontSize: 12 }}>
+              Remove {dupeCount} duplicate{dupeCount !== 1 ? "s" : ""}
+            </button>
+          ) : null;
+        })()}
       </div>
 
       {service && (
@@ -4188,9 +4212,9 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
 
           {/* Launch controls */}
           <div style={{ display: "flex", gap: 10 }}>
-            <button onClick={() => onSetActive(service.id)}
-              style={{ flex: 1, padding: "12px", borderRadius: 12, border: `1px solid ${service.id === activeServiceId ? COLORS.green : COLORS.border}`, background: service.id === activeServiceId ? COLORS.greenLight : COLORS.card, color: service.id === activeServiceId ? COLORS.green : COLORS.textMuted, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow }}>
-              {service.id === activeServiceId ? "✓ Active Service" : "Set as Active"}
+            <button onClick={() => handleSetActive(service.id)}
+              style={{ flex: 1, padding: "12px", borderRadius: 12, border: `1px solid ${service.id === activeServiceId ? COLORS.green : COLORS.border}`, background: service.id === activeServiceId ? (justSetActive ? COLORS.green : COLORS.greenLight) : COLORS.card, color: service.id === activeServiceId ? (justSetActive ? "#fff" : COLORS.green) : COLORS.textMuted, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.3s" }}>
+              {service.id === activeServiceId ? (justSetActive ? "✓ Set as Active!" : "✓ Active Service") : "Set as Active"}
             </button>
             <button onClick={() => { onSetActive(service.id); onLaunch(); }} className="btn btn-primary" style={{ flex: 1, justifyContent: "center", padding: "12px" }}>
               ▶ Launch Live Mode
@@ -4695,6 +4719,13 @@ Do not add any preamble or explanation — just the bullet points.`;
         {/* Section color accent bar */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: secColor, borderRadius: "20px 20px 0 0" }} />
 
+        {/* PCO song notice */}
+        {!songLibrary.find(s => s.id === songs[songIndex]?.id) && songs[songIndex]?.sections?.[0]?.id?.startsWith('p') && (
+          <div style={{ marginBottom: 12, padding: "7px 12px", borderRadius: 8, background: "rgba(192,122,12,0.08)", border: `1px solid rgba(192,122,12,0.2)`, fontSize: 11, color: COLORS.accent }}>
+            ⚡ PCO import — bar counts are estimates. Edit in Song Builder before Sunday.
+          </div>
+        )}
+
         {/* Section label + bar count */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 14, marginTop: 4 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -4724,7 +4755,7 @@ Do not add any preamble or explanation — just the bullet points.`;
           </div>
         ) : (
           <div style={{ marginBottom: 14, padding: "10px 12px", borderRadius: 10, background: "rgba(255,255,255,0.04)", border: `1px dashed ${LIVE.border}` }}>
-            <div style={{ fontSize: 12, color: LIVE.textDim, fontStyle: "italic" }}>No MD notes for this section — add them in Song Builder</div>
+            <div style={{ fontSize: 12, color: LIVE.textDim, fontStyle: "italic" }}>No MD notes — add them in Song Builder</div>
           </div>
         )}
 
