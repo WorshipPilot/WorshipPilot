@@ -2067,22 +2067,22 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           {isFirstVisit ? (
             <>
               <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 32, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 10, letterSpacing: "-0.5px" }}>
-                Know what to call.<br />Know when to lead.
+                Most teams don't lack talent.<br />They lack clarity.
               </div>
               <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.accent, marginBottom: 16, letterSpacing: 0.2 }}>
                 Playback handles the audio. WorshipPilot handles the leadership.
               </div>
               <div style={{ fontSize: 14, color: "rgba(240,235,225,0.6)", lineHeight: 1.7, maxWidth: 480, marginBottom: 24 }}>
-                Most worship teams don't struggle with talent — they struggle with clarity. When cues are unclear, the whole band feels it.
+                When cues are unclear, the whole band feels it. WorshipPilot trains MDs systematically and equips them to lead with confidence every Sunday — in rehearsal, at home, and on stage.
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <button onClick={() => setPage("starthere")}
                   style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
-                  Get started →
+                  Start Your MD Training →
                 </button>
                 <button onClick={() => setPage("live")}
                   style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.8)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", backdropFilter: "blur(8px)" }}>
-                  ▶ Try Live Mode
+                  ▶ Train for Sunday
                 </button>
               </div>
             </>
@@ -2131,7 +2131,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
             {isFirstVisit ? "Begin MD Training" : trainingDone ? "Review Modules" : currentWeek.title}
           </div>
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>
-            {isFirstVisit ? "Start the 5-step MD pathway" : trainingDone ? "All modules complete" : currentWeek.benchmark}
+            {isFirstVisit ? "Work through the 5-step MD pathway" : trainingDone ? "All modules complete" : currentWeek.benchmark}
           </div>
         </button>
 
@@ -2144,8 +2144,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
               <Icon name="live" size={18} color={COLORS.accent} />
             </div>
             <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>Live Mode</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, marginBottom: 4 }}>Build the confidence to lead before Sunday arrives.</div>
-            <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Current cue, bar position, and upcoming changes — all in real time.</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, marginBottom: 4 }}>Practice like Sunday feels. Lead before you step on stage.</div>
+            <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Section cues, bar position, MD notes, and heads-up warnings — everything you need, right when you need it.</div>
           </button>
         </div>
 
@@ -2154,17 +2154,17 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           <div className="feature-spotlight-inner">
             <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
               <div style={{ flex: 1, minWidth: 200 }}>
-                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10, fontFamily: "'Outfit', sans-serif" }}>Your secret weapon</div>
+                <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10, fontFamily: "'Outfit', sans-serif" }}>Real-time MD execution</div>
                 <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 700, color: "#F0EBE1", marginBottom: 8, lineHeight: 1.2 }}>Live Mode</div>
                 <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.65, maxWidth: 340 }}>
-                  Current section. Next cue. Bar position. Heads-up warning before the change. Everything an MD needs — visible the moment it matters.
+                  Your MD notes, current section, bar position, and upcoming cues — on your phone, on your mic stand, exactly when it matters. Replace your notes app. Lead with clarity.
                 </div>
               </div>
               <button onClick={() => setPage("live")}
                 style={{ padding: "12px 22px", borderRadius: 12, border: "1px solid rgba(192,122,12,0.4)", background: "rgba(192,122,12,0.12)", color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", flexShrink: 0, alignSelf: "center", transition: "all 0.15s" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "rgba(192,122,12,0.22)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "rgba(192,122,12,0.12)"; }}>
-                ▶ Open Live Mode
+                ▶ Open Live Mode →
               </button>
             </div>
             {/* Mini bar visualizer — purely decorative */}
