@@ -86,7 +86,7 @@ export const handler = async (event) => {
 
         const title = item.attributes?.title || 'Untitled';
         const keyName = item.attributes?.key_name || '';
-        const bpm = null; // Will fetch from arrangement if linked
+        
         const arrangementName = item.attributes?.arrangement_name || '';
 
         // Fetch arrangement to get BPM and sections
