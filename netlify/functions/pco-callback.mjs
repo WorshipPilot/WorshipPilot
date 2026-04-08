@@ -47,18 +47,18 @@ export const handler = async (event) => {
     const tokenData = await tokenResponse.json();
     const { access_token, refresh_token, expires_in } = tokenData;
 
-    // 2. Fetch the PCO user's info using the correct endpoint
-    const meResponse = await fetch('https://api.planningcenteronline.com/people/v2/me', {
+    // 2. Fetch user info using Services API (within our scope)
+    const meResponse = await fetch('https://api.planningcenteronline.com/services/v2/me', {
       headers: { Authorization: `Bearer ${access_token}` },
     });
 
     const meData = await meResponse.json();
     console.log('PCO me response:', JSON.stringify(meData).slice(0, 500));
-    
+
     const pcoUserId = meData?.data?.id;
-    const pcoOrgName = meData?.data?.attributes?.organization_name || 
-                       meData?.included?.[0]?.attributes?.name || 'My Church';
-    const pcoUserName = `${meData?.data?.attributes?.first_name || ''} ${meData?.data?.attributes?.last_name || ''}`.trim() || 'User';
+    const pcoOrgName = meData?.data?.attributes?.organization_name || 'My Church';
+    const pcoUserName = meData?.data?.attributes?.full_name ||
+                        meData?.data?.attributes?.name || 'User';
 
     if (!pcoUserId) {
       console.error('No PCO user ID found in response:', JSON.stringify(meData));
