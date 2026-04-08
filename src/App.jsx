@@ -3640,11 +3640,43 @@ const NotesPanel = ({ notes = {}, onChange, placeholder = {} }) => {
 };
 
 // Individual block renderers
-const SongBlock = ({ block, index, song, onNotesChange, onRemove, onMoveUp, onMoveDown, isFirst, isLast, total }) => {
+const SongBlock = ({ block, index, song, songLibrary, onSaveSong, onNotesChange, onRemove, onMoveUp, onMoveDown, isFirst, isLast, total }) => {
   const [open, setOpen] = useState(false);
+  const [savedToLib, setSavedToLib] = useState(false);
   const hasNotes = Object.values(block.notes || {}).some(v => v?.trim());
+  const isPcoOnly = !song && block.pcoTitle;
+
+  const handleAddToLibrary = () => {
+    if (!isPcoOnly || !onSaveSong) return;
+    const newSong = {
+      id: mkId(),
+      title: block.pcoTitle,
+      key: block.pcoKey || "G",
+      bpm: block.pcoBpm || 120,
+      sections: (block.pcoSections || []).length > 0
+        ? block.pcoSections.map((sec, i) => ({
+            id: mkId(), type: sec.type || "verse",
+            label: sec.label || sec.type || "Section",
+            bars: sec.bars || DEFAULT_BARS_BY_TYPE[sec.type] || 8,
+            repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2,
+          }))
+        : [
+            { id: mkId(), type: "intro",  label: "Intro",   bars: 8,  repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "verse",  label: "Verse 1", bars: 16, repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "chorus", label: "Chorus",  bars: 16, repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "verse",  label: "Verse 2", bars: 16, repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "chorus", label: "Chorus",  bars: 16, repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "bridge", label: "Bridge",  bars: 8,  repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+            { id: mkId(), type: "chorus", label: "Final Chorus", bars: 16, repeatCount: 1, note: "", headsUp: "", headsUpBarsBefore: 2 },
+          ],
+    };
+    onSaveSong(newSong);
+    setSavedToLib(true);
+    setTimeout(() => setSavedToLib(false), 2500);
+  };
+
   return (
-    <div style={{ borderRadius: 14, border: `1px solid ${COLORS.border}`, background: COLORS.card, boxShadow: COLORS.shadow, overflow: "hidden" }}>
+    <div style={{ borderRadius: 14, border: `1px solid ${isPcoOnly ? COLORS.borderMid : COLORS.border}`, background: COLORS.card, boxShadow: COLORS.shadow, overflow: "hidden" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px" }}>
         <div style={{ width: 22, height: 22, borderRadius: "50%", background: COLORS.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <span style={{ fontSize: 10, fontWeight: 800, color: "#fff" }}>{index + 1}</span>
@@ -3656,7 +3688,13 @@ const SongBlock = ({ block, index, song, onNotesChange, onRemove, onMoveUp, onMo
             {hasNotes && <span style={{ marginLeft: 8, color: COLORS.accent }}>● notes</span>}
           </div>
         </div>
-        <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 3, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+          {isPcoOnly && (
+            <button onClick={handleAddToLibrary}
+              style={{ padding: "4px 9px", borderRadius: 8, border: `1px solid ${savedToLib ? COLORS.green : COLORS.accentDim}`, background: savedToLib ? COLORS.greenLight : COLORS.accentLight, color: savedToLib ? COLORS.green : COLORS.accent, fontSize: 10, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>
+              {savedToLib ? "✓ Saved" : "+ Library"}
+            </button>
+          )}
           <button onClick={() => onMoveUp()} disabled={isFirst} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${COLORS.border}`, background: COLORS.surfaceAlt, color: COLORS.textMuted, fontSize: 11, cursor: isFirst ? "default" : "pointer", opacity: isFirst ? 0.3 : 1 }}>↑</button>
           <button onClick={() => onMoveDown()} disabled={isLast} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${COLORS.border}`, background: COLORS.surfaceAlt, color: COLORS.textMuted, fontSize: 11, cursor: isLast ? "default" : "pointer", opacity: isLast ? 0.3 : 1 }}>↓</button>
           <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.accentLight : COLORS.surfaceAlt, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
@@ -3818,7 +3856,7 @@ const formatNotesForSend = (blocks, songLibrary, serviceTitle) => {
   return lines.join("\n");
 };
 
-const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveService, onDuplicateService, onDeleteService, onSetActive, onLaunch }) => {
+const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveService, onDuplicateService, onDeleteService, onSetActive, onLaunch, onSaveSong }) => {
   const [selectedServiceId, setSelectedServiceId] = useState(services[0]?.id || null);
   const [editTitle, setEditTitle] = useState("");
   const [addSongId, setAddSongId] = useState(songLibrary[0]?.id || "");
@@ -3871,13 +3909,17 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
   };
 
   const importPcoPlan = (plan) => {
-    // Create a new service from a PCO plan
     const newBlocks = [];
     plan.songs.forEach((song, i) => {
       if (i > 0) newBlocks.push(mkBlock("transition"));
-      // Try to match to existing song library by title
       const match = songLibrary.find(s => s.title.toLowerCase() === song.title.toLowerCase());
-      newBlocks.push(mkBlock("song", { songId: match?.id || null, pcoTitle: song.title, pcoKey: song.key }));
+      newBlocks.push(mkBlock("song", {
+        songId: match?.id || null,
+        pcoTitle: song.title,
+        pcoKey: song.key || '',
+        pcoBpm: song.bpm || 120,
+        pcoSections: song.sections || [],
+      }));
     });
 
     const newSvc = {
@@ -3982,9 +4024,13 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
               {pcoError && <div style={{ fontSize: 11, color: COLORS.red, marginTop: 6 }}>{pcoError}</div>}
             </div>
             <button onClick={connectPCO}
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 18px", borderRadius: 10, border: "none", background: COLORS.navy, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", flexShrink: 0 }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              Connect PCO
+              style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 18px", borderRadius: 10, border: "none", background: "#3D7BF4", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", flexShrink: 0 }}>
+              {/* PCO logo mark */}
+              <svg width="18" height="18" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="white" fillOpacity="0.2"/>
+                <text x="20" y="26" textAnchor="middle" fill="white" fontSize="16" fontWeight="800" fontFamily="Arial">P</text>
+              </svg>
+              Connect to PCO
             </button>
           </div>
         ) : (
@@ -4094,6 +4140,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
                   const songNum = songBlocks.findIndex(b => b.id === block.id);
                   return (
                     <SongBlock key={block.id} block={block} index={songNum} song={song}
+                      songLibrary={songLibrary} onSaveSong={onSaveSong}
                       onNotesChange={notes => updateBlockNotes(block.id, notes)}
                       onRemove={() => removeBlock(block.id)}
                       onMoveUp={() => moveBlock(block.id, -1)}
@@ -4167,14 +4214,39 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
           .map(b => {
             const libSong = songLibrary.find(s => s.id === b.songId);
             if (libSong) return libSong;
-            // PCO-imported song without library match — create a minimal song object
-            if (b.pcoTitle) return {
-              id: b.id,
-              title: b.pcoTitle,
-              key: b.pcoKey || '',
-              bpm: 120,
-              sections: [{ id: 'default', type: 'verse', label: 'Song', bars: 8, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2, options: [] }],
-            };
+            // PCO-imported song without library match — build sections from PCO data
+            if (b.pcoTitle) {
+              // Use pcoSections if available, otherwise build a sensible default structure
+              const buildSections = (pcoSecs) => {
+                if (pcoSecs && pcoSecs.length > 0) {
+                  return pcoSecs.map((sec, i) => ({
+                    id: `pco-${i}`,
+                    type: sec.type || 'verse',
+                    label: sec.label || (sec.type ? sec.type.charAt(0).toUpperCase() + sec.type.slice(1) : 'Section'),
+                    bars: sec.bars || DEFAULT_BARS_BY_TYPE[sec.type] || 8,
+                    repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2,
+                  }));
+                }
+                // Default worship song structure
+                return [
+                  { id: 'p0', type: 'intro',   label: 'Intro',         bars: 8,  repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p1', type: 'verse',   label: 'Verse 1',       bars: 16, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p2', type: 'chorus',  label: 'Chorus',        bars: 16, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p3', type: 'verse',   label: 'Verse 2',       bars: 16, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p4', type: 'chorus',  label: 'Chorus',        bars: 16, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p5', type: 'bridge',  label: 'Bridge',        bars: 8,  repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p6', type: 'chorus',  label: 'Final Chorus',  bars: 16, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                  { id: 'p7', type: 'outro',   label: 'Outro',         bars: 8,  repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2 },
+                ];
+              };
+              return {
+                id: b.id,
+                title: b.pcoTitle,
+                key: b.pcoKey || '',
+                bpm: b.pcoBpm || 120,
+                sections: buildSections(b.pcoSections),
+              };
+            }
             return null;
           })
           .filter(Boolean)
@@ -5170,7 +5242,7 @@ export default function App() {
       case "videos":      return <VideoPage />;
       case "roadmap":     return <RoadmapPage setPage={setPage} />;
       case "builder":     return <SongBuilderPage songLibrary={songLibrary} onSaveSong={handleSaveSong} onDuplicateSong={handleDuplicateSong} editSongId={editSongId} setPage={(p, id) => { setEditSongId(id ?? null); setPage(p); }} />;
-      case "services":    return <ServiceBuilderPage services={services} songLibrary={songLibrary} activeServiceId={activeServiceId} onSaveService={handleSaveService} onDuplicateService={handleDuplicateService} onDeleteService={handleDeleteService} onSetActive={setActiveServiceId} onLaunch={() => setPage("live")} />;
+      case "services":    return <ServiceBuilderPage services={services} songLibrary={songLibrary} activeServiceId={activeServiceId} onSaveService={handleSaveService} onDuplicateService={handleDuplicateService} onDeleteService={handleDeleteService} onSetActive={setActiveServiceId} onLaunch={() => setPage("live")} onSaveSong={handleSaveSong} />;
       case "live":        return <LiveModePage activeService={activeService} songLibrary={songLibrary} onGoToServiceBuilder={() => setPage("services")} />;
       default:            return <Dashboard setPage={setPage} setSelectedPart={setSelectedPart} />;
     }
