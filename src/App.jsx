@@ -4037,7 +4037,27 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
 // Live Mode keeps the dark palette for focus — this is intentional
 
 const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
-  const songs = activeService ? activeService.songIds.map(id => songLibrary.find(s => s.id === id)).filter(Boolean) : [];
+  // Build song list from blocks (handles both library songs and PCO-imported songs)
+  const songs = activeService ? (
+    activeService.blocks
+      ? activeService.blocks
+          .filter(b => b.type === 'song')
+          .map(b => {
+            const libSong = songLibrary.find(s => s.id === b.songId);
+            if (libSong) return libSong;
+            // PCO-imported song without library match — create a minimal song object
+            if (b.pcoTitle) return {
+              id: b.id,
+              title: b.pcoTitle,
+              key: b.pcoKey || '',
+              bpm: 120,
+              sections: [{ id: 'default', type: 'verse', label: 'Song', bars: 8, repeatCount: 1, note: '', headsUp: '', headsUpBarsBefore: 2, options: [] }],
+            };
+            return null;
+          })
+          .filter(Boolean)
+      : activeService.songIds.map(id => songLibrary.find(s => s.id === id)).filter(Boolean)
+  ) : [];
 
   const [songIndex, setSongIndex]     = useState(0);
   const [sectionIndex, setSectionIndex] = useState(0);
