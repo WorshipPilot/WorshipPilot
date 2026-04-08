@@ -1812,99 +1812,88 @@ const ScriptureVerse = ({ page }) => {
 // ─── ILLUSTRATIONS (SVG line-art, low opacity) ───────────────────────────────
 
 const IllustrationMic = () => (
-  <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg"
-    style={{ position: "absolute", bottom: -20, right: -20, width: 320, height: 400, opacity: 0.045, pointerEvents: "none", userSelect: "none" }}>
-    {/* Mic capsule */}
-    <rect x="155" y="40" width="90" height="140" rx="45" fill="none" stroke={COLORS.accent} strokeWidth="6"/>
-    {/* Mic grille lines */}
-    <line x1="155" y1="80" x2="245" y2="80" stroke={COLORS.accent} strokeWidth="3"/>
-    <line x1="155" y1="100" x2="245" y2="100" stroke={COLORS.accent} strokeWidth="3"/>
-    <line x1="155" y1="120" x2="245" y2="120" stroke={COLORS.accent} strokeWidth="3"/>
-    <line x1="158" y1="140" x2="242" y2="140" stroke={COLORS.accent} strokeWidth="3"/>
-    <line x1="168" y1="158" x2="232" y2="158" stroke={COLORS.accent} strokeWidth="3"/>
-    {/* Mic body */}
-    <rect x="185" y="180" width="30" height="80" rx="4" fill="none" stroke={COLORS.accent} strokeWidth="5"/>
-    {/* Stand arm */}
-    <line x1="200" y1="260" x2="200" y2="380" stroke={COLORS.accent} strokeWidth="6"/>
-    {/* Stand base */}
-    <ellipse cx="200" cy="390" rx="80" ry="16" fill="none" stroke={COLORS.accent} strokeWidth="5"/>
-    <line x1="120" y1="390" x2="90" y2="430" stroke={COLORS.accent} strokeWidth="5"/>
-    <line x1="280" y1="390" x2="310" y2="430" stroke={COLORS.accent} strokeWidth="5"/>
-    <line x1="200" y1="390" x2="200" y2="440" stroke={COLORS.accent} strokeWidth="5"/>
-    {/* Cable */}
-    <path d="M200 380 Q240 400 260 440 Q280 470 240 480" fill="none" stroke={COLORS.accent} strokeWidth="4" strokeDasharray="8,6"/>
-    {/* Sound waves */}
-    <path d="M260 80 Q290 110 260 140" fill="none" stroke={COLORS.accent} strokeWidth="4"/>
-    <path d="M275 65 Q315 110 275 155" fill="none" stroke={COLORS.accent} strokeWidth="3"/>
-    <path d="M125 80 Q95 110 125 140" fill="none" stroke={COLORS.accent} strokeWidth="4"/>
-    <path d="M110 65 Q70 110 110 155" fill="none" stroke={COLORS.accent} strokeWidth="3"/>
-  </svg>
+  <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", paddingRight: 8, marginBottom: -160, pointerEvents: "none", userSelect: "none", opacity: 0.07 }}>
+    <svg viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="160" height="272">
+      {/* Mic capsule */}
+      <rect x="65" y="10" width="70" height="110" rx="35" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      {/* Mic grille lines */}
+      <line x1="65" y1="38" x2="135" y2="38" stroke="#C07A0C" strokeWidth="2.5"/>
+      <line x1="65" y1="55" x2="135" y2="55" stroke="#C07A0C" strokeWidth="2.5"/>
+      <line x1="65" y1="72" x2="135" y2="72" stroke="#C07A0C" strokeWidth="2.5"/>
+      <line x1="67" y1="89" x2="133" y2="89" stroke="#C07A0C" strokeWidth="2.5"/>
+      <line x1="73" y1="104" x2="127" y2="104" stroke="#C07A0C" strokeWidth="2.5"/>
+      {/* Mic body */}
+      <rect x="88" y="120" width="24" height="60" rx="4" fill="none" stroke="#C07A0C" strokeWidth="4"/>
+      {/* Stand pole */}
+      <line x1="100" y1="180" x2="100" y2="270" stroke="#C07A0C" strokeWidth="5"/>
+      {/* Stand base tripod */}
+      <ellipse cx="100" cy="275" rx="55" ry="12" fill="none" stroke="#C07A0C" strokeWidth="4"/>
+      <line x1="45" y1="275" x2="22" y2="310" stroke="#C07A0C" strokeWidth="4"/>
+      <line x1="155" y1="275" x2="178" y2="310" stroke="#C07A0C" strokeWidth="4"/>
+      <line x1="100" y1="275" x2="100" y2="320" stroke="#C07A0C" strokeWidth="4"/>
+      {/* Sound waves right */}
+      <path d="M148 42 Q165 65 148 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
+      <path d="M158 30 Q182 65 158 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+      {/* Sound waves left */}
+      <path d="M52 42 Q35 65 52 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
+      <path d="M42 30 Q18 65 42 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+    </svg>
+  </div>
 );
 
 const IllustrationStageLight = () => (
-  <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg"
-    style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: "100%", maxWidth: 540, height: 300, opacity: 0.04, pointerEvents: "none", userSelect: "none" }}>
-    {/* Light beam left */}
-    <polygon points="180,0 100,300 260,300" fill={COLORS.accent}/>
-    {/* Light beam center */}
-    <polygon points="250,0 160,300 340,300" fill={COLORS.accent}/>
-    {/* Light beam right */}
-    <polygon points="320,0 240,300 400,300" fill={COLORS.accent}/>
-    {/* Light fixture circles */}
-    <circle cx="180" cy="20" r="18" fill="none" stroke={COLORS.accent} strokeWidth="6"/>
-    <circle cx="250" cy="20" r="18" fill="none" stroke={COLORS.accent} strokeWidth="6"/>
-    <circle cx="320" cy="20" r="18" fill="none" stroke={COLORS.accent} strokeWidth="6"/>
-    {/* Rigging bar */}
-    <line x1="60" y1="10" x2="440" y2="10" stroke={COLORS.accent} strokeWidth="8"/>
-    <line x1="60" y1="0" x2="60" y2="20" stroke={COLORS.accent} strokeWidth="6"/>
-    <line x1="440" y1="0" x2="440" y2="20" stroke={COLORS.accent} strokeWidth="6"/>
-  </svg>
+  <div style={{ width: "100%", display: "flex", justifyContent: "center", marginBottom: -8, pointerEvents: "none", userSelect: "none", opacity: 0.06, overflow: "hidden" }}>
+    <svg viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg" width="100%" style={{ maxWidth: 540 }}>
+      {/* Rigging bar */}
+      <line x1="20" y1="12" x2="480" y2="12" stroke="#C07A0C" strokeWidth="7"/>
+      <line x1="20" y1="4" x2="20" y2="20" stroke="#C07A0C" strokeWidth="5"/>
+      <line x1="480" y1="4" x2="480" y2="20" stroke="#C07A0C" strokeWidth="5"/>
+      {/* Light fixture circles */}
+      <circle cx="150" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      <circle cx="250" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      <circle cx="350" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      {/* Light beams */}
+      <polygon points="150,26 90,155 210,155" fill="#C07A0C" opacity="0.6"/>
+      <polygon points="250,26 170,155 330,155" fill="#C07A0C" opacity="0.7"/>
+      <polygon points="350,26 290,155 410,155" fill="#C07A0C" opacity="0.6"/>
+    </svg>
+  </div>
 );
 
 const IllustrationMusicStaff = () => (
-  <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg"
-    style={{ position: "absolute", bottom: 0, left: 0, right: 0, width: "100%", height: 200, opacity: 0.04, pointerEvents: "none", userSelect: "none" }}>
-    {/* Staff lines */}
-    {[60, 90, 120, 150, 180].map((y, i) => (
-      <line key={i} x1="0" y1={y} x2="500" y2={y} stroke={COLORS.navy} strokeWidth="2"/>
-    ))}
-    {/* Treble clef simplified */}
-    <path d="M40 50 Q50 20 60 40 Q70 60 55 80 Q40 100 50 120 Q60 140 50 160 Q40 180 55 190" fill="none" stroke={COLORS.navy} strokeWidth="4"/>
-    {/* Notes */}
-    <ellipse cx="120" cy="120" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="130" y1="120" x2="130" y2="70" stroke={COLORS.navy} strokeWidth="3"/>
-    <ellipse cx="180" cy="90" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="190" y1="90" x2="190" y2="40" stroke={COLORS.navy} strokeWidth="3"/>
-    <ellipse cx="240" cy="150" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="250" y1="150" x2="250" y2="100" stroke={COLORS.navy} strokeWidth="3"/>
-    <ellipse cx="300" cy="120" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="310" y1="120" x2="310" y2="70" stroke={COLORS.navy} strokeWidth="3"/>
-    <ellipse cx="360" cy="90" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="370" y1="90" x2="370" y2="40" stroke={COLORS.navy} strokeWidth="3"/>
-    <ellipse cx="420" cy="60" rx="10" ry="8" fill={COLORS.navy}/>
-    <line x1="430" y1="60" x2="430" y2="10" stroke={COLORS.navy} strokeWidth="3"/>
-    {/* Beam connecting last two notes */}
-    <line x1="370" y1="40" x2="430" y2="10" stroke={COLORS.navy} strokeWidth="5"/>
-  </svg>
+  <div style={{ width: "100%", marginTop: 16, pointerEvents: "none", userSelect: "none", opacity: 0.06, overflow: "hidden" }}>
+    <svg viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg" width="100%">
+      {/* Staff lines */}
+      <line x1="0" y1="20" x2="500" y2="20" stroke="#080F1A" strokeWidth="2"/>
+      <line x1="0" y1="38" x2="500" y2="38" stroke="#080F1A" strokeWidth="2"/>
+      <line x1="0" y1="56" x2="500" y2="56" stroke="#080F1A" strokeWidth="2"/>
+      <line x1="0" y1="74" x2="500" y2="74" stroke="#080F1A" strokeWidth="2"/>
+      <line x1="0" y1="92" x2="500" y2="92" stroke="#080F1A" strokeWidth="2"/>
+      {/* Notes */}
+      <ellipse cx="120" cy="56" rx="10" ry="8" fill="#080F1A"/>
+      <line x1="130" y1="56" x2="130" y2="16" stroke="#080F1A" strokeWidth="3"/>
+      <ellipse cx="190" cy="38" rx="10" ry="8" fill="#080F1A"/>
+      <line x1="200" y1="38" x2="200" y2="0" stroke="#080F1A" strokeWidth="3"/>
+      <ellipse cx="270" cy="74" rx="10" ry="8" fill="#080F1A"/>
+      <line x1="280" y1="74" x2="280" y2="34" stroke="#080F1A" strokeWidth="3"/>
+      <ellipse cx="350" cy="56" rx="10" ry="8" fill="#080F1A"/>
+      <line x1="360" y1="56" x2="360" y2="16" stroke="#080F1A" strokeWidth="3"/>
+      <ellipse cx="420" cy="38" rx="10" ry="8" fill="#080F1A"/>
+      <line x1="430" y1="38" x2="430" y2="0" stroke="#080F1A" strokeWidth="3"/>
+      {/* Beam */}
+      <line x1="360" y1="16" x2="430" y2="0" stroke="#080F1A" strokeWidth="5"/>
+    </svg>
+  </div>
 );
 
 const IllustrationHeadphones = () => (
-  <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg"
-    style={{ position: "absolute", bottom: -10, right: -10, width: 260, height: 220, opacity: 0.05, pointerEvents: "none", userSelect: "none" }}>
-    {/* Headband arc */}
-    <path d="M60 200 Q60 60 200 60 Q340 60 340 200" fill="none" stroke={COLORS.navy} strokeWidth="10" strokeLinecap="round"/>
-    {/* Left ear cup */}
-    <rect x="30" y="180" width="60" height="90" rx="20" fill="none" stroke={COLORS.navy} strokeWidth="8"/>
-    <rect x="44" y="196" width="32" height="58" rx="12" fill="none" stroke={COLORS.navy} strokeWidth="4"/>
-    {/* Right ear cup */}
-    <rect x="310" y="180" width="60" height="90" rx="20" fill="none" stroke={COLORS.navy} strokeWidth="8"/>
-    <rect x="324" y="196" width="32" height="58" rx="12" fill="none" stroke={COLORS.navy} strokeWidth="4"/>
-    {/* Cable down from left cup */}
-    <path d="M60 270 Q60 310 80 320 Q120 330 160 320" fill="none" stroke={COLORS.navy} strokeWidth="5" strokeDasharray="8,5"/>
-    {/* Jack */}
-    <circle cx="160" cy="320" r="10" fill="none" stroke={COLORS.navy} strokeWidth="5"/>
-    <line x1="160" y1="330" x2="160" y2="350" stroke={COLORS.navy} strokeWidth="5"/>
-  </svg>
+  <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", marginBottom: -120, pointerEvents: "none", userSelect: "none", opacity: 0.07 }}>
+    <svg viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg" width="140" height="119">
+      <path d="M30 100 Q30 30 100 30 Q170 30 170 100" fill="none" stroke="#080F1A" strokeWidth="8" strokeLinecap="round"/>
+      <rect x="12" y="90" width="36" height="55" rx="14" fill="none" stroke="#080F1A" strokeWidth="6"/>
+      <rect x="152" y="90" width="36" height="55" rx="14" fill="none" stroke="#080F1A" strokeWidth="6"/>
+    </svg>
+  </div>
 );
 
 // ─── START HERE ──────────────────────────────────────────────────────────────
@@ -2168,6 +2157,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
           );
         })}
       </div>
+      <IllustrationStageLight />
       <ScriptureVerse page="training" />
     </div>
   );
@@ -3016,6 +3006,7 @@ const FretboardSection = () => {
         </div>
       </div>
     </div>
+    <IllustrationHeadphones />
     <ScriptureVerse page="vocab" />
     </>
   );
@@ -3271,6 +3262,7 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
         </div>
       ))}
     </div>
+    <IllustrationMusicStaff />
     <ScriptureVerse page="manual" />
   </div>
 );
