@@ -89,13 +89,22 @@ export const handler = async (event) => {
         const bpm = null; // Will fetch from arrangement if linked
         const arrangementName = item.attributes?.arrangement_name || '';
 
-        // Try to fetch arrangement sections if song is linked
+        // Fetch arrangement to get BPM and sections
         let sections = [];
+        let bpm = 120;
         const songId = item.relationships?.song?.data?.id;
         const arrangementId = item.relationships?.arrangement?.data?.id;
 
         if (songId && arrangementId) {
           try {
+            // Fetch arrangement details for BPM
+            const arrangementData = await pcoGet(
+              `/songs/${songId}/arrangements/${arrangementId}`
+            );
+            const arrAttrs = arrangementData?.data?.attributes;
+            if (arrAttrs?.bpm) bpm = Math.round(arrAttrs.bpm);
+
+            // Fetch sections
             const sectionsData = await pcoGet(
               `/songs/${songId}/arrangements/${arrangementId}/sections?per_page=50`
             );
@@ -104,15 +113,17 @@ export const handler = async (event) => {
               const type = mapSectionType(label);
               return { label, type, bars: DEFAULT_BARS[type] || 8 };
             });
+
+            console.log(`Song: ${title} | BPM: ${bpm} | Sections: ${sections.length}`);
           } catch (e) {
-            // sections stays empty — Live Mode will use defaults
+            console.log(`Could not fetch arrangement for ${title}:`, e.message);
           }
         }
 
         songItems.push({
           title,
           key: keyName,
-          bpm: item.attributes?.length ? Math.round(item.attributes.length) : 120,
+          bpm,
           sequence: item.attributes?.sequence || 0,
           arrangementName,
           sections,
