@@ -71,8 +71,24 @@ export const handler = async (event) => {
 
       // Get song items from included data
       const itemIds = plan.relationships?.items?.data?.map(i => i.id) || [];
-      const songItems = included
-        .filter(i => itemIds.includes(i.id) && i.type === 'Item' && i.attributes?.item_type === 'song')
+      const allItems = included.filter(i => itemIds.includes(i.id));
+      
+      // Log all item types for debugging
+      console.log('Plan items types:', allItems.map(i => ({ 
+        type: i.type, 
+        item_type: i.attributes?.item_type,
+        title: i.attributes?.title 
+      })));
+
+      const songItems = allItems
+        .filter(i => {
+          const itemType = i.attributes?.item_type?.toLowerCase() || '';
+          const title = i.attributes?.title || '';
+          // PCO uses 'song' item_type for songs, but also check for linked song
+          return itemType === 'song' || 
+                 i.attributes?.linked_song_id ||
+                 (itemType === '' && i.attributes?.key_name);
+        })
         .map(i => ({
           title: i.attributes?.title || 'Untitled',
           key: i.attributes?.key_name || '',
