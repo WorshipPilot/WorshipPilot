@@ -2208,15 +2208,15 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
               <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 30, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 8, letterSpacing: "-0.5px" }}>
                 Most teams don't lack talent.<br />They lack clarity.
               </div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: COLORS.accent, marginBottom: 14, letterSpacing: 0.3 }}>
-                Playback handles the audio. WorshipPilot handles the leadership.
+              <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.accent, marginBottom: 14, letterSpacing: 0.2, lineHeight: 1.4 }}>
+                Playback handles the audio.<br />WorshipPilot handles the leadership.
               </div>
               <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.65, maxWidth: 440, marginBottom: 22 }}>
-                When cues are unclear, the whole band feels it. Train systematically. Lead with confidence every Sunday.
+                When cues are unclear, the whole band feels it. Don't just learn the role — step into it.
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                 <button onClick={() => setPage("starthere")} style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
-                  Start Your MD Training →
+                  Train for Sunday →
                 </button>
                 <button onClick={() => setPage("services")} style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
                   ↓ Import from PCO
@@ -2293,7 +2293,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           </div>
           <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "'Outfit', sans-serif" }}>Live Mode</div>
           <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, marginBottom: 3 }}>Practice for Sunday</div>
-          <div style={{ fontSize: 11, color: COLORS.textDim, lineHeight: 1.4 }}>Cues, bar position, MD notes — in real time</div>
+          <div style={{ fontSize: 11, color: COLORS.textDim, lineHeight: 1.4 }}>Practice like Sunday feels. Lead before you step on stage.</div>
           {/* Mini waveform decoration */}
           <div style={{ display: "flex", gap: 2, marginTop: 12, alignItems: "flex-end", height: 16, opacity: 0.25 }}>
             {[40,70,100,85,60,90,100,75,50,80,95,65].map((h, i) => (
