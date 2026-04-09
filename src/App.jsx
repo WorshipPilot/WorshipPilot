@@ -1013,6 +1013,16 @@ const Icon = ({ name, size = 20, color = "currentColor", strokeWidth = 1.6 }) =>
         <circle cx="19" cy="17" r="1.5" fill={color} stroke="none"/>
       </svg>
     ),
+    pilots: (
+      <svg style={s} viewBox="0 0 24 24" {...p}>
+        <circle cx="9" cy="7" r="3"/>
+        <circle cx="17" cy="7" r="2"/>
+        <path d="M3 21v-1a6 6 0 0112 0v1"/>
+        <path d="M17 9c2.5 0 4 1.5 4 4v1"/>
+        <path d="M12 12h4"/>
+        <path d="M12 15h2"/>
+      </svg>
+    ),
     search: (
       <svg style={s} viewBox="0 0 24 24" {...p}>
         <circle cx="11" cy="11" r="7"/>
@@ -2332,6 +2342,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
             { icon: "builder",    title: "Song Builder",  sub: "Build songs",  page: "builder" },
             { icon: "services",   title: "Services",      sub: "Set lists",    page: "services" },
             { icon: "onboarding", title: "Onboarding",    sub: "5-week path",  page: "onboarding" },
+            { icon: "pilots",     title: "Pilots Page",   sub: "MD community", page: "pilots" },
             { icon: "roadmap",    title: "Roadmap",       sub: "Roll it out",  page: "roadmap" },
             { icon: "training",   title: "Training",      sub: "MD pathway",   page: "training" },
           ].map((item, i) => (
@@ -3303,6 +3314,429 @@ const PartDetail = ({ part, setPage }) => (
   </div>
 );
 
+// ─── PILOTS PAGE ──────────────────────────────────────────────────────────────
+
+const PILOTS_API = '/.netlify/functions/pilots-page';
+
+const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
+  const [view, setView] = useState('browse'); // browse | detail | publish | profile
+  const [songs, setSongs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('popular');
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [importing, setImporting] = useState(null);
+  const [importedIds, setImportedIds] = useState(new Set());
+  const [flagging, setFlagging] = useState(null);
+  const [publishSongId, setPublishSongId] = useState(null);
+  const [publishDesc, setPublishDesc] = useState('');
+  const [publishTags, setPublishTags] = useState([]);
+  const [publishing, setPublishing] = useState(false);
+  const [publishDone, setPublishDone] = useState(false);
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  const pcoState = (() => { try { return JSON.parse(localStorage.getItem('wp-pco-connection') || 'null'); } catch { return null; } })();
+  const STYLE_TAGS = ['Driving', 'Intimate', 'Building', 'Celebratory', 'Reflective', 'High Energy', 'Acoustic', 'Contemporary', 'Traditional'];
+  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#E8A838",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
+
+  const fetchSongs = async () => {
+    setLoading(true); setError(null);
+    try {
+      const params = new URLSearchParams({ action: 'browse', search, sort });
+      const res = await fetch(`${PILOTS_API}?${params}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to load');
+      setSongs(data.songs || []);
+    } catch (e) { setError(e.message); }
+    finally { setLoading(false); }
+  };
+
+  const fetchLeaderboard = async () => {
+    try {
+      const res = await fetch(`${PILOTS_API}?action=leaderboard`);
+      const data = await res.json();
+      setLeaderboard(data.leaderboard || []);
+    } catch {}
+  };
+
+  useEffect(() => { fetchSongs(); fetchLeaderboard(); }, [sort]);
+
+  const handleSearch = (e) => { if (e.key === 'Enter') fetchSongs(); };
+
+  const handleImport = async (song) => {
+    if (importedIds.has(song.id)) return;
+    setImporting(song.id);
+    try {
+      // Save to local library
+      const newSong = {
+        id: mkId(),
+        title: song.song_title,
+        key: song.key || 'G',
+        bpm: song.bpm || 120,
+        timeSig: song.time_sig || '4/4',
+        sections: (song.sections || []).map(s => ({ ...s, id: mkId() })),
+        importedFrom: { pilot: song.wp_users?.display_name, church: song.wp_users?.church_name, communityId: song.id },
+      };
+      onSaveSong(newSong);
+      setImportedIds(prev => new Set([...prev, song.id]));
+
+      // Record import in DB
+      if (pcoState?.pcoUserId) {
+        await fetch(PILOTS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'import', song_id: song.id, importer_pco_user_id: pcoState.pcoUserId }),
+        });
+        // Update local display count
+        setSongs(prev => prev.map(s => s.id === song.id ? { ...s, import_count: (s.import_count || 0) + 1 } : s));
+      }
+    } catch {}
+    finally { setImporting(null); }
+  };
+
+  const handlePublish = async () => {
+    if (!pcoState?.pcoUserId || !publishSongId) return;
+    const song = songLibrary.find(s => s.id === publishSongId);
+    if (!song) return;
+    setPublishing(true);
+    try {
+      // Ensure user exists
+      await fetch(PILOTS_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'upsert_user',
+          pco_user_id: pcoState.pcoUserId,
+          display_name: pcoState.pcoName || 'Worship MD',
+          church_name: pcoState.pcoOrg && pcoState.pcoOrg !== 'My Church' ? pcoState.pcoOrg : 'My Church',
+        }),
+      });
+      // Publish song
+      const res = await fetch(PILOTS_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'publish',
+          pco_user_id: pcoState.pcoUserId,
+          song: { ...song, description: publishDesc, styleTags: publishTags },
+        }),
+      });
+      if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
+      setPublishDone(true);
+      setTimeout(() => { setView('browse'); setPublishDone(false); setPublishDesc(''); setPublishTags([]); fetchSongs(); }, 2000);
+    } catch (e) { setError(e.message); }
+    finally { setPublishing(false); }
+  };
+
+  const handleFlag = async (songId) => {
+    if (!pcoState?.pcoUserId) return;
+    setFlagging(songId);
+    await fetch(PILOTS_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'flag', song_id: songId, reporter_pco_user_id: pcoState.pcoUserId, reason: 'Inappropriate content' }),
+    }).catch(() => {});
+    setFlagging(null);
+  };
+
+  // ── PUBLISH VIEW ──
+  if (view === 'publish') {
+    const publishableSongs = songLibrary.filter(s => s.sections?.length > 0);
+    return (
+      <div className="fade-in">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+          <button onClick={() => setView('browse')} className="btn btn-ghost" style={{ padding: '7px 14px' }}>← Back</button>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.navy }}>Share to The Pilots Page</div>
+        </div>
+        {!pcoState ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', background: COLORS.card, borderRadius: 16, border: `1px solid ${COLORS.border}` }}>
+            <div style={{ fontSize: 16, fontWeight: 600, color: COLORS.navy, marginBottom: 8 }}>Connect PCO to publish</div>
+            <div style={{ fontSize: 13, color: COLORS.textMuted, marginBottom: 20 }}>Your PCO account becomes your Pilots Page identity — your name and church appear on everything you share.</div>
+            <button onClick={() => setPage('services')} className="btn btn-primary">Connect Planning Center →</button>
+          </div>
+        ) : publishDone ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', background: COLORS.card, borderRadius: 16 }}>
+            <div style={{ fontSize: 32, marginBottom: 12 }}>✓</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.navy }}>Published to The Pilots Page!</div>
+            <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 8 }}>Other MDs can now find, use, and import your arrangement.</div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ padding: '14px 16px', background: COLORS.accentLight, borderRadius: 12, border: `1px solid ${COLORS.accentDim}` }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.accent, marginBottom: 2 }}>Publishing as</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy }}>{pcoState.pcoName || 'Worship MD'} · {pcoState.pcoOrg !== 'My Church' ? pcoState.pcoOrg : 'Your Church'}</div>
+            </div>
+
+            <div>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: COLORS.textDim, marginBottom: 8 }}>Choose a song from your library</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {publishableSongs.length === 0 ? (
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, padding: '12px', textAlign: 'center' }}>No songs with sections yet — build one in Song Builder first.</div>
+                ) : publishableSongs.map(s => (
+                  <button key={s.id} onClick={() => setPublishSongId(s.id)}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', background: publishSongId === s.id ? COLORS.accentLight : COLORS.card, border: `1.5px solid ${publishSongId === s.id ? COLORS.accent : COLORS.border}`, borderRadius: 12, cursor: 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.15s' }}>
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>{s.title}</div>
+                      <div style={{ fontSize: 11, color: COLORS.textDim }}>Key of {s.key} · {s.bpm} BPM · {s.sections?.length} sections</div>
+                    </div>
+                    {publishSongId === s.id && <span style={{ color: COLORS.accent, fontSize: 16 }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {publishSongId && (
+              <>
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: COLORS.textDim, marginBottom: 6 }}>Description (optional)</div>
+                  <textarea value={publishDesc} onChange={e => setPublishDesc(e.target.value)}
+                    placeholder="Describe your arrangement — what makes it unique? Extended bridge? Drum break? Works great for altar calls?"
+                    rows={3} className="field-input" style={{ width: '100%', resize: 'vertical', boxSizing: 'border-box' }} />
+                </div>
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: COLORS.textDim, marginBottom: 8 }}>Style tags</div>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {STYLE_TAGS.map(tag => (
+                      <button key={tag} onClick={() => setPublishTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
+                        style={{ padding: '5px 12px', borderRadius: 20, border: `1px solid ${publishTags.includes(tag) ? COLORS.accent : COLORS.border}`, background: publishTags.includes(tag) ? COLORS.accentLight : COLORS.card, color: publishTags.includes(tag) ? COLORS.accent : COLORS.textDim, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <button onClick={handlePublish} disabled={publishing} className="btn btn-primary" style={{ justifyContent: 'center', padding: '14px', fontSize: 14 }}>
+                  {publishing ? 'Publishing…' : 'Publish to The Pilots Page →'}
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── SONG DETAIL VIEW ──
+  if (view === 'detail' && selectedSong) {
+    const s = selectedSong;
+    const alreadyImported = importedIds.has(s.id);
+    return (
+      <div className="fade-in">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+          <button onClick={() => { setView('browse'); setSelectedSong(null); }} className="btn btn-ghost" style={{ padding: '7px 14px' }}>← The Pilots Page</button>
+        </div>
+
+        {/* Song header */}
+        <div style={{ background: COLORS.navy, borderRadius: 20, padding: '24px 22px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: -30, right: -20, width: 160, height: 120, background: 'radial-gradient(ellipse, rgba(192,122,12,0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ fontSize: 22, fontWeight: 700, color: '#fff', fontFamily: "'Outfit', sans-serif", marginBottom: 4 }}>{s.song_title}</div>
+          {s.artist && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 10 }}>{s.artist}</div>}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+            {s.key && <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: COLORS.accentGlow, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {s.key}</span>}
+            {s.bpm && <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)' }}>{s.bpm} BPM</span>}
+            {s.time_sig && s.time_sig !== '4/4' && <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)' }}>{s.time_sig}</span>}
+            {(s.style_tags || []).map(t => <span key={t} style={{ fontSize: 11, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.5)' }}>{t}</span>)}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 28, height: 28, borderRadius: '50%', background: COLORS.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#fff' }}>{(s.wp_users?.display_name || 'MD')[0]}</span>
+            </div>
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 600, color: '#fff' }}>{s.wp_users?.display_name || 'Unknown MD'}</div>
+              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>{s.wp_users?.church_name}{s.wp_users?.city ? ` · ${s.wp_users.city}` : ''}</div>
+            </div>
+            <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
+              <div style={{ fontSize: 18, fontWeight: 800, color: COLORS.accent }}>{s.import_count || 0}</div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>imports</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        {s.description && (
+          <div style={{ padding: '14px 16px', background: COLORS.card, borderRadius: 14, border: `1px solid ${COLORS.border}`, marginBottom: 16 }}>
+            <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.6 }}>{s.description}</div>
+          </div>
+        )}
+
+        {/* Sections */}
+        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: COLORS.textDim, marginBottom: 10 }}>Arrangement</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
+          {(s.sections || []).map((sec, i) => {
+            const col = TYPE_C[sec.type] || COLORS.textDim;
+            return (
+              <div key={i} style={{ background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: '12px 14px', borderLeft: `4px solid ${col}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: sec.note ? 8 : 0 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: col, textTransform: 'uppercase', letterSpacing: 1 }}>{sec.label}</span>
+                  <span style={{ fontSize: 11, color: COLORS.textDim, marginLeft: 'auto', fontFamily: "'JetBrains Mono', monospace" }}>{sec.bars} bars × {sec.repeatCount}</span>
+                </div>
+                {sec.note && <div style={{ fontSize: 12, color: COLORS.textMuted, lineHeight: 1.5, borderTop: `1px solid ${COLORS.border}`, paddingTop: 8 }}>{sec.note}</div>}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Action buttons */}
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={() => handleImport(s)} disabled={importing === s.id || alreadyImported}
+            style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: alreadyImported ? COLORS.green : COLORS.accent, color: '#fff', fontSize: 14, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>
+            {importing === s.id ? 'Importing…' : alreadyImported ? '✓ In Your Library' : '↓ Import to Library'}
+          </button>
+          <button onClick={() => handleFlag(s.id)} disabled={flagging === s.id}
+            style={{ padding: '13px 16px', borderRadius: 12, border: `1px solid ${COLORS.border}`, background: COLORS.card, color: COLORS.textDim, fontSize: 12, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+            {flagging === s.id ? '…' : '🚩'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── BROWSE VIEW ──
+  return (
+    <div className="fade-in">
+      {/* Header */}
+      <div style={{ marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: 'uppercase', color: COLORS.accent, fontFamily: "'Outfit', sans-serif", marginBottom: 4 }}>Community</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 28, fontWeight: 700, color: COLORS.navy, lineHeight: 1.1 }}>The Pilots Page</div>
+            <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>Song arrangements by MDs, for MDs.</div>
+          </div>
+          <button onClick={() => setView('publish')}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 11, border: 'none', background: COLORS.accentGradient, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, boxShadow: COLORS.shadowAccent }}>
+            <span style={{ fontSize: 16 }}>↑</span> Share an Arrangement
+          </button>
+        </div>
+
+        {/* Stats bar */}
+        <div style={{ display: 'flex', gap: 16, padding: '10px 0', borderBottom: `1px solid ${COLORS.border}`, marginBottom: 16 }}>
+          <div style={{ fontSize: 12, color: COLORS.textDim }}><span style={{ fontWeight: 700, color: COLORS.navy }}>{songs.length}</span> arrangements</div>
+          <div style={{ fontSize: 12, color: COLORS.textDim }}><span style={{ fontWeight: 700, color: COLORS.navy }}>{songs.reduce((a, s) => a + (s.import_count || 0), 0)}</span> total imports</div>
+        </div>
+
+        {/* Search + sort */}
+        <div style={{ display: 'flex', gap: 8 }}>
+          <input value={search} onChange={e => setSearch(e.target.value)} onKeyDown={handleSearch}
+            placeholder="Search by song title… (press Enter)"
+            className="field-input" style={{ flex: 1 }} />
+          <select value={sort} onChange={e => setSort(e.target.value)} className="field-input" style={{ width: 'auto', flexShrink: 0 }}>
+            <option value="popular">Most imported</option>
+            <option value="recent">Most recent</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Song cards */}
+      {loading ? (
+        <div style={{ textAlign: 'center', padding: '40px 0', color: COLORS.textDim }}>Loading arrangements…</div>
+      ) : error ? (
+        <div style={{ textAlign: 'center', padding: '40px 0' }}>
+          <div style={{ color: COLORS.red, marginBottom: 12, fontSize: 13 }}>{error}</div>
+          <button onClick={fetchSongs} className="btn btn-ghost">Try again</button>
+        </div>
+      ) : songs.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '60px 20px', background: COLORS.card, borderRadius: 20, border: `1px solid ${COLORS.border}` }}>
+          <div style={{ fontSize: 40, marginBottom: 16 }}>✈️</div>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, fontWeight: 700, color: COLORS.navy, marginBottom: 8 }}>Be the first Pilot.</div>
+          <div style={{ fontSize: 13, color: COLORS.textMuted, marginBottom: 20, maxWidth: 300, margin: '0 auto 20px' }}>No arrangements here yet. Share yours and start the community.</div>
+          <button onClick={() => setView('publish')} className="btn btn-primary">Share an Arrangement →</button>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {songs.map(song => {
+            const alreadyImported = importedIds.has(song.id);
+            return (
+              <div key={song.id} style={{ background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: '16px 16px', boxShadow: COLORS.shadow, transition: 'all 0.15s', cursor: 'pointer' }}
+                onClick={() => { setSelectedSong(song); setView('detail'); }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = 'translateY(0)'; }}>
+
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 10 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif", marginBottom: 2 }}>{song.song_title}</div>
+                    {song.artist && <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 6 }}>{song.artist}</div>}
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                      {song.key && <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, background: COLORS.accentLight, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {song.key}</span>}
+                      {song.bpm && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{song.bpm} BPM</span>}
+                      {song.time_sig && song.time_sig !== '4/4' && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{song.time_sig}</span>}
+                      {(song.style_tags || []).slice(0, 2).map(t => <span key={t} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{t}</span>)}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                    <div style={{ fontSize: 20, fontWeight: 800, color: COLORS.accent, lineHeight: 1 }}>{song.import_count || 0}</div>
+                    <div style={{ fontSize: 9, color: COLORS.textDim, fontWeight: 600, letterSpacing: 0.5 }}>imports</div>
+                  </div>
+                </div>
+
+                {/* MD notes preview */}
+                {song.md_notes_preview && (
+                  <div style={{ fontSize: 12, color: COLORS.textMuted, lineHeight: 1.5, padding: '8px 10px', background: COLORS.surfaceAlt, borderRadius: 8, marginBottom: 10, borderLeft: `3px solid ${COLORS.accent}` }}>
+                    {song.md_notes_preview}
+                  </div>
+                )}
+
+                {/* Section flow bar */}
+                {(song.sections || []).length > 0 && (
+                  <div style={{ display: 'flex', gap: 2, height: 4, borderRadius: 4, overflow: 'hidden', marginBottom: 10 }}>
+                    {song.sections.map((sec, i) => (
+                      <div key={i} style={{ flex: (sec.bars || 8) * (sec.repeatCount || 1), background: TYPE_C[sec.type] || COLORS.textDim, minWidth: 3 }} />
+                    ))}
+                  </div>
+                )}
+
+                {/* Contributor + import */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: COLORS.navy, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ fontSize: 9, fontWeight: 800, color: '#fff' }}>{(song.wp_users?.display_name || 'M')[0]}</span>
+                    </div>
+                    <div style={{ fontSize: 11, color: COLORS.textDim }}>
+                      <span style={{ fontWeight: 600, color: COLORS.navy }}>{song.wp_users?.display_name || 'Unknown MD'}</span>
+                      {song.wp_users?.church_name && <span> · {song.wp_users.church_name}</span>}
+                    </div>
+                  </div>
+                  <button
+                    onClick={e => { e.stopPropagation(); handleImport(song); }}
+                    disabled={importing === song.id || alreadyImported}
+                    style={{ padding: '6px 14px', borderRadius: 9, border: `1px solid ${alreadyImported ? COLORS.green : COLORS.accent}`, background: alreadyImported ? COLORS.greenLight : COLORS.accentLight, color: alreadyImported ? COLORS.green : COLORS.accent, fontSize: 11, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, transition: 'all 0.15s' }}>
+                    {importing === song.id ? '…' : alreadyImported ? '✓ Imported' : '↓ Import'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Leaderboard */}
+      {leaderboard.length > 0 && (
+        <div style={{ marginTop: 32 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: 'uppercase', color: COLORS.textDim, marginBottom: 12 }}>Top Contributors</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {leaderboard.map((u, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12 }}>
+                <div style={{ width: 24, height: 24, borderRadius: '50%', background: i === 0 ? COLORS.accent : i === 1 ? COLORS.borderMid : COLORS.surfaceAlt, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: i < 2 ? '#fff' : COLORS.textDim }}>{i + 1}</span>
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.navy }}>{u.display_name}</div>
+                  <div style={{ fontSize: 11, color: COLORS.textDim }}>{u.church_name}{u.city ? ` · ${u.city}` : ''}</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 800, color: COLORS.accent }}>{u.import_count || 0}</div>
+                  <div style={{ fontSize: 9, color: COLORS.textDim }}>imports</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <ScriptureVerse page="coaching" />
+    </div>
+  );
+};
+
 // ─── ROADMAP PAGE ─────────────────────────────────────────────────────────────
 
 const RoadmapPage = ({ setPage }) => {
@@ -3472,7 +3906,7 @@ const SectionRow = ({ section, onChange, onDelete, onMoveUp, onMoveDown, isFirst
   );
 };
 
-const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId, setPage }) => {
+const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId, setPage, navigateTo }) => {
   const editing = editSongId ? songLibrary.find(s => s.id === editSongId) : null;
   const [songTitle, setSongTitle] = useState(editing?.title || "New Song");
   const [songKey, setSongKey] = useState(editing?.key || "G");
@@ -3596,6 +4030,14 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
         style={{ width: "100%", padding: "14px", borderRadius: 12, border: `1px solid ${saved ? COLORS.green : COLORS.accent}`, background: saved ? COLORS.green : COLORS.accentLight, color: saved ? "#fff" : COLORS.accent, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", transition: "all 0.3s" }}>
         {saved ? "✓ Saved" : editing ? "Save Changes" : "Save to Song Library"}
       </button>
+      {saved && (
+        <button onClick={() => { if (navigateTo) navigateTo("pilots"); }}
+          style={{ width: "100%", padding: "12px", borderRadius: 12, border: `1px solid ${COLORS.border}`, background: COLORS.card, color: COLORS.textMuted, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif", marginTop: 8, transition: "all 0.15s" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.color = COLORS.accent; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.color = COLORS.textMuted; }}>
+          ✈️ Share on The Pilots Page
+        </button>
+      )}
       <ScriptureVerse page="builder" />
     </div>
   );
@@ -5452,6 +5894,7 @@ export default function App() {
     { id: "builder",    icon: "builder",    label: "Song Builder" },
     { id: "services",   icon: "services",   label: "Service Builder" },
     { id: "live",       icon: "live",       label: "Live Mode" },
+    { id: "pilots",     icon: "pilots",     label: "The Pilots Page" },
     { id: "roadmap",    icon: "roadmap",    label: "Roadmap" },
   ];
 
@@ -5466,8 +5909,9 @@ export default function App() {
       case "manual":      return <ManualPage setSelectedPart={setSelectedPart} setPage={setPage} />;
       case "part-detail": return selectedPart ? <PartDetail part={selectedPart} setPage={setPage} /> : null;
       case "videos":      return <VideoPage />;
+      case "pilots":      return <PilotsPage setPage={setPage} songLibrary={songLibrary} onSaveSong={handleSaveSong} />;
       case "roadmap":     return <RoadmapPage setPage={setPage} />;
-      case "builder":     return <SongBuilderPage songLibrary={songLibrary} onSaveSong={handleSaveSong} onDuplicateSong={handleDuplicateSong} editSongId={editSongId} setPage={(p, id) => { setEditSongId(id ?? null); setPage(p); }} />;
+      case "builder":     return <SongBuilderPage songLibrary={songLibrary} onSaveSong={handleSaveSong} onDuplicateSong={handleDuplicateSong} editSongId={editSongId} setPage={(p, id) => { setEditSongId(id ?? null); setPage(p); }} navigateTo={setPage} />;
       case "services":    return <ServiceBuilderPage services={services} songLibrary={songLibrary} activeServiceId={activeServiceId} onSaveService={handleSaveService} onDuplicateService={handleDuplicateService} onDeleteService={handleDeleteService} onSetActive={setActiveServiceId} onLaunch={() => setPage("live")} onSaveSong={handleSaveSong} />;
       case "live":        return <LiveModePage activeService={activeService} songLibrary={songLibrary} onGoToServiceBuilder={() => setPage("services")} />;
       default:            return <Dashboard setPage={setPage} setSelectedPart={setSelectedPart} />;
