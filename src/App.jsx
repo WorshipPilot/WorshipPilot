@@ -2,76 +2,119 @@ import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 const COLORS = {
-  bg:          "#F2F0EC",
-  surface:     "#FFFFFF",
-  surfaceAlt:  "#EDEAE3",
-  surfaceGlass:"rgba(255,255,255,0.72)",
-  card:        "#FFFFFF",
-  border:      "#E4DFD6",
-  borderMid:   "#CEC8BC",
-  sidebar:     "#080F1A",
-  sidebarBorder:"#131F30",
-  sidebarIcon: "#3E5870",
+  // ── Surfaces ──
+  bg:           "#F4F1EA",
+  surface:      "#FFFFFF",
+  surfaceAlt:   "#EEEAE1",
+  surfaceSunk:  "#E8E3D8",
+  surfaceGlass: "rgba(255,255,255,0.78)",
+  card:         "#FFFFFF",
+  // ── Borders ──
+  border:       "#E6E0D4",
+  borderMid:    "#CFC8B9",
+  borderStrong: "#B8AF9E",
+  // ── Sidebar ──
+  sidebar:           "#070D18",
+  sidebarBorder:     "#121C2C",
+  sidebarIcon:       "#44607A",
+  sidebarIconHover:  "#7E9CB8",
   sidebarIconActive: "#E8A838",
-  accent:      "#C07A0C",
-  accentDim:   "#8A5208",
-  accentLight: "#FDF3E3",
-  accentGlow:  "rgba(192,122,12,0.12)",
-  accentGradient: "linear-gradient(135deg, #C07A0C 0%, #E8A838 100%)",
-  navy:        "#080F1A",
-  navyMid:     "#1A2E44",
-  text:        "#18120C",
-  textMuted:   "#635D57",
-  textDim:     "#9A948E",
-  green:       "#1E6B42",
-  greenLight:  "#E6F4EE",
-  red:         "#B83040",
-  redLight:    "#FCEEF0",
-  blue:        "#1E5E96",
-  blueLight:   "#E8F1FA",
-  // Multi-layer shadow system
-  shadow:      "0 1px 2px rgba(8,15,26,0.04), 0 4px 16px rgba(8,15,26,0.06)",
-  shadowMd:    "0 2px 4px rgba(8,15,26,0.05), 0 8px 24px rgba(8,15,26,0.09), 0 20px 40px rgba(8,15,26,0.05)",
-  shadowLg:    "0 4px 8px rgba(8,15,26,0.06), 0 16px 40px rgba(8,15,26,0.12), 0 40px 80px rgba(8,15,26,0.08)",
-  shadowAccent:"0 4px 20px rgba(192,122,12,0.25), 0 1px 3px rgba(192,122,12,0.15)",
+  // ── Brand accent ──
+  accent:         "#B87209",
+  accentDim:      "#8A5208",
+  accentBright:   "#E8A838",
+  accentLight:    "#FBF1DD",
+  accentSoft:     "#FDF7EA",
+  accentGlow:     "rgba(184,114,9,0.11)",
+  accentGradient: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)",
+  // ── Navy ──
+  navy:    "#070D18",
+  navyMid: "#172538",
+  navyLow: "#0D1624",
+  // ── Text ──
+  text:      "#161008",
+  textMuted: "#5E574E",
+  textDim:   "#938B80",
+  textFaint: "#B8AFA3",
+  // ── Semantic ──
+  green:       "#1B6540",
+  greenLight:  "#E4F1EA",
+  red:         "#B02E3C",
+  redLight:    "#FBEBEE",
+  blue:        "#1A5991",
+  blueLight:   "#E5EFF8",
+  purple:      "#5E4A9E",
+  purpleLight: "#ECE8F5",
+  // ── Elevation ──
+  shadowXs: "0 1px 2px rgba(8,15,26,0.04)",
+  shadow:   "0 1px 2px rgba(8,15,26,0.04), 0 2px 8px rgba(8,15,26,0.05)",
+  shadowMd: "0 2px 4px rgba(8,15,26,0.05), 0 8px 20px rgba(8,15,26,0.08), 0 16px 32px rgba(8,15,26,0.04)",
+  shadowLg: "0 4px 8px rgba(8,15,26,0.06), 0 12px 28px rgba(8,15,26,0.10), 0 32px 64px rgba(8,15,26,0.08)",
+  shadowXl: "0 8px 16px rgba(8,15,26,0.08), 0 24px 48px rgba(8,15,26,0.14), 0 56px 112px rgba(8,15,26,0.10)",
+  shadowAccent:   "0 1px 2px rgba(184,114,9,0.15), 0 4px 14px rgba(184,114,9,0.22), 0 8px 28px rgba(184,114,9,0.12)",
+  shadowAccentLg: "0 2px 4px rgba(184,114,9,0.18), 0 8px 22px rgba(184,114,9,0.30), 0 16px 40px rgba(184,114,9,0.15)",
+  // ── Focus ring ──
+  ring: "0 0 0 3px rgba(184,114,9,0.18)",
 };
 
-// Live mode — deep dark, console-like
 const LIVE = {
-  bg:        "#060D18",
-  bgGrad:    "linear-gradient(180deg, #060D18 0%, #090F1E 100%)",
-  surface:   "#0C1525",
-  card:      "#101A2C",
-  cardGlass: "rgba(16,26,44,0.9)",
-  border:    "#182236",
-  borderGlow:"rgba(232,168,56,0.2)",
-  text:      "#EEE8E0",
-  textMuted: "#7A9AB8",
-  textDim:   "#364E66",
+  bg:         "#050A12",
+  bgGrad:     "linear-gradient(180deg, #050A12 0%, #080E1A 100%)",
+  surface:    "#0B1220",
+  surfaceAlt: "#0E1629",
+  card:       "#101A2C",
+  cardGlass:  "rgba(16,26,44,0.88)",
+  border:     "#162033",
+  borderMid:  "#1F2C44",
+  borderGlow: "rgba(232,168,56,0.22)",
+  text:       "#EEE8E0",
+  textMuted:  "#7993AD",
+  textDim:    "#3E566E",
+  textFaint:  "#2A3C52",
 };
 
 // SVG noise texture (inline, tiny, tileable)
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`;
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font-display: 'Fraunces', 'Outfit', Georgia, serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { font-size: 16px; }
 
   body {
     background: ${COLORS.bg};
     background-image: ${NOISE_SVG};
     color: ${COLORS.text};
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
+    font-feature-settings: "cv11", "ss01", "ss03";
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: ${COLORS.borderMid}; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb {
+    background: ${COLORS.borderMid};
+    border-radius: 8px;
+    border: 2px solid ${COLORS.bg};
+  }
   ::-webkit-scrollbar-thumb:hover { background: ${COLORS.textDim}; }
+
+  ::selection { background: ${COLORS.accentLight}; color: ${COLORS.accentDim}; }
+
+  :focus-visible { outline: none; box-shadow: ${COLORS.ring}; border-radius: 8px; }
+  button:focus { outline: none; }
+  button:focus-visible { box-shadow: ${COLORS.ring}; }
 
   .app-container {
     display: flex;
@@ -81,51 +124,57 @@ const styles = `
     width: 100%;
   }
 
-  /* ── SIDEBAR ── */
   .sidebar {
-    width: 56px;
+    width: 60px;
     background: ${COLORS.sidebar};
     background-image: ${NOISE_SVG};
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 14px 0;
-    gap: 2px;
+    padding: 16px 0 14px;
+    gap: 3px;
     flex-shrink: 0;
     z-index: 200;
     overflow: visible;
     border-right: 1px solid ${COLORS.sidebarBorder};
-    box-shadow: 2px 0 20px rgba(0,0,0,0.15);
+    box-shadow: 2px 0 32px rgba(0,0,0,0.18);
     position: relative;
   }
 
   .sidebar-logo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: ${COLORS.accent};
-    width: 36px;
-    height: 36px;
+    position: relative;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    margin-bottom: 14px;
-    letter-spacing: -0.5px;
-    background: linear-gradient(135deg, rgba(192,122,12,0.15) 0%, rgba(232,168,56,0.08) 100%);
-    border: 1px solid rgba(192,122,12,0.3);
-    box-shadow: 0 2px 8px rgba(192,122,12,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+    border-radius: 11px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, rgba(184,114,9,0.20) 0%, rgba(232,168,56,0.08) 100%);
+    border: 1px solid rgba(184,114,9,0.35);
+    box-shadow: 0 2px 10px rgba(184,114,9,0.20), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 0 1px rgba(232,168,56,0.12);
     transition: all 0.2s ease;
+    cursor: pointer;
   }
-  .sidebar-logo:hover {
-    background: linear-gradient(135deg, rgba(192,122,12,0.25) 0%, rgba(232,168,56,0.15) 100%);
-    box-shadow: 0 4px 16px rgba(192,122,12,0.25);
+  .sidebar-logo::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 15px;
+    background: radial-gradient(circle at center, rgba(232,168,56,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
   }
+  .sidebar-logo:hover { background: linear-gradient(135deg, rgba(184,114,9,0.30) 0%, rgba(232,168,56,0.15) 100%); transform: scale(1.04); }
+  .sidebar-logo:hover::after { opacity: 1; }
+  .sidebar-logo svg { position: relative; z-index: 1; }
 
   .nav-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
     border: none;
     background: transparent;
     color: ${COLORS.sidebarIcon};
@@ -134,26 +183,32 @@ const styles = `
     align-items: center;
     justify-content: center;
     transition: all 0.15s ease;
-    font-size: 16px;
-    position: relative;
-    overflow: visible;
   }
-  .nav-btn:hover {
-    background: rgba(255,255,255,0.06);
-    color: #7A9AB8;
-  }
+  .nav-btn:hover { background: rgba(255,255,255,0.06); color: ${COLORS.sidebarIconHover}; }
   .nav-btn.active {
-    background: linear-gradient(135deg, rgba(192,122,12,0.18) 0%, rgba(232,168,56,0.10) 100%);
-    color: ${COLORS.accent};
-    box-shadow: inset 0 1px 0 rgba(232,168,56,0.1);
+    background: linear-gradient(135deg, rgba(184,114,9,0.20) 0%, rgba(232,168,56,0.10) 100%);
+    color: ${COLORS.accentBright};
+    box-shadow: inset 0 1px 0 rgba(232,168,56,0.12), 0 0 0 1px rgba(232,168,56,0.15);
+  }
+  .nav-btn.active::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 20px;
+    background: ${COLORS.accentBright};
+    border-radius: 0 3px 3px 0;
+    box-shadow: 0 0 8px rgba(232,168,56,0.5);
   }
 
   .nav-tooltip {
     position: absolute;
-    left: 58px;
-    background: linear-gradient(135deg, #0D1B2A 0%, #162033 100%);
-    color: #E8E2D8;
-    padding: 7px 14px;
+    left: 62px;
+    background: linear-gradient(135deg, #0C1A2D 0%, #162238 100%);
+    color: #EEE8E0;
+    padding: 8px 14px;
     border-radius: 9px;
     font-size: 12px;
     font-weight: 600;
@@ -164,218 +219,190 @@ const styles = `
     transition: opacity 0.15s ease, transform 0.15s ease;
     transform: translateX(-4px);
     z-index: 1000;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-    font-family: 'Inter', sans-serif;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
+    font-family: var(--font-body);
     letter-spacing: 0.2px;
   }
   .nav-tooltip::before {
     content: '';
     position: absolute;
-    left: -5px;
+    left: -6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-right: 5px solid #1E3248;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid #1E3248;
   }
   .nav-tooltip::after {
     content: '';
     position: absolute;
-    left: -4px;
+    left: -5px;
     top: 50%;
     transform: translateY(-50%);
-    width: 0;
-    height: 0;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-    border-right: 4px solid #162033;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #162238;
   }
-  .nav-btn:hover .nav-tooltip {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  .nav-btn:hover .nav-tooltip,
+  .search-btn:hover .nav-tooltip,
+  .sidebar-logo:hover .nav-tooltip { opacity: 1; transform: translateX(0); }
 
   .nav-divider {
-    width: 24px;
+    width: 28px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, ${COLORS.sidebarBorder}, transparent);
+    background: linear-gradient(90deg, transparent, ${COLORS.sidebarBorder} 30%, ${COLORS.sidebarBorder} 70%, transparent);
     margin: 6px 0;
   }
 
-  /* ── MAIN ── */
   .main-content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 28px 24px;
+    padding: 32px 24px;
     background: ${COLORS.bg};
     background-image: ${NOISE_SVG};
     min-width: 0;
   }
 
-  /* ── PAGE HEADER ── */
-  .page-header { margin-bottom: 32px; }
+  .page-header { margin-bottom: 36px; }
 
   .page-eyebrow {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: ${COLORS.accent};
-    margin-bottom: 10px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-family: 'Outfit', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: ${COLORS.accent};
+    margin-bottom: 12px;
+    font-family: var(--font-body);
   }
   .page-eyebrow::before {
     content: '';
-    width: 20px;
-    height: 2.5px;
+    width: 22px;
+    height: 2px;
     background: ${COLORS.accentGradient};
     border-radius: 2px;
     flex-shrink: 0;
   }
 
   .page-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 36px;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 500;
     color: ${COLORS.navy};
-    line-height: 1.1;
-    letter-spacing: -0.5px;
+    line-height: 1.08;
+    letter-spacing: -0.8px;
+    font-optical-sizing: auto;
   }
+
   .page-sub {
-    font-size: 14px;
+    font-size: 15px;
     color: ${COLORS.textMuted};
-    margin-top: 8px;
-    line-height: 1.65;
-    max-width: 520px;
+    margin-top: 12px;
+    line-height: 1.6;
+    max-width: 580px;
     font-weight: 400;
   }
 
-  /* ── CARDS ── */
   .card {
     background: ${COLORS.card};
     border: 1px solid ${COLORS.border};
-    border-radius: 18px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 22px;
     box-shadow: ${COLORS.shadow};
-    transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+    transition: box-shadow 0.25s ease, border-color 0.2s ease, transform 0.2s ease;
     position: relative;
   }
   .card::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 18px;
-    background: linear-gradient(160deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 60%);
+    border-radius: 16px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.5) 0%, transparent 55%);
     pointer-events: none;
   }
-  button.card { cursor: pointer; text-align: left; width: 100%; font-family: 'Inter', sans-serif; }
-  .card:hover {
-    border-color: ${COLORS.borderMid};
-    box-shadow: ${COLORS.shadowMd};
-    transform: translateY(-1px);
-  }
+  button.card { cursor: pointer; text-align: left; width: 100%; font-family: var(--font-body); }
+  .card:hover { border-color: ${COLORS.borderMid}; box-shadow: ${COLORS.shadowMd}; transform: translateY(-1px); }
 
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 14px;
-  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
 
   .card-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 18px;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 500;
     color: ${COLORS.navy};
     margin-bottom: 6px;
-    letter-spacing: -0.1px;
+    letter-spacing: -0.25px;
   }
-  .card-desc { font-size: 13px; color: ${COLORS.textMuted}; line-height: 1.55; }
+  .card-desc { font-size: 13.5px; color: ${COLORS.textMuted}; line-height: 1.55; }
 
   .card-icon {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, ${COLORS.accentLight} 0%, rgba(253,243,227,0.5) 100%);
-    border: 1px solid rgba(192,122,12,0.15);
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%);
+    border: 1px solid rgba(184,114,9,0.18);
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(192,122,12,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(184,114,9,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
   }
 
-  /* ── BUTTONS ── */
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 9px 18px;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
     border-radius: 10px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: all 0.16s cubic-bezier(0.3, 0, 0.2, 1);
     border: none;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
     letter-spacing: 0.1px;
     position: relative;
     overflow: hidden;
+    user-select: none;
+    white-space: nowrap;
   }
-  .btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary { background: ${COLORS.accentGradient}; color: #fff; box-shadow: ${COLORS.shadowAccent}; }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 50%);
     pointer-events: none;
   }
-  .btn-primary {
-    background: ${COLORS.accentGradient};
-    color: #fff;
-    box-shadow: ${COLORS.shadowAccent};
-  }
-  .btn-primary:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(192,122,12,0.35), 0 2px 6px rgba(192,122,12,0.2);
-  }
-  .btn-primary:active { transform: translateY(0); filter: brightness(0.96); }
+  .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); box-shadow: ${COLORS.shadowAccentLg}; }
+  .btn-primary:active { filter: brightness(0.96); transform: translateY(0); }
 
   .btn-secondary {
     background: linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyMid} 100%);
     color: #fff;
-    box-shadow: 0 2px 8px rgba(8,15,26,0.3), 0 1px 2px rgba(8,15,26,0.2);
+    box-shadow: 0 1px 2px rgba(8,15,26,0.20), 0 4px 12px rgba(8,15,26,0.18);
   }
-  .btn-secondary:hover {
-    filter: brightness(1.15);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(8,15,26,0.35);
+  .btn-secondary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 50%);
+    pointer-events: none;
   }
+  .btn-secondary:hover { filter: brightness(1.12); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(8,15,26,0.20), 0 8px 24px rgba(8,15,26,0.28); }
 
   .btn-ghost {
     background: ${COLORS.surfaceGlass};
     color: ${COLORS.textMuted};
     border: 1px solid ${COLORS.border};
-    box-shadow: ${COLORS.shadow};
+    box-shadow: ${COLORS.shadowXs};
     backdrop-filter: blur(8px);
   }
-  .btn-ghost:hover {
-    color: ${COLORS.text};
-    border-color: ${COLORS.borderMid};
-    background: ${COLORS.surface};
-  }
+  .btn-ghost:hover { color: ${COLORS.text}; border-color: ${COLORS.borderMid}; background: ${COLORS.surface}; box-shadow: ${COLORS.shadow}; }
 
-  /* ── SECTION LABEL ── */
   .section-label {
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 3px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: ${COLORS.textDim};
     margin: 32px 0 14px;
@@ -383,541 +410,120 @@ const styles = `
     align-items: center;
     gap: 12px;
   }
-  .section-label::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, ${COLORS.border}, transparent);
-  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, ${COLORS.border}, transparent 70%); }
 
-  /* ── BADGE ── */
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-  }
-  .badge-gold {
-    background: linear-gradient(135deg, ${COLORS.accentLight} 0%, rgba(253,243,227,0.7) 100%);
-    color: ${COLORS.accent};
-    border: 1px solid rgba(192,122,12,0.2);
-  }
-  .badge-green {
-    background: ${COLORS.greenLight};
-    color: ${COLORS.green};
-    border: 1px solid rgba(30,107,66,0.2);
-  }
-  .badge-blue {
-    background: ${COLORS.blueLight};
-    color: ${COLORS.blue};
-    border: 1px solid rgba(30,94,150,0.2);
-  }
-  .badge-red {
-    background: ${COLORS.redLight};
-    color: ${COLORS.red};
-    border: 1px solid rgba(184,48,64,0.2);
-  }
-  .badge-navy {
-    background: rgba(8,15,26,0.07);
-    color: ${COLORS.navy};
-    border: 1px solid rgba(8,15,26,0.13);
-  }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; font-family: var(--font-body); }
+  .badge-gold { background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%); color: ${COLORS.accent}; border: 1px solid rgba(184,114,9,0.22); }
+  .badge-green { background: ${COLORS.greenLight}; color: ${COLORS.green}; border: 1px solid rgba(27,101,64,0.20); }
+  .badge-blue { background: ${COLORS.blueLight}; color: ${COLORS.blue}; border: 1px solid rgba(26,89,145,0.20); }
+  .badge-red { background: ${COLORS.redLight}; color: ${COLORS.red}; border: 1px solid rgba(176,46,60,0.20); }
+  .badge-navy { background: rgba(8,15,26,0.06); color: ${COLORS.navy}; border: 1px solid rgba(8,15,26,0.12); }
 
-  /* ── PROGRESS BAR ── */
-  .progress-track {
-    background: ${COLORS.border};
-    border-radius: 4px;
-    height: 3px;
-    overflow: hidden;
-    margin-top: 12px;
-  }
-  .progress-fill {
-    height: 100%;
-    background: ${COLORS.accentGradient};
-    border-radius: 4px;
-    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-  }
+  .progress-track { background: ${COLORS.surfaceSunk}; border-radius: 4px; height: 4px; overflow: hidden; margin-top: 12px; box-shadow: inset 0 1px 2px rgba(8,15,26,0.06); }
+  .progress-fill { height: 100%; background: ${COLORS.accentGradient}; border-radius: 4px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px rgba(184,114,9,0.25); }
 
-  /* ── DETAIL PANEL ── */
-  .detail-panel {
-    background: ${COLORS.card};
-    border: 1px solid ${COLORS.border};
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: ${COLORS.shadow};
-  }
-  .detail-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid ${COLORS.border};
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%);
-  }
+  .detail-panel { background: ${COLORS.card}; border: 1px solid ${COLORS.border}; border-radius: 16px; overflow: hidden; box-shadow: ${COLORS.shadow}; }
+  .detail-header { padding: 20px 24px; border-bottom: 1px solid ${COLORS.border}; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
   .detail-body { padding: 24px; }
 
-  /* ── ACCORDION ── */
   .accordion-item { border-bottom: 1px solid ${COLORS.border}; }
-  .accordion-trigger {
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 16px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    color: ${COLORS.text};
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: left;
-    transition: color 0.15s;
-    gap: 12px;
-  }
+  .accordion-item:last-child { border-bottom: none; }
+  .accordion-trigger { width: 100%; background: none; border: none; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: ${COLORS.text}; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-align: left; transition: color 0.15s; gap: 12px; }
   .accordion-trigger:hover { color: ${COLORS.accent}; }
-  .accordion-chevron {
-    color: ${COLORS.textDim};
-    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
-    font-size: 11px;
-    flex-shrink: 0;
-  }
+  .accordion-chevron { color: ${COLORS.textDim}; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); font-size: 11px; flex-shrink: 0; }
   .accordion-chevron.open { transform: rotate(180deg); color: ${COLORS.accent}; }
-  .accordion-content {
-    padding-bottom: 18px;
-    font-size: 13.5px;
-    color: ${COLORS.textMuted};
-    line-height: 1.78;
-  }
+  .accordion-content { padding-bottom: 18px; font-size: 14px; color: ${COLORS.textMuted}; line-height: 1.75; }
 
-  /* ── COACHING / CHAT ── */
-  .chat-container {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    max-height: 460px;
-    overflow-y: auto;
-    padding-right: 4px;
-  }
-  .chat-bubble {
-    padding: 13px 16px;
-    border-radius: 14px;
-    font-size: 13.5px;
-    line-height: 1.65;
-    max-width: 86%;
-  }
-  .chat-bubble.user {
-    background: linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyMid} 100%);
-    color: #EEE8E0;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-    box-shadow: 0 2px 8px rgba(8,15,26,0.2);
-  }
-  .chat-bubble.ai {
-    background: ${COLORS.surfaceAlt};
-    border: 1px solid ${COLORS.border};
-    color: ${COLORS.text};
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-  }
-  .chat-bubble.loading {
-    background: ${COLORS.surfaceAlt};
-    border: 1px solid ${COLORS.border};
-    color: ${COLORS.textDim};
-    align-self: flex-start;
-    font-style: italic;
-  }
+  .chat-container { display: flex; flex-direction: column; gap: 14px; max-height: 460px; overflow-y: auto; padding-right: 4px; }
+  .chat-bubble { padding: 13px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.65; max-width: 86%; }
+  .chat-bubble.user { background: linear-gradient(135deg, ${COLORS.navy} 0%, ${COLORS.navyMid} 100%); color: #EEE8E0; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 2px 8px rgba(8,15,26,0.2); }
+  .chat-bubble.ai { background: ${COLORS.surfaceAlt}; border: 1px solid ${COLORS.border}; color: ${COLORS.text}; align-self: flex-start; border-bottom-left-radius: 4px; }
+  .chat-bubble.loading { background: ${COLORS.surfaceAlt}; border: 1px solid ${COLORS.border}; color: ${COLORS.textDim}; align-self: flex-start; font-style: italic; }
 
   .chat-input-row { display: flex; gap: 10px; margin-top: 16px; }
-  .chat-input {
-    flex: 1;
-    background: ${COLORS.surfaceAlt};
-    border: 1.5px solid ${COLORS.border};
-    border-radius: 12px;
-    padding: 11px 16px;
-    color: ${COLORS.text};
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    resize: none;
-    min-height: 46px;
-    max-height: 120px;
-  }
-  .chat-input:focus {
-    border-color: ${COLORS.accent};
-    box-shadow: 0 0 0 3px rgba(192,122,12,0.1);
-  }
+  .chat-input { flex: 1; background: ${COLORS.surfaceAlt}; border: 1.5px solid ${COLORS.border}; border-radius: 12px; padding: 11px 16px; color: ${COLORS.text}; font-family: var(--font-body); font-size: 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; resize: none; min-height: 46px; max-height: 120px; }
+  .chat-input:focus { border-color: ${COLORS.accent}; box-shadow: ${COLORS.ring}; background: ${COLORS.surface}; }
   .chat-input::placeholder { color: ${COLORS.textDim}; }
 
-  /* ── SCENARIO CARD ── */
-  .scenario-card {
-    background: ${COLORS.card};
-    border: 1px solid ${COLORS.border};
-    border-radius: 16px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.22s ease;
-    box-shadow: ${COLORS.shadow};
-    position: relative;
-    overflow: hidden;
-  }
-  .scenario-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, rgba(255,255,255,0.5) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .scenario-card:hover {
-    border-color: rgba(192,122,12,0.4);
-    box-shadow: ${COLORS.shadowMd}, 0 0 0 1px rgba(192,122,12,0.1);
-    transform: translateY(-3px);
-  }
+  .scenario-card { background: ${COLORS.card}; border: 1px solid ${COLORS.border}; border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.22s ease; box-shadow: ${COLORS.shadow}; position: relative; overflow: hidden; }
+  .scenario-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.5) 0%, transparent 50%); pointer-events: none; }
+  .scenario-card:hover { border-color: rgba(184,114,9,0.40); box-shadow: ${COLORS.shadowMd}, 0 0 0 1px rgba(184,114,9,0.10); transform: translateY(-3px); }
 
-  /* ── TABLE ── */
   .ref-table { width: 100%; border-collapse: collapse; }
-  .ref-table th {
-    text-align: left;
-    padding: 10px 16px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: ${COLORS.textDim};
-    border-bottom: 1px solid ${COLORS.border};
-    background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%);
-  }
-  .ref-table td {
-    padding: 12px 16px;
-    font-size: 13px;
-    border-bottom: 1px solid ${COLORS.border};
-    vertical-align: top;
-  }
+  .ref-table th { text-align: left; padding: 12px 16px; font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: ${COLORS.textDim}; border-bottom: 1px solid ${COLORS.border}; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
+  .ref-table td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid ${COLORS.border}; vertical-align: top; line-height: 1.55; }
   .ref-table tr:last-child td { border-bottom: none; }
   .ref-table tr:hover td { background: ${COLORS.surfaceAlt}; }
-  .call-code {
-    font-family: 'JetBrains Mono', monospace;
-    color: ${COLORS.accent};
-    font-size: 12.5px;
-    font-weight: 500;
-  }
+  .call-code { font-family: var(--font-mono); color: ${COLORS.accent}; font-size: 12.5px; font-weight: 500; }
 
-  /* ── ROADMAP ── */
-  .roadmap-phase {
-    display: flex;
-    gap: 20px;
-    padding: 22px 0;
-    border-bottom: 1px solid ${COLORS.border};
-    align-items: flex-start;
-  }
-  .phase-number {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Outfit', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .phase-title { font-weight: 600; font-size: 15px; margin-bottom: 3px; color: ${COLORS.navy}; }
+  .roadmap-phase { display: flex; gap: 20px; padding: 22px 0; border-bottom: 1px solid ${COLORS.border}; align-items: flex-start; }
+  .roadmap-phase:last-child { border-bottom: none; }
+  .phase-number { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; flex-shrink: 0; }
+  .phase-title { font-weight: 600; font-size: 15px; margin-bottom: 3px; color: ${COLORS.navy}; font-family: var(--font-display); }
   .phase-timing { font-size: 11px; color: ${COLORS.accent}; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
   .phase-items { font-size: 13px; color: ${COLORS.textMuted}; line-height: 1.9; }
 
-  /* ── ONBOARDING ── */
-  .onboard-step {
-    display: flex;
-    gap: 20px;
-    padding: 20px 0;
-    border-bottom: 1px solid ${COLORS.border};
-  }
-  .step-dot {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  .step-dot.complete { background: ${COLORS.green}; color: #fff; box-shadow: 0 2px 8px rgba(30,107,66,0.3); }
+  .onboard-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid ${COLORS.border}; }
+  .onboard-step:last-child { border-bottom: none; }
+  .step-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+  .step-dot.complete { background: ${COLORS.green}; color: #fff; box-shadow: 0 2px 8px rgba(27,101,64,0.30); }
   .step-dot.active { background: ${COLORS.accentGradient}; color: #fff; box-shadow: ${COLORS.shadowAccent}; }
   .step-dot.upcoming { background: ${COLORS.surfaceAlt}; color: ${COLORS.textDim}; border: 1.5px solid ${COLORS.border}; }
   .step-line { width: 1.5px; flex: 1; background: linear-gradient(180deg, ${COLORS.border}, transparent); margin: 4px 0; min-height: 20px; }
 
-  /* ── SEARCH ── */
-  .search-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(8,15,26,0.55);
-    backdrop-filter: blur(12px) saturate(1.2);
-    -webkit-backdrop-filter: blur(12px) saturate(1.2);
-    z-index: 200;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 80px;
-  }
-  .search-modal {
-    background: rgba(255,255,255,0.88);
-    backdrop-filter: blur(20px) saturate(1.5);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5);
-    border: 1px solid rgba(255,255,255,0.6);
-    border-radius: 20px;
-    width: 100%;
-    max-width: 500px;
-    margin: 0 20px;
-    overflow: hidden;
-    box-shadow: ${COLORS.shadowLg}, 0 0 0 1px rgba(8,15,26,0.04);
-  }
-  .search-input-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    border-bottom: 1px solid rgba(228,223,214,0.7);
-  }
-  .search-input-field {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: ${COLORS.text};
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-  }
+  .search-overlay { position: fixed; inset: 0; background: rgba(8,15,26,0.55); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); z-index: 9500; display: flex; align-items: flex-start; justify-content: center; padding-top: 80px; }
+  .search-modal { background: rgba(255,255,255,0.88); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); border: 1px solid rgba(255,255,255,0.6); border-radius: 18px; width: 100%; max-width: 520px; margin: 0 20px; overflow: hidden; box-shadow: ${COLORS.shadowXl}, 0 0 0 1px rgba(8,15,26,0.04); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid rgba(228,223,214,0.7); }
+  .search-input-field { flex: 1; background: transparent; border: none; outline: none; color: ${COLORS.text}; font-family: var(--font-body); font-size: 16px; font-weight: 400; }
   .search-input-field::placeholder { color: ${COLORS.textDim}; }
   .search-results { max-height: 360px; overflow-y: auto; }
-  .search-result-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 20px;
-    cursor: pointer;
-    transition: background 0.1s;
-    border: none;
-    background: transparent;
-    width: 100%;
-    text-align: left;
-    font-family: 'Inter', sans-serif;
-  }
+  .search-result-item { display: flex; align-items: center; gap: 12px; padding: 11px 20px; cursor: pointer; transition: background 0.1s; border: none; background: transparent; width: 100%; text-align: left; font-family: var(--font-body); }
   .search-result-item:hover { background: rgba(240,238,233,0.8); }
   .search-result-item.highlighted { background: ${COLORS.accentLight}; }
-  .search-result-icon {
-    width: 34px; height: 34px;
-    border-radius: 9px;
-    background: ${COLORS.surfaceAlt};
-    border: 1px solid ${COLORS.border};
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
+  .search-result-icon { width: 34px; height: 34px; border-radius: 9px; background: ${COLORS.surfaceAlt}; border: 1px solid ${COLORS.border}; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
   .search-result-label { font-size: 14px; font-weight: 500; color: ${COLORS.text}; }
   .search-result-type { font-size: 11px; color: ${COLORS.textDim}; margin-top: 1px; }
   .search-result-item.highlighted .search-result-label { color: ${COLORS.accent}; }
   .search-empty { padding: 28px 20px; text-align: center; font-size: 13px; color: ${COLORS.textDim}; }
-  .search-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    border: none;
-    background: transparent;
-    color: ${COLORS.sidebarIcon};
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    transition: all 0.15s ease;
-    position: relative;
-    flex-shrink: 0;
-    overflow: visible;
-  }
-  .search-btn:hover { background: rgba(255,255,255,0.06); color: #7A9AB8; }
-  .search-btn:hover .nav-tooltip { opacity: 1; transform: translateX(0); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .fade-in { animation: fadeUp 0.28s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .search-btn { width: 40px; height: 40px; border-radius: 11px; border: none; background: transparent; color: ${COLORS.sidebarIcon}; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; position: relative; flex-shrink: 0; overflow: visible; }
+  .search-btn:hover { background: rgba(255,255,255,0.06); color: ${COLORS.sidebarIconHover}; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.35; }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .fade-in { animation: fadeUp 0.32s cubic-bezier(0.2, 0.6, 0.2, 1) forwards; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
   .pulsing { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+  @keyframes slowDrift { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 50% { transform: translate(6px, -4px) rotate(0.5deg); } }
 
-  @keyframes shimmer {
-    from { background-position: -200% 0; }
-    to   { background-position: 200% 0; }
-  }
+  .stat-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; background: ${COLORS.surfaceGlass}; border: 1px solid ${COLORS.border}; border-radius: 24px; box-shadow: ${COLORS.shadowXs}; backdrop-filter: blur(8px); }
 
-  /* ── STAT PILL ── */
-  .stat-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 14px;
-    background: ${COLORS.surfaceGlass};
-    border: 1px solid ${COLORS.border};
-    border-radius: 24px;
-    box-shadow: ${COLORS.shadow};
-    backdrop-filter: blur(8px);
-  }
+  .field-input { width: 100%; background: ${COLORS.surfaceAlt}; border: 1.5px solid ${COLORS.border}; border-radius: 10px; padding: 10px 14px; color: ${COLORS.text}; font-family: var(--font-body); font-size: 14px; font-weight: 400; outline: none; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s; }
+  .field-input:focus { border-color: ${COLORS.accent}; box-shadow: ${COLORS.ring}; background: ${COLORS.surface}; }
+  .field-input::placeholder { color: ${COLORS.textDim}; }
 
-  /* ── INPUT ── */
-  .field-input {
-    width: 100%;
-    background: ${COLORS.surfaceAlt};
-    border: 1.5px solid ${COLORS.border};
-    border-radius: 10px;
-    padding: 10px 14px;
-    color: ${COLORS.text};
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .field-input:focus {
-    border-color: ${COLORS.accent};
-    box-shadow: 0 0 0 3px rgba(192,122,12,0.1);
-    background: ${COLORS.surface};
-  }
+  .page-content { max-width: 840px; margin: 0 auto; width: 100%; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  /* ── RESPONSIVE ── */
-  .page-content {
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  @media (min-width: 1024px) {
-    .main-content { padding: 44px 56px; }
-    .page-title { font-size: 40px; }
-    .two-col { grid-template-columns: 1fr 1fr; gap: 16px; }
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .main-content { padding: 32px 36px; }
-  }
-  @media (max-width: 640px) {
-    .main-content { padding: 20px 16px; }
-    .card-grid { grid-template-columns: 1fr; }
-    .page-title { font-size: 26px; }
-    .two-col { grid-template-columns: 1fr; }
-  }
+  @media (min-width: 1024px) { .main-content { padding: 48px 56px; } .page-title { font-size: 44px; } .two-col { gap: 16px; } }
+  @media (min-width: 768px) and (max-width: 1023px) { .main-content { padding: 36px 40px; } }
+  @media (max-width: 640px) { .main-content { padding: 22px 16px; } .card-grid { grid-template-columns: 1fr; } .page-title { font-size: 28px; letter-spacing: -0.4px; } .two-col { grid-template-columns: 1fr; } }
 
-  /* ── HERO BANNER ── */
-  .hero-banner {
-    position: relative;
-    border-radius: 22px;
-    overflow: hidden;
-    margin-bottom: 36px;
-    background: linear-gradient(135deg, #060D18 0%, #0D1B2E 40%, #111E30 70%, #0A1220 100%);
-    box-shadow: 0 8px 40px rgba(8,15,26,0.35), 0 2px 8px rgba(8,15,26,0.2);
-  }
-  /* Ambient light leak from top-left */
-  .hero-banner::before {
-    content: '';
-    position: absolute;
-    top: -60px;
-    left: -40px;
-    width: 380px;
-    height: 260px;
-    background: radial-gradient(ellipse, rgba(192,122,12,0.22) 0%, rgba(232,168,56,0.08) 45%, transparent 70%);
-    pointer-events: none;
-  }
-  /* Subtle right-side cool light */
-  .hero-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    right: -20px;
-    width: 280px;
-    height: 200px;
-    background: radial-gradient(ellipse, rgba(30,94,150,0.18) 0%, transparent 65%);
-    pointer-events: none;
-  }
-  .hero-banner-inner {
-    position: relative;
-    z-index: 2;
-    padding: 36px 36px 32px;
-  }
-  @media (max-width: 640px) {
-    .hero-banner-inner { padding: 28px 22px 24px; }
-  }
+  .hero-banner { position: relative; border-radius: 24px; overflow: hidden; margin-bottom: 36px; background: linear-gradient(135deg, #050A12 0%, #0B1624 40%, #0E1A2B 70%, #080F1C 100%); box-shadow: 0 4px 20px rgba(8,15,26,0.30), 0 20px 60px rgba(8,15,26,0.20), inset 0 1px 0 rgba(255,255,255,0.04); }
+  .hero-banner::before { content: ''; position: absolute; top: -80px; left: -40px; width: 440px; height: 300px; background: radial-gradient(ellipse, rgba(184,114,9,0.24) 0%, rgba(232,168,56,0.08) 45%, transparent 70%); pointer-events: none; }
+  .hero-banner::after { content: ''; position: absolute; bottom: -40px; right: -30px; width: 320px; height: 220px; background: radial-gradient(ellipse, rgba(26,89,145,0.18) 0%, transparent 65%); pointer-events: none; }
+  .hero-banner-inner { position: relative; z-index: 2; padding: 40px 40px 36px; }
+  @media (max-width: 640px) { .hero-banner-inner { padding: 30px 24px 26px; } }
+  .hero-stage-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,114,9,0.45), rgba(232,168,56,0.30), transparent); z-index: 3; }
 
-  /* Stage floor reflection — horizontal line near bottom */
-  .hero-stage-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(192,122,12,0.4), rgba(232,168,56,0.3), transparent);
-    z-index: 3;
-  }
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(184,114,9,0.30), rgba(184,114,9,0.50), rgba(184,114,9,0.30), transparent); margin: 36px 0; position: relative; }
+  .section-divider::after { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: ${COLORS.accent}; opacity: 0.5; }
 
-  /* ── TRUST BAR ── */
-  .trust-bar {
-    background: linear-gradient(135deg, #FFFBF5 0%, #FDF5E6 100%);
-    border: 1px solid rgba(192,122,12,0.2);
-    border-radius: 16px;
-    padding: 20px 24px;
-    margin-bottom: 32px;
-    box-shadow: 0 2px 12px rgba(192,122,12,0.06);
-  }
-
-  /* ── VISUAL SECTION DIVIDER ── */
-  .section-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, ${COLORS.accent}30, ${COLORS.accent}50, ${COLORS.accent}30, transparent);
-    margin: 36px 0;
-    position: relative;
-  }
-  .section-divider::after {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: ${COLORS.accent};
-    opacity: 0.5;
-  }
-
-  /* ── FEATURE SPOTLIGHT ── */
-  .feature-spotlight {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    background: linear-gradient(135deg, ${COLORS.navy} 0%, #0D1B2E 60%, #162033 100%);
-    padding: 28px;
-    box-shadow: ${COLORS.shadowMd};
-  }
-  .feature-spotlight::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 220px;
-    height: 220px;
-    background: radial-gradient(ellipse, rgba(192,122,12,0.15) 0%, transparent 65%);
-    pointer-events: none;
-  }
+  .feature-spotlight { position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, ${COLORS.navy} 0%, #0D1B2E 60%, #162033 100%); padding: 28px; box-shadow: ${COLORS.shadowMd}; }
+  .feature-spotlight::before { content: ''; position: absolute; top: -40px; right: -40px; width: 220px; height: 220px; background: radial-gradient(ellipse, rgba(184,114,9,0.15) 0%, transparent 65%); pointer-events: none; }
   .feature-spotlight-inner { position: relative; z-index: 2; }
-`;
+`
 
 
 // ─── SVG ICON SYSTEM ─────────────────────────────────────────────────────────
@@ -1555,35 +1161,235 @@ const ROLES = [
 
 const RoleSelector = ({ onSelect }) => {
   const [selected, setSelected] = useState(null);
+  const [hovered, setHovered] = useState(null);
+
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 9000, background: COLORS.bg, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 20px", boxSizing: "border-box" }}>
-      <div style={{ width: "100%", maxWidth: 480 }}>
-        <div style={{ textAlign: "center", marginBottom: 36 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 12 }}>Welcome to WorshipPilot</div>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 700, color: COLORS.navy, lineHeight: 1.2, marginBottom: 10 }}>What best describes you?</div>
-          <div style={{ fontSize: 14, color: COLORS.textMuted }}>We'll point you to the right starting place.</div>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
-          {ROLES.map(role => (
-            <button key={role.id} onClick={() => setSelected(role.id)}
-              style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 18px", background: COLORS.card, border: `2px solid ${selected === role.id ? COLORS.accent : COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: selected === role.id ? COLORS.shadowMd : COLORS.shadow, transition: "all 0.15s" }}>
-              <div style={{ width: 40, height: 40, borderRadius: 11, background: selected === role.id ? COLORS.accentLight : COLORS.surfaceAlt, border: `1px solid ${selected === role.id ? COLORS.accent : COLORS.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.15s" }}>
-                <Icon name={role.icon} size={18} color={selected === role.id ? COLORS.accent : COLORS.textDim} />
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 9000,
+      background: `linear-gradient(135deg, #050A12 0%, #0A1220 45%, #0E1A2B 100%)`,
+      display: "flex", flexDirection: "column",
+      overflow: "auto",
+    }}>
+      <div style={{
+        position: "absolute", top: -120, left: -80,
+        width: 520, height: 360,
+        background: `radial-gradient(ellipse, rgba(184,114,9,0.22) 0%, rgba(232,168,56,0.07) 45%, transparent 70%)`,
+        pointerEvents: "none", animation: "slowDrift 18s ease-in-out infinite",
+      }} />
+      <div style={{
+        position: "absolute", bottom: -80, right: -60,
+        width: 440, height: 300,
+        background: `radial-gradient(ellipse, rgba(26,89,145,0.18) 0%, transparent 65%)`,
+        pointerEvents: "none",
+      }} />
+      <div style={{
+        position: "absolute", inset: 0,
+        backgroundImage: NOISE_SVG,
+        opacity: 0.4, pointerEvents: "none",
+      }} />
+
+      <div style={{
+        position: "relative", zIndex: 2,
+        flex: 1, display: "grid",
+        gridTemplateColumns: "minmax(0, 1fr)",
+        alignItems: "center", justifyItems: "center",
+        padding: "48px 24px",
+      }}>
+        <div style={{
+          width: "100%", maxWidth: 960,
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr)",
+          gap: 40,
+        }}
+        className="role-selector-grid">
+
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 36 }}>
+              <div style={{
+                width: 44, height: 44, borderRadius: 13,
+                background: `linear-gradient(135deg, rgba(184,114,9,0.25) 0%, rgba(232,168,56,0.10) 100%)`,
+                border: `1px solid rgba(184,114,9,0.40)`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                boxShadow: `0 4px 16px rgba(184,114,9,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
+              }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#E8A838" fillOpacity="0.9"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#E8A838" strokeWidth="0.8" strokeLinejoin="round"/>
+                </svg>
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 15, fontWeight: 700, color: selected === role.id ? COLORS.navy : COLORS.navy, marginBottom: 2, fontFamily: "'Outfit', sans-serif" }}>{role.label}</div>
-                <div style={{ fontSize: 12, color: COLORS.textMuted, lineHeight: 1.4 }}>{role.desc}</div>
+              <div>
+                <div style={{
+                  fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
+                  color: "#F0EBE1", lineHeight: 1, letterSpacing: "-0.3px",
+                }}>WorshipPilot</div>
+                <div style={{
+                  fontSize: 10, fontWeight: 700, letterSpacing: 2,
+                  textTransform: "uppercase", color: "rgba(232,168,56,0.75)",
+                  marginTop: 3,
+                }}>MD System · Built for Sunday</div>
               </div>
-              {selected === role.id && <div style={{ width: 20, height: 20, borderRadius: "50%", background: COLORS.accent, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><span style={{ fontSize: 11, color: "#fff", fontWeight: 800 }}>✓</span></div>}
+            </div>
+
+            <div style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(32px, 5vw, 46px)", fontWeight: 400,
+              color: "#F0EBE1", lineHeight: 1.05,
+              letterSpacing: "-1.2px", marginBottom: 20,
+              fontStyle: "italic",
+            }}>
+              Lead the band.<br />
+              <span style={{ color: "#E8A838", fontStyle: "normal" }}>Free the room.</span>
+            </div>
+
+            <div style={{
+              fontSize: 15, color: "rgba(240,235,225,0.62)",
+              lineHeight: 1.65, maxWidth: 420, marginBottom: 32,
+            }}>
+              A training and execution system for worship Music Directors.
+              Playback handles the audio. WorshipPilot handles the leadership —
+              so the band can be confident, and the congregation can encounter Jesus.
+            </div>
+
+            <div style={{
+              display: "flex", gap: 24, flexWrap: "wrap",
+              paddingTop: 24, borderTop: "1px solid rgba(240,235,225,0.08)",
+            }}>
+              {[
+                { n: "10", label: "Manual parts" },
+                { n: "45+", label: "Standard calls" },
+                { n: "5-wk", label: "Onboarding path" },
+              ].map(({ n, label }) => (
+                <div key={label}>
+                  <div style={{
+                    fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
+                    color: "#E8A838", letterSpacing: "-0.5px", lineHeight: 1,
+                  }}>{n}</div>
+                  <div style={{
+                    fontSize: 10, color: "rgba(240,235,225,0.45)",
+                    letterSpacing: 1.5, textTransform: "uppercase",
+                    marginTop: 4, fontWeight: 600,
+                  }}>{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{
+            background: "rgba(11, 18, 32, 0.65)",
+            backdropFilter: "blur(24px) saturate(1.3)",
+            WebkitBackdropFilter: "blur(24px) saturate(1.3)",
+            border: "1px solid rgba(240,235,225,0.10)",
+            borderRadius: 20,
+            padding: "28px 24px",
+            boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#E8A838", marginBottom: 8 }}>
+              Get started
+            </div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
+              What brings you here?
+            </div>
+            <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.55, marginBottom: 22 }}>
+              Pick the closest fit. We'll point you to the right starting place — you can always explore the rest later.
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+              {ROLES.map(role => {
+                const isSelected = selected === role.id;
+                const isHovered = hovered === role.id;
+                return (
+                  <button
+                    key={role.id}
+                    onClick={() => setSelected(role.id)}
+                    onMouseEnter={() => setHovered(role.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 14,
+                      padding: "13px 14px",
+                      background: isSelected
+                        ? "linear-gradient(135deg, rgba(184,114,9,0.22) 0%, rgba(232,168,56,0.08) 100%)"
+                        : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
+                      border: `1.5px solid ${isSelected ? "#E8A838" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
+                      borderRadius: 12, cursor: "pointer", textAlign: "left",
+                      fontFamily: "var(--font-body)",
+                      transition: "all 0.18s cubic-bezier(0.2, 0.6, 0.2, 1)",
+                    }}
+                  >
+                    <div style={{
+                      width: 36, height: 36, borderRadius: 10,
+                      background: isSelected ? "linear-gradient(135deg, #E8A838 0%, #B87209 100%)" : "rgba(240,235,225,0.06)",
+                      border: `1px solid ${isSelected ? "rgba(232,168,56,0.5)" : "rgba(240,235,225,0.10)"}`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      flexShrink: 0,
+                      boxShadow: isSelected ? "0 4px 14px rgba(184,114,9,0.3)" : "none",
+                      transition: "all 0.18s",
+                    }}>
+                      <Icon name={role.icon} size={17} color={isSelected ? "#fff" : "rgba(240,235,225,0.65)"} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: isSelected ? "#F0EBE1" : "rgba(240,235,225,0.88)", marginBottom: 1, letterSpacing: "-0.1px" }}>
+                        {role.label}
+                      </div>
+                      <div style={{ fontSize: 12, lineHeight: 1.35, color: isSelected ? "rgba(240,235,225,0.7)" : "rgba(240,235,225,0.45)" }}>
+                        {role.desc}
+                      </div>
+                    </div>
+                    <div style={{
+                      width: 18, height: 18, borderRadius: "50%",
+                      border: `1.5px solid ${isSelected ? "#E8A838" : "rgba(240,235,225,0.18)"}`,
+                      background: isSelected ? "#E8A838" : "transparent",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      flexShrink: 0, transition: "all 0.18s",
+                    }}>
+                      {isSelected && <span style={{ fontSize: 10, color: "#0A1220", fontWeight: 900 }}>✓</span>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => { if (selected) onSelect(selected); }}
+              disabled={!selected}
+              style={{
+                width: "100%", padding: "14px",
+                borderRadius: 11, border: "none",
+                background: selected ? "linear-gradient(135deg, #B87209 0%, #E8A838 100%)" : "rgba(240,235,225,0.06)",
+                color: selected ? "#fff" : "rgba(240,235,225,0.35)",
+                fontSize: 14, fontWeight: 700,
+                cursor: selected ? "pointer" : "not-allowed",
+                fontFamily: "var(--font-body)", letterSpacing: 0.2,
+                transition: "all 0.2s",
+                boxShadow: selected ? "0 4px 16px rgba(184,114,9,0.35)" : "none",
+                position: "relative", overflow: "hidden",
+              }}
+              onMouseEnter={e => { if (selected) { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 22px rgba(184,114,9,0.45)"; }}}
+              onMouseLeave={e => { if (selected) { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(184,114,9,0.35)"; }}}
+            >
+              {selected ? "Enter the system →" : "Select a role to continue"}
             </button>
-          ))}
+
+            <div style={{
+              marginTop: 18, paddingTop: 18,
+              borderTop: "1px solid rgba(240,235,225,0.06)",
+              fontSize: 11, color: "rgba(240,235,225,0.35)",
+              textAlign: "center", lineHeight: 1.5, fontStyle: "italic",
+            }}>
+              "Sing to Him a new song. Play skillfully with a shout of joy." — Psalm 33:3
+            </div>
+          </div>
         </div>
-        <button onClick={() => { if (selected) onSelect(selected); }}
-          disabled={!selected}
-          style={{ width: "100%", padding: "14px", borderRadius: 12, border: "none", background: selected ? COLORS.accent : COLORS.border, color: selected ? "#fff" : COLORS.textDim, fontSize: 15, fontWeight: 700, cursor: selected ? "pointer" : "default", fontFamily: "'Outfit', sans-serif", transition: "all 0.2s" }}>
-          Get started →
-        </button>
       </div>
+
+      <style>{`
+        @media (min-width: 860px) {
+          .role-selector-grid {
+            grid-template-columns: 1.1fr 1fr !important;
+            gap: 64px !important;
+            align-items: center;
+          }
+        }
+      `}</style>
     </div>
   );
 };
@@ -2183,80 +1989,90 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
   const isFirstVisit = completedCount === 0;
   const progressPct = Math.round((completedCount / MD_MODULES.length) * 100);
 
+  const pcoConnected = (() => {
+    try { return !!localStorage.getItem("wp-pco-connection"); } catch { return false; }
+  })();
+
+  const hourNow = new Date().getHours();
+  const greeting =
+    hourNow < 5  ? "Night watch" :
+    hourNow < 12 ? "Good morning" :
+    hourNow < 17 ? "Good afternoon" :
+    hourNow < 21 ? "Good evening" :
+                   "Night watch";
+
   return (
     <div className="fade-in">
-
-      {/* ── HERO BANNER ── */}
-      <div className="hero-banner" style={{ marginBottom: 24 }}>
+      <div className="hero-banner" style={{ marginBottom: 28 }}>
         <div className="hero-stage-line" />
-        {/* Mic illustration inside hero */}
-        <div style={{ position: "absolute", bottom: -10, right: 0, opacity: 0.07, pointerEvents: "none", userSelect: "none" }}>
-          <svg viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="160" height="272">
-            <rect x="65" y="10" width="70" height="110" rx="35" fill="none" stroke="#C07A0C" strokeWidth="5"/>
-            <line x1="65" y1="38" x2="135" y2="38" stroke="#C07A0C" strokeWidth="2.5"/>
-            <line x1="65" y1="55" x2="135" y2="55" stroke="#C07A0C" strokeWidth="2.5"/>
-            <line x1="65" y1="72" x2="135" y2="72" stroke="#C07A0C" strokeWidth="2.5"/>
-            <line x1="67" y1="89" x2="133" y2="89" stroke="#C07A0C" strokeWidth="2.5"/>
-            <line x1="73" y1="104" x2="127" y2="104" stroke="#C07A0C" strokeWidth="2.5"/>
-            <rect x="88" y="120" width="24" height="60" rx="4" fill="none" stroke="#C07A0C" strokeWidth="4"/>
-            <line x1="100" y1="180" x2="100" y2="270" stroke="#C07A0C" strokeWidth="5"/>
-            <ellipse cx="100" cy="275" rx="55" ry="12" fill="none" stroke="#C07A0C" strokeWidth="4"/>
-            <line x1="45" y1="275" x2="22" y2="310" stroke="#C07A0C" strokeWidth="4"/>
-            <line x1="155" y1="275" x2="178" y2="310" stroke="#C07A0C" strokeWidth="4"/>
-            <line x1="100" y1="275" x2="100" y2="320" stroke="#C07A0C" strokeWidth="4"/>
-            <path d="M148 42 Q165 65 148 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
-            <path d="M158 30 Q182 65 158 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
-            <path d="M52 42 Q35 65 52 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
-            <path d="M42 30 Q18 65 42 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
-          </svg>
-        </div>
         <div className="hero-banner-inner">
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 14, fontFamily: "'Outfit', sans-serif", opacity: 0.9 }}>WorshipPilot</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#E8A838", boxShadow: "0 0 8px rgba(232,168,56,0.6)" }} />
+            <div style={{
+              fontSize: 10, fontWeight: 700, letterSpacing: 2.5,
+              textTransform: "uppercase", color: "rgba(232,168,56,0.85)",
+              fontFamily: "var(--font-body)",
+            }}>
+              {isFirstVisit ? "Welcome to WorshipPilot" : greeting}
+            </div>
+          </div>
 
           {isFirstVisit ? (
             <>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 30, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 8, letterSpacing: "-0.5px" }}>
-                Most teams don't lack talent.<br />They lack clarity.
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(26px, 4vw, 36px)",
+                fontWeight: 400, color: "#F0EBE1",
+                lineHeight: 1.08, marginBottom: 14,
+                letterSpacing: "-0.8px", fontStyle: "italic",
+              }}>
+                Most teams don't lack talent.<br />
+                <span style={{ color: "#E8A838", fontStyle: "normal" }}>They lack clarity.</span>
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.accent, marginBottom: 14, letterSpacing: 0.2, lineHeight: 1.4 }}>
-                Playback handles the audio.<br />WorshipPilot handles the leadership.
-              </div>
-              <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.65, maxWidth: 440, marginBottom: 22 }}>
-                When cues are unclear, the whole band feels it. Don't just learn the role — step into it.
+              <div style={{ fontSize: 14, color: "rgba(240,235,225,0.62)", lineHeight: 1.65, maxWidth: 480, marginBottom: 26 }}>
+                Playback handles the audio. WorshipPilot handles the leadership — so the band can be confident, and the room can worship.
               </div>
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage("starthere")} style={{ padding: "11px 24px", borderRadius: 11, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
-                  Train for Sunday →
+                <button onClick={() => setPage("starthere")} style={{ padding: "12px 22px", borderRadius: 11, border: "none", background: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)", color: "#fff", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", letterSpacing: 0.2, boxShadow: "0 4px 20px rgba(184,114,9,0.35), 0 1px 3px rgba(184,114,9,0.2)", transition: "all 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.filter = "brightness(1.08)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.filter = "brightness(1)"; }}>
+                  Start training →
                 </button>
-                <button onClick={() => setPage("services")} style={{ padding: "11px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
-                  ↓ Import from PCO
+                <button onClick={() => setPage("live")} style={{ padding: "12px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(240,235,225,0.80)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(240,235,225,0.24)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(240,235,225,0.16)"; }}>
+                  ▶ Try Live Mode
                 </button>
               </div>
             </>
           ) : (
             <>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 26, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.2, marginBottom: 6 }}>
-                {trainingDone ? "Ready to lead." : "Welcome back."}
+              <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 400, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 6, letterSpacing: "-0.6px" }}>
+                {trainingDone ? <>You're trained. <span style={{ fontStyle: "italic", color: "#E8A838" }}>Now keep sharp.</span></> : <>Pick up where you left off.</>}
               </div>
-              <div style={{ fontSize: 13, color: "rgba(240,235,225,0.5)", marginBottom: 16, lineHeight: 1.5 }}>
-                {trainingDone ? "All modules complete. Keep sharp with scenarios and Live Mode." : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} — ${currentStep.phase}`}
+              <div style={{ fontSize: 13.5, color: "rgba(240,235,225,0.55)", marginBottom: 22, lineHeight: 1.5 }}>
+                {trainingDone ? "All modules complete. Scenarios, Live Mode, and the Manual keep your edge." : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase} · ${currentWeek.title}`}
               </div>
               {!trainingDone && (
-                <div style={{ marginBottom: 18 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(240,235,225,0.4)" }}>Training progress</span>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: COLORS.accent }}>{progressPct}%</span>
+                <div style={{ marginBottom: 22 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: "rgba(240,235,225,0.4)" }}>Training progress</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#E8A838", fontFamily: "var(--font-mono)" }}>{completedCount}<span style={{ color: "rgba(240,235,225,0.3)" }}> / {MD_MODULES.length}</span></span>
                   </div>
-                  <div style={{ height: 4, borderRadius: 4, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accentGradient, borderRadius: 4, transition: "width 0.6s ease" }} />
+                  <div style={{ height: 4, borderRadius: 4, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${progressPct}%`, background: "linear-gradient(90deg, #B87209, #E8A838)", borderRadius: 4, transition: "width 0.6s ease", boxShadow: "0 0 8px rgba(232,168,56,0.35)" }} />
                   </div>
                 </div>
               )}
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage(trainingDone ? "coaching" : "training")} style={{ padding: "10px 20px", borderRadius: 10, border: "none", background: COLORS.accentGradient, color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowAccent }}>
-                  {trainingDone ? "Practice scenarios →" : "Continue training →"}
+                <button onClick={() => setPage(trainingDone ? "coaching" : "training")} style={{ padding: "11px 20px", borderRadius: 11, border: "none", background: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: "0 4px 16px rgba(184,114,9,0.30)", transition: "all 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.filter = "brightness(1.08)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.filter = "brightness(1)"; }}>
+                  {trainingDone ? "Practice scenarios →" : "Continue →"}
                 </button>
-                <button onClick={() => setPage("live")} style={{ padding: "10px 18px", borderRadius: 10, border: "1px solid rgba(240,235,225,0.15)", background: "rgba(255,255,255,0.06)", color: "rgba(240,235,225,0.75)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                <button onClick={() => setPage("live")} style={{ padding: "11px 18px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(240,235,225,0.80)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}>
                   ▶ Live Mode
                 </button>
               </div>
@@ -2265,102 +2081,122 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         </div>
       </div>
 
-      {/* ── QUICK ACTION CARDS — visible to all users ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
-
-        {/* Training card */}
-        <button onClick={() => setPage("training")}
-          style={{ display: "flex", flexDirection: "column", padding: "18px 18px", background: COLORS.navy, border: "none", borderRadius: 16, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowMd, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 28 }}>
+        <button onClick={() => setPage("training")} style={{ display: "flex", flexDirection: "column", padding: "22px 20px 20px", background: isFirstVisit || !trainingDone ? COLORS.navy : COLORS.card, border: isFirstVisit || !trainingDone ? "none" : `1px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: isFirstVisit || !trainingDone ? COLORS.shadowMd : COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
           onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}>
-          <div style={{ position: "absolute", top: -20, right: -10, width: 120, height: 90, background: "radial-gradient(ellipse, rgba(192,122,12,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
-          <div style={{ width: 32, height: 32, borderRadius: 9, background: "rgba(192,122,12,0.2)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
-            <Icon name="training" size={16} color={COLORS.accent} />
+          onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = isFirstVisit || !trainingDone ? COLORS.shadowMd : COLORS.shadow; }}>
+          {(isFirstVisit || !trainingDone) && (
+            <div style={{ position: "absolute", top: -30, right: -20, width: 140, height: 110, background: "radial-gradient(ellipse, rgba(184,114,9,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
+          )}
+          <div style={{ width: 34, height: 34, borderRadius: 10, background: isFirstVisit || !trainingDone ? "rgba(184,114,9,0.20)" : "linear-gradient(135deg, #FBF1DD 0%, #FDF7EA 100%)", border: isFirstVisit || !trainingDone ? "1px solid rgba(232,168,56,0.25)" : "1px solid rgba(184,114,9,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+            <Icon name="training" size={17} color={isFirstVisit || !trainingDone ? "#E8A838" : COLORS.accent} />
           </div>
-          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "'Outfit', sans-serif" }}>
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.2, textTransform: "uppercase", color: isFirstVisit || !trainingDone ? "#E8A838" : COLORS.accent, marginBottom: 4, fontFamily: "var(--font-body)" }}>
             {isFirstVisit ? "Start here" : trainingDone ? "Complete" : `Step ${currentStep.step}/${JOURNEY_STEPS.length}`}
           </div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 3 }}>
+          <div style={{ fontSize: 15, fontWeight: 600, color: isFirstVisit || !trainingDone ? "#fff" : COLORS.navy, marginBottom: 4, letterSpacing: "-0.2px", fontFamily: "var(--font-display)" }}>
             {isFirstVisit ? "MD Training" : trainingDone ? "Review Training" : currentWeek.title}
           </div>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.4 }}>
-            {isFirstVisit ? "5-step MD pathway" : trainingDone ? "All modules complete" : currentWeek.benchmark}
+          <div style={{ fontSize: 12, lineHeight: 1.5, color: isFirstVisit || !trainingDone ? "rgba(255,255,255,0.48)" : COLORS.textDim }}>
+            {isFirstVisit ? "5-module pathway · ~90 min total" : trainingDone ? "Refresh anytime" : currentWeek.benchmark}
           </div>
           {!isFirstVisit && !trainingDone && (
-            <div style={{ marginTop: 10, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.1)", overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accent, borderRadius: 3 }} />
+            <div style={{ marginTop: 12, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${progressPct}%`, background: "#E8A838", borderRadius: 3 }} />
             </div>
           )}
         </button>
 
-        {/* Live Mode card */}
-        <button onClick={() => setPage("live")}
-          style={{ display: "flex", flexDirection: "column", padding: "18px 18px", background: COLORS.card, border: `1.5px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-2px)"; }}
+        <button onClick={() => setPage("live")} style={{ display: "flex", flexDirection: "column", padding: "22px 20px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-2px)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
-          <div style={{ width: 32, height: 32, borderRadius: 9, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
-            <Icon name="live" size={16} color={COLORS.accent} />
+          <div style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #FBF1DD 0%, #FDF7EA 100%)", border: "1px solid rgba(184,114,9,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+            <Icon name="live" size={17} color={COLORS.accent} />
           </div>
-          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "'Outfit', sans-serif" }}>Live Mode</div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, marginBottom: 3 }}>Practice for Sunday</div>
-          <div style={{ fontSize: 11, color: COLORS.textDim, lineHeight: 1.4 }}>Practice like Sunday feels. Lead before you step on stage.</div>
-          {/* Mini waveform decoration */}
-          <div style={{ display: "flex", gap: 2, marginTop: 12, alignItems: "flex-end", height: 16, opacity: 0.25 }}>
-            {[40,70,100,85,60,90,100,75,50,80,95,65].map((h, i) => (
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "var(--font-body)" }}>Live Mode</div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 4, letterSpacing: "-0.2px", fontFamily: "var(--font-display)" }}>Practice for Sunday</div>
+          <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Real-time cue engine · Beat-accurate countdowns</div>
+          <div style={{ display: "flex", gap: 2, marginTop: 14, alignItems: "flex-end", height: 18, opacity: 0.35 }}>
+            {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
               <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 1, background: COLORS.accent }} />
             ))}
           </div>
         </button>
       </div>
 
-      {/* ── PCO IMPORT SHORTCUT — shown when not connected ── */}
-      <button onClick={() => setPage("services")}
-        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 18px", marginBottom: 24, background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, background: "#3D7BF420", border: "1px solid #3D7BF440", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <svg width="18" height="18" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" fill="#3D7BF4" fillOpacity="0.2"/><text x="20" y="26" textAnchor="middle" fill="#3D7BF4" fontSize="16" fontWeight="800" fontFamily="Arial">P</text></svg>
+      {!pcoConnected && (
+        <button onClick={() => setPage("services")} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "13px 18px", marginBottom: 28, background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: COLORS.shadowXs, transition: "all 0.15s" }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = "#3D7BF4"; e.currentTarget.style.boxShadow = COLORS.shadow; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadowXs; }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(61,123,244,0.10)", border: "1px solid rgba(61,123,244,0.22)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ color: "#3D7BF4", fontSize: 12, fontWeight: 800, fontFamily: "var(--font-body)" }}>P</span>
+            </div>
+            <div style={{ textAlign: "left" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.navy, letterSpacing: "-0.1px" }}>Planning Center</div>
+              <div style={{ fontSize: 11.5, color: COLORS.textDim, lineHeight: 1.3, marginTop: 1 }}>Import your upcoming services and song lists</div>
+            </div>
           </div>
-          <div style={{ textAlign: "left" }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>Planning Center</div>
-            <div style={{ fontSize: 11, color: COLORS.textDim }}>Import upcoming services and song data</div>
-          </div>
-        </div>
-        <div style={{ fontSize: 13, color: COLORS.accent, fontWeight: 700 }}>Connect →</div>
-      </button>
+          <div style={{ fontSize: 12, color: COLORS.accent, fontWeight: 700, letterSpacing: 0.2 }}>Connect →</div>
+        </button>
+      )}
 
-      {/* ── TOOLS GRID ── */}
-      <div style={{ marginBottom: 6 }}>
-        <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim, marginBottom: 12 }}>All Tools</div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-          {[
-            { icon: "coaching",   title: "Scenarios",     sub: "7 situations", page: "coaching" },
-            { icon: "vocab",      title: "Vocabulary",    sub: "All calls",    page: "vocab" },
-            { icon: "videos",     title: "Videos",        sub: "40 curated",   page: "videos" },
-            { icon: "manual",     title: "Manual",        sub: "10 parts",     page: "manual" },
-            { icon: "builder",    title: "Song Builder",  sub: "Build songs",  page: "builder" },
-            { icon: "services",   title: "Services",      sub: "Set lists",    page: "services" },
-            { icon: "onboarding", title: "Onboarding",    sub: "5-week path",  page: "onboarding" },
-            { icon: "pilots",     title: "Pilots Page",   sub: "MD community", page: "pilots" },
-            { icon: "roadmap",    title: "Roadmap",       sub: "Roll it out",  page: "roadmap" },
-            { icon: "training",   title: "Training",      sub: "MD pathway",   page: "training" },
-          ].map((item, i) => (
-            <button key={i} onClick={() => setPage(item.page)}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "14px 8px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s", textAlign: "center" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.12)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name={item.icon} size={18} color={COLORS.accent} />
-              </div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.navy, lineHeight: 1.2 }}>{item.title}</div>
-              <div style={{ fontSize: 10, color: COLORS.textDim, lineHeight: 1.2 }}>{item.sub}</div>
-            </button>
-          ))}
+      <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim }}>Everything else</div>
+          <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${COLORS.border}, transparent 70%)` }} />
         </div>
+
+        {[
+          {
+            heading: "Reference",
+            items: [
+              { icon: "vocab",    title: "Vocabulary",       sub: "Every standard call",               page: "vocab" },
+              { icon: "manual",   title: "System Manual",    sub: "All 10 MD parts",                   page: "manual" },
+              { icon: "videos",   title: "Video Library",    sub: "40 curated videos",                 page: "videos" },
+              { icon: "coaching", title: "MD Situations",    sub: "7 real scenarios",                  page: "coaching" },
+            ]
+          },
+          {
+            heading: "Prepare",
+            items: [
+              { icon: "builder",    title: "Song Builder",    sub: "Structure songs for Live Mode",     page: "builder" },
+              { icon: "services",   title: "Service Builder", sub: "Assemble a Sunday set",             page: "services" },
+              { icon: "onboarding", title: "Onboarding",      sub: "5-week MD pathway",                 page: "onboarding" },
+              { icon: "pilots",     title: "The Pilots Page", sub: "Arrangements from other MDs",       page: "pilots" },
+            ]
+          },
+          {
+            heading: "Roll it out",
+            items: [
+              { icon: "roadmap", title: "Roadmap", sub: "Implement the system across your team",        page: "roadmap" },
+            ]
+          },
+        ].map((group, gi) => (
+          <div key={gi} style={{ marginBottom: gi < 2 ? 24 : 0 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10, paddingLeft: 2 }}>
+              {group.heading}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {group.items.map((item, i) => (
+                <button key={i} onClick={() => setPage(item.page)} style={{ display: "flex", alignItems: "center", gap: 14, padding: "11px 14px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 11, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "var(--font-body)", boxShadow: COLORS.shadowXs, transition: "all 0.14s" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(-1px)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadowXs; e.currentTarget.style.transform = "translateY(0)"; }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 9, background: COLORS.surfaceAlt, border: `1px solid ${COLORS.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Icon name={item.icon} size={15} color={COLORS.textMuted} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.navy, lineHeight: 1.25, letterSpacing: "-0.1px" }}>{item.title}</div>
+                    <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>
+                  </div>
+                  <span style={{ color: COLORS.textFaint, fontSize: 15, flexShrink: 0, fontWeight: 500 }}>›</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* ── SCRIPTURE ── */}
       <ScriptureVerse page="dashboard" />
     </div>
   );
@@ -5946,29 +5782,48 @@ export default function App() {
       )}
       <div className="app-container">
         <nav className="sidebar">
-          <div className="sidebar-logo">WP</div>
-          <div className="nav-divider" />
-          {nav.slice(0, 6).map(n => (
-            <button key={n.id} className={`nav-btn ${page === n.id || (page === "part-detail" && n.id === "manual") ? "active" : ""}`} onClick={() => setPage(n.id)}>
-              <Icon name={n.icon} size={19} />
-              <div className="nav-tooltip">{n.label}</div>
-            </button>
-          ))}
-          <div className="nav-divider" />
-          {nav.slice(6).map(n => (
-            <button key={n.id} className={`nav-btn ${page === n.id ? "active" : ""}`} onClick={() => setPage(n.id)}>
-              <Icon name={n.icon} size={19} />
-              <div className="nav-tooltip">{n.label}</div>
-            </button>
-          ))}
-          {/* Search pinned to bottom of sidebar */}
-          <div style={{ flex: 1 }} />
-          <div className="nav-divider" />
-          <button className="search-btn" onClick={() => setSearchOpen(true)}>
-            <Icon name="search" size={19} />
-            <div className="nav-tooltip">Search</div>
-          </button>
-        </nav>
+  <button
+    className="sidebar-logo"
+    onClick={() => setPage("dashboard")}
+    aria-label="WorshipPilot — go to dashboard"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#E8A838" fillOpacity="0.92"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#E8A838" strokeWidth="0.6" strokeLinejoin="round"/>
+    </svg>
+    <div className="nav-tooltip">WorshipPilot</div>
+  </button>
+  <div className="nav-divider" />
+  {nav.slice(0, 6).map(n => (
+    <button
+      key={n.id}
+      className={`nav-btn ${page === n.id || (page === "part-detail" && n.id === "manual") ? "active" : ""}`}
+      onClick={() => setPage(n.id)}
+      aria-label={n.label}
+    >
+      <Icon name={n.icon} size={19} />
+      <div className="nav-tooltip">{n.label}</div>
+    </button>
+  ))}
+  <div className="nav-divider" />
+  {nav.slice(6).map(n => (
+    <button
+      key={n.id}
+      className={`nav-btn ${page === n.id ? "active" : ""}`}
+      onClick={() => setPage(n.id)}
+      aria-label={n.label}
+    >
+      <Icon name={n.icon} size={19} />
+      <div className="nav-tooltip">{n.label}</div>
+    </button>
+  ))}
+  <div style={{ flex: 1 }} />
+  <div className="nav-divider" />
+  <button className="search-btn" onClick={() => setSearchOpen(true)} aria-label="Search">
+    <Icon name="search" size={19} />
+    <div className="nav-tooltip">Search (⌘K)</div>
+  </button>
+</nav>
         <main className="main-content" style={{ padding: page === "live" ? 0 : undefined }}>
           <div className={page === "live" ? "" : "page-content"}>
             {renderPage()}
