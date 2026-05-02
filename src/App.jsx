@@ -3,19 +3,19 @@ import { createPortal } from "react-dom";
 
 const COLORS = {
   // ── Surfaces ──
-  bg:           "#10141B",
-  surface:      "#161B24",
-  surfaceAlt:   "#1B2130",
-  surfaceSunk:  "#20283A",
-  surfaceGlass: "rgba(22,27,36,0.92)",
-  card:         "#161B24",
+  bg:           "#0D1117",
+  surface:      "#161D2B",
+  surfaceAlt:   "#1C2438",
+  surfaceSunk:  "#222D44",
+  surfaceGlass: "rgba(22,29,43,0.92)",
+  card:         "#161D2B",
   // ── Borders ──
-  border:       "#273041",
-  borderMid:    "#344158",
-  borderStrong: "#465773",
+  border:       "#243045",
+  borderMid:    "#304060",
+  borderStrong: "#425575",
   // ── Sidebar ──
-  sidebar:           "#0A0F16",
-  sidebarBorder:     "#151C26",
+  sidebar:           "#090E16",
+  sidebarBorder:     "#111A28",
   sidebarIcon:       "#58708C",
   sidebarIconHover:  "#8FB7E0",
   sidebarIconActive: "#78B7FF",
@@ -66,7 +66,7 @@ const LIVE = {
   cardGlass:  "rgba(16,26,44,0.88)",
   border:     "#162033",
   borderMid:  "#1F2C44",
-  borderGlow: "rgba(232,168,56,0.22)",
+  borderGlow: "rgba(120,183,255,0.22)",
   text:       "#EEE8E0",
   textMuted:  "#7993AD",
   textDim:    "#3E566E",
@@ -150,9 +150,9 @@ const styles = `
     justify-content: center;
     border-radius: 11px;
     margin-bottom: 16px;
-    background: linear-gradient(135deg, rgba(184,114,9,0.20) 0%, rgba(232,168,56,0.08) 100%);
-    border: 1px solid rgba(184,114,9,0.35);
-    box-shadow: 0 2px 10px rgba(184,114,9,0.20), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 0 1px rgba(232,168,56,0.12);
+    background: linear-gradient(135deg, rgba(62,127,199,0.20) 0%, rgba(120,183,255,0.08) 100%);
+    border: 1px solid rgba(62,127,199,0.35);
+    box-shadow: 0 2px 10px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 0 0 1px rgba(120,183,255,0.12);
     transition: all 0.2s ease;
     cursor: pointer;
   }
@@ -161,12 +161,12 @@ const styles = `
     position: absolute;
     inset: -4px;
     border-radius: 15px;
-    background: radial-gradient(circle at center, rgba(232,168,56,0.15) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(120,183,255,0.15) 0%, transparent 70%);
     pointer-events: none;
     opacity: 0.6;
     transition: opacity 0.2s;
   }
-  .sidebar-logo:hover { background: linear-gradient(135deg, rgba(184,114,9,0.30) 0%, rgba(232,168,56,0.15) 100%); transform: scale(1.04); }
+  .sidebar-logo:hover { background: linear-gradient(135deg, rgba(62,127,199,0.30) 0%, rgba(120,183,255,0.15) 100%); transform: scale(1.04); }
   .sidebar-logo:hover::after { opacity: 1; }
   .sidebar-logo svg { position: relative; z-index: 1; }
 
@@ -186,9 +186,9 @@ const styles = `
   }
   .nav-btn:hover { background: rgba(255,255,255,0.06); color: ${COLORS.sidebarIconHover}; }
   .nav-btn.active {
-    background: linear-gradient(135deg, rgba(184,114,9,0.20) 0%, rgba(232,168,56,0.10) 100%);
+    background: linear-gradient(135deg, rgba(62,127,199,0.20) 0%, rgba(120,183,255,0.10) 100%);
     color: ${COLORS.accentBright};
-    box-shadow: inset 0 1px 0 rgba(232,168,56,0.12), 0 0 0 1px rgba(232,168,56,0.15);
+    box-shadow: inset 0 1px 0 rgba(120,183,255,0.12), 0 0 0 1px rgba(120,183,255,0.15);
   }
   .nav-btn.active::before {
     content: '';
@@ -200,7 +200,7 @@ const styles = `
     height: 20px;
     background: ${COLORS.accentBright};
     border-radius: 0 3px 3px 0;
-    box-shadow: 0 0 8px rgba(232,168,56,0.5);
+    box-shadow: 0 0 8px rgba(120,183,255,0.5);
   }
 
   .nav-tooltip {
@@ -341,11 +341,11 @@ const styles = `
   .card-icon {
     width: 44px; height: 44px;
     background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%);
-    border: 1px solid rgba(184,114,9,0.18);
+    border: 1px solid rgba(62,127,199,0.18);
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(184,114,9,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
+    box-shadow: 0 2px 8px rgba(62,127,199,0.10), inset 0 1px 0 rgba(255,255,255,0.5);
   }
 
   .btn {
@@ -412,14 +412,14 @@ const styles = `
   .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, ${COLORS.border}, transparent 70%); }
 
   .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; font-family: var(--font-body); }
-  .badge-gold { background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%); color: ${COLORS.accent}; border: 1px solid rgba(184,114,9,0.22); }
+  .badge-gold { background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%); color: ${COLORS.accent}; border: 1px solid rgba(62,127,199,0.22); }
   .badge-green { background: ${COLORS.greenLight}; color: ${COLORS.green}; border: 1px solid rgba(27,101,64,0.20); }
   .badge-blue { background: ${COLORS.blueLight}; color: ${COLORS.blue}; border: 1px solid rgba(26,89,145,0.20); }
   .badge-red { background: ${COLORS.redLight}; color: ${COLORS.red}; border: 1px solid rgba(176,46,60,0.20); }
   .badge-navy { background: rgba(8,15,26,0.06); color: ${COLORS.navy}; border: 1px solid rgba(8,15,26,0.12); }
 
   .progress-track { background: ${COLORS.surfaceSunk}; border-radius: 4px; height: 4px; overflow: hidden; margin-top: 12px; box-shadow: inset 0 1px 2px rgba(8,15,26,0.06); }
-  .progress-fill { height: 100%; background: ${COLORS.accentGradient}; border-radius: 4px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px rgba(184,114,9,0.25); }
+  .progress-fill { height: 100%; background: ${COLORS.accentGradient}; border-radius: 4px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 0 8px rgba(120,183,255,0.25); }
 
   .detail-panel { background: ${COLORS.card}; border: 1px solid ${COLORS.border}; border-radius: 16px; overflow: hidden; box-shadow: ${COLORS.shadow}; }
   .detail-header { padding: 20px 24px; border-bottom: 1px solid ${COLORS.border}; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
@@ -446,7 +446,7 @@ const styles = `
 
   .scenario-card { background: ${COLORS.card}; border: 1px solid ${COLORS.border}; border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.22s ease; box-shadow: ${COLORS.shadow}; position: relative; overflow: hidden; }
   .scenario-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, transparent 50%); pointer-events: none; }
-  .scenario-card:hover { border-color: rgba(184,114,9,0.40); box-shadow: ${COLORS.shadowMd}, 0 0 0 1px rgba(184,114,9,0.10); transform: translateY(-3px); }
+  .scenario-card:hover { border-color: rgba(120,183,255,0.40); box-shadow: ${COLORS.shadowMd}, 0 0 0 1px rgba(120,183,255,0.10); transform: translateY(-3px); }
 
   .ref-table { width: 100%; border-collapse: collapse; }
   .ref-table th { text-align: left; padding: 12px 16px; font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: ${COLORS.textDim}; border-bottom: 1px solid ${COLORS.border}; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
@@ -510,17 +510,17 @@ const styles = `
   @media (max-width: 640px) { .main-content { padding: 22px 16px; } .card-grid { grid-template-columns: 1fr; } .page-title { font-size: 28px; letter-spacing: -0.4px; } .two-col { grid-template-columns: 1fr; } }
 
   .hero-banner { position: relative; border-radius: 24px; overflow: hidden; margin-bottom: 36px; background: linear-gradient(135deg, #050A12 0%, #0B1624 40%, #0E1A2B 70%, #080F1C 100%); box-shadow: 0 4px 20px rgba(8,15,26,0.30), 0 20px 60px rgba(8,15,26,0.20), inset 0 1px 0 rgba(255,255,255,0.04); }
-  .hero-banner::before { content: ''; position: absolute; top: -80px; left: -40px; width: 440px; height: 300px; background: radial-gradient(ellipse, rgba(184,114,9,0.24) 0%, rgba(232,168,56,0.08) 45%, transparent 70%); pointer-events: none; }
+  .hero-banner::before { content: ''; position: absolute; top: -80px; left: -40px; width: 440px; height: 300px; background: radial-gradient(ellipse, rgba(62,127,199,0.24) 0%, rgba(120,183,255,0.08) 45%, transparent 70%); pointer-events: none; }
   .hero-banner::after { content: ''; position: absolute; bottom: -40px; right: -30px; width: 320px; height: 220px; background: radial-gradient(ellipse, rgba(26,89,145,0.18) 0%, transparent 65%); pointer-events: none; }
   .hero-banner-inner { position: relative; z-index: 2; padding: 40px 40px 36px; }
   @media (max-width: 640px) { .hero-banner-inner { padding: 30px 24px 26px; } }
-  .hero-stage-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(184,114,9,0.45), rgba(232,168,56,0.30), transparent); z-index: 3; }
+  .hero-stage-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(62,127,199,0.45), rgba(120,183,255,0.30), transparent); z-index: 3; }
 
-  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(184,114,9,0.30), rgba(184,114,9,0.50), rgba(184,114,9,0.30), transparent); margin: 36px 0; position: relative; }
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(120,183,255,0.30), rgba(120,183,255,0.50), rgba(120,183,255,0.30), transparent); margin: 36px 0; position: relative; }
   .section-divider::after { content: ''; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; border-radius: 50%; background: ${COLORS.accent}; opacity: 0.5; }
 
   .feature-spotlight { position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, ${COLORS.navy} 0%, #0D1B2E 60%, #162033 100%); padding: 28px; box-shadow: ${COLORS.shadowMd}; }
-  .feature-spotlight::before { content: ''; position: absolute; top: -40px; right: -40px; width: 220px; height: 220px; background: radial-gradient(ellipse, rgba(184,114,9,0.15) 0%, transparent 65%); pointer-events: none; }
+  .feature-spotlight::before { content: ''; position: absolute; top: -40px; right: -40px; width: 220px; height: 220px; background: radial-gradient(ellipse, rgba(62,127,199,0.15) 0%, transparent 65%); pointer-events: none; }
   .feature-spotlight-inner { position: relative; z-index: 2; }
 `
 
@@ -1172,7 +1172,7 @@ const RoleSelector = ({ onSelect }) => {
       <div style={{
         position: "absolute", top: -120, left: -80,
         width: 520, height: 360,
-        background: `radial-gradient(ellipse, rgba(184,114,9,0.22) 0%, rgba(232,168,56,0.07) 45%, transparent 70%)`,
+        background: `radial-gradient(ellipse, rgba(62,127,199,0.22) 0%, rgba(120,183,255,0.07) 45%, transparent 70%)`,
         pointerEvents: "none", animation: "slowDrift 18s ease-in-out infinite",
       }} />
       <div style={{
@@ -1206,10 +1206,10 @@ const RoleSelector = ({ onSelect }) => {
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 36 }}>
               <div style={{
                 width: 44, height: 44, borderRadius: 13,
-                background: `linear-gradient(135deg, rgba(184,114,9,0.25) 0%, rgba(232,168,56,0.10) 100%)`,
-                border: `1px solid rgba(184,114,9,0.40)`,
+                background: `linear-gradient(135deg, rgba(62,127,199,0.25) 0%, rgba(120,183,255,0.10) 100%)`,
+                border: `1px solid rgba(62,127,199,0.40)`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: `0 4px 16px rgba(184,114,9,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                boxShadow: `0 4px 16px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                   <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#78B7FF" fillOpacity="0.9"/>
@@ -1223,7 +1223,7 @@ const RoleSelector = ({ onSelect }) => {
                 }}>WorshipPilot</div>
                 <div style={{
                   fontSize: 10, fontWeight: 700, letterSpacing: 2,
-                  textTransform: "uppercase", color: "rgba(232,168,56,0.75)",
+                  textTransform: "uppercase", color: "rgba(120,183,255,0.75)",
                   marginTop: 3,
                 }}>MD System · Built for Sunday</div>
               </div>
@@ -1306,7 +1306,7 @@ const RoleSelector = ({ onSelect }) => {
                       display: "flex", alignItems: "center", gap: 14,
                       padding: "13px 14px",
                       background: isSelected
-                        ? "linear-gradient(135deg, rgba(184,114,9,0.22) 0%, rgba(232,168,56,0.08) 100%)"
+                        ? "linear-gradient(135deg, rgba(62,127,199,0.22) 0%, rgba(120,183,255,0.08) 100%)"
                         : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
                       border: `1.5px solid ${isSelected ? "#78B7FF" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
                       borderRadius: 12, cursor: "pointer", textAlign: "left",
@@ -1316,11 +1316,11 @@ const RoleSelector = ({ onSelect }) => {
                   >
                     <div style={{
                       width: 36, height: 36, borderRadius: 10,
-                      background: isSelected ? "linear-gradient(135deg, #E8A838 0%, #B87209 100%)" : "rgba(240,235,225,0.06)",
-                      border: `1px solid ${isSelected ? "rgba(232,168,56,0.5)" : "rgba(240,235,225,0.10)"}`,
+                      background: isSelected ? "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)" : "rgba(240,235,225,0.06)",
+                      border: `1px solid ${isSelected ? "rgba(120,183,255,0.5)" : "rgba(240,235,225,0.10)"}`,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0,
-                      boxShadow: isSelected ? "0 4px 14px rgba(184,114,9,0.3)" : "none",
+                      boxShadow: isSelected ? "0 4px 14px rgba(62,127,199,0.3)" : "none",
                       transition: "all 0.18s",
                     }}>
                       <Icon name={role.icon} size={17} color={isSelected ? "#fff" : "rgba(240,235,225,0.65)"} />
@@ -1353,17 +1353,17 @@ const RoleSelector = ({ onSelect }) => {
               style={{
                 width: "100%", padding: "14px",
                 borderRadius: 11, border: "none",
-                background: selected ? "linear-gradient(135deg, #B87209 0%, #E8A838 100%)" : "rgba(240,235,225,0.06)",
+                background: selected ? "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)" : "rgba(240,235,225,0.06)",
                 color: selected ? "#fff" : "rgba(240,235,225,0.35)",
                 fontSize: 14, fontWeight: 700,
                 cursor: selected ? "pointer" : "not-allowed",
                 fontFamily: "var(--font-body)", letterSpacing: 0.2,
                 transition: "all 0.2s",
-                boxShadow: selected ? "0 4px 16px rgba(184,114,9,0.35)" : "none",
+                boxShadow: selected ? "0 4px 16px rgba(62,127,199,0.35)" : "none",
                 position: "relative", overflow: "hidden",
               }}
-              onMouseEnter={e => { if (selected) { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 22px rgba(184,114,9,0.45)"; }}}
-              onMouseLeave={e => { if (selected) { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(184,114,9,0.35)"; }}}
+              onMouseEnter={e => { if (selected) { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 6px 22px rgba(62,127,199,0.45)"; }}}
+              onMouseLeave={e => { if (selected) { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(62,127,199,0.35)"; }}}
             >
               {selected ? "Enter the system →" : "Select a role to continue"}
             </button>
@@ -1446,7 +1446,7 @@ const ModuleQuiz = ({ moduleId, onComplete, onSkip }) => {
     return (
       <div className="fade-in" style={{ padding: "28px 24px", background: COLORS.card, borderRadius: 18, border: `1px solid ${COLORS.border}`, textAlign: "center" }}>
         <div style={{ fontSize: 36, marginBottom: 12 }}>{allCorrect ? "🎯" : "👍"}</div>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.navy, marginBottom: 8 }}>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: COLORS.navy, marginBottom: 8 }}>
           {allCorrect ? "Sharp." : "Good work."}
         </div>
         <div style={{ fontSize: 14, color: COLORS.textMuted, marginBottom: 24, lineHeight: 1.6 }}>
@@ -1466,7 +1466,7 @@ const ModuleQuiz = ({ moduleId, onComplete, onSkip }) => {
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.textDim }}>Quick Check — {qIdx + 1} of {questions.length}</div>
         <button onClick={onSkip} style={{ fontSize: 11, color: COLORS.textDim, background: "none", border: "none", cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>Skip →</button>
       </div>
-      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 20, lineHeight: 1.4 }}>{q.question || q.q}</div>
+      <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 20, lineHeight: 1.4 }}>{q.question || q.q}</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
         {q.options.map((opt, i) => {
           let bg = COLORS.surfaceAlt;
@@ -1514,7 +1514,7 @@ const Hint = ({ hintKey, text }) => {
   const [visible, dismiss] = useHint(hintKey);
   if (!visible) return null;
   return (
-    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.25)`, borderRadius: 12, marginBottom: 16 }}>
+    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.25)`, borderRadius: 12, marginBottom: 16 }}>
       <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>💡</span>
       <span style={{ fontSize: 13, color: COLORS.navy, lineHeight: 1.5, flex: 1 }}>{text}</span>
       <button onClick={dismiss} style={{ background: "none", border: "none", color: COLORS.textDim, cursor: "pointer", fontSize: 14, flexShrink: 0, padding: 0, lineHeight: 1 }}>✕</button>
@@ -1561,7 +1561,7 @@ const renderAnswerText = (text) => {
     } else if (line.endsWith(":") && line.length < 60 && !line.startsWith("e.g")) {
       // Short line ending in colon = section header
       elements.push(
-        <div key={i} style={{ fontWeight: 700, color: COLORS.navy, fontSize: 13, marginTop: 14, marginBottom: 6, fontFamily: "'Outfit', sans-serif" }}>{line}</div>
+        <div key={i} style={{ fontWeight: 700, color: COLORS.navy, fontSize: 13, marginTop: 14, marginBottom: 6, fontFamily: "var(--font-display)" }}>{line}</div>
       );
     } else {
       // Normal paragraph text
@@ -1731,7 +1731,7 @@ const StartHerePage = ({ setPage }) => {
 
       <div className="card" style={{ marginBottom: 28 }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>What is this app?</div>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 600, color: COLORS.navy, lineHeight: 1.3, marginBottom: 10 }}>A training and execution system for Worship Music Directors.</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: COLORS.navy, lineHeight: 1.3, marginBottom: 10 }}>A training and execution system for Worship Music Directors.</div>
         <div style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.7 }}>This app trains and equips Music Directors to confidently lead a worship team — both in rehearsal and live on Sunday. It combines structured training modules with a real-time cue engine so you can learn the role and then execute it with clarity.</div>
       </div>
 
@@ -1742,7 +1742,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 38, height: 38, borderRadius: "50%", background: COLORS.accentLight, border: `1.5px solid rgba(184,114,10,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
+            <div style={{ width: 38, height: 38, borderRadius: "50%", background: COLORS.accentLight, border: `1.5px solid rgba(62,127,199,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>{step.label}</div>
               <div style={{ fontSize: 12, color: COLORS.textDim }}>{step.desc}</div>
@@ -1759,11 +1759,11 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={mod.icon} size={18} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>Module {i + 1} — {mod.title}</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>Module {i + 1} — {mod.title}</div>
               <div style={{ fontSize: 12, color: COLORS.textDim }}>{mod.tagline}</div>
             </div>
             <span style={{ color: COLORS.accent, fontSize: 16, flexShrink: 0 }}>›</span>
@@ -1781,7 +1781,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ padding: "18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
               <Icon name={item.icon} size={19} color={COLORS.accent} />
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{item.label}</div>
@@ -1815,7 +1815,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
 
         <div className="page-header">
           <div className="page-eyebrow">MD Training — Module {MD_MODULES.findIndex(m => m.id === view) + 1} of {MD_MODULES.length}</div>
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
+          <div style={{ width: 48, height: 48, borderRadius: 14, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
             <Icon name={activeModule.icon} size={24} color={COLORS.accent} />
           </div>
           <div className="page-title">{activeModule.title}</div>
@@ -1823,7 +1823,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
         </div>
 
         {/* Outcomes */}
-        <div style={{ background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.2)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
+        <div style={{ background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>After this module you'll be able to:</div>
           {activeModule.outcomes.map((o, i) => (
             <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7, fontSize: 13.5, color: COLORS.navy, lineHeight: 1.5 }}>
@@ -1836,7 +1836,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
         {/* Content sections */}
         {activeModule.sections.map((sec, i) => (
           <div key={i} className="card" style={{ marginBottom: 10 }}>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 600, color: COLORS.navy, marginBottom: 12 }}>{sec.heading}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: COLORS.navy, marginBottom: 12 }}>{sec.heading}</div>
             {sec.body.split("\n\n").map((para, j) => (
               <p key={j} style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.75, marginBottom: 10 }}>
                 {para.startsWith("•") ? (
@@ -1891,10 +1891,15 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
   // ── JOURNEY VIEW (default) ──
   return (
     <div className="fade-in">
-      <div className="page-header">
-        <div className="page-eyebrow">WorshipPilot</div>
-        <div className="page-title">MD Training</div>
-        <div className="page-sub">Five steps from observer to deployed Music Director. Study each module, then execute.</div>
+      {/* Photo hero */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 200 }}>
+        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Training · 5-week plan</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>The MD Journey</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>A linear path from foundations to leading a real service.</div>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -1905,7 +1910,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
           </div>
           <div className="progress-track"><div className="progress-fill" style={{ width: `${(completedCount / MD_MODULES.length) * 100}%` }} /></div>
         </div>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 32, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{completedCount}/{MD_MODULES.length}</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{completedCount}/{MD_MODULES.length}</div>
       </div>
 
       {/* 5-step journey spine */}
@@ -1920,7 +1925,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
             <div key={step.step} style={{ display: "flex", gap: 0 }}>
               {/* Spine */}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 48, flexShrink: 0 }}>
-                <div style={{ width: 34, height: 34, borderRadius: "50%", border: `2px solid ${moduleDone ? COLORS.green : step.color}`, background: moduleDone ? COLORS.green : COLORS.surface, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 700, color: moduleDone ? "#fff" : step.color, flexShrink: 0 }}>
+                <div style={{ width: 34, height: 34, borderRadius: "50%", border: `2px solid ${moduleDone ? COLORS.green : step.color}`, background: moduleDone ? COLORS.green : COLORS.surface, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: moduleDone ? "#fff" : step.color, flexShrink: 0 }}>
                   {moduleDone ? "✓" : step.step}
                 </div>
                 {!isLast && <div style={{ width: 2, flex: 1, minHeight: 24, background: `${step.color}25`, margin: "3px 0" }} />}
@@ -1933,7 +1938,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: step.color }}>Step {step.step}</div>
                     <div style={{ fontSize: 10, color: COLORS.textDim, letterSpacing: 1, textTransform: "uppercase" }}>{step.phase}</div>
                   </div>
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{week.title}</div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{week.title}</div>
                   <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.55, marginBottom: 12 }}>{step.desc}</div>
 
                   {/* Module card — if this step has a module */}
@@ -1942,7 +1947,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
                       style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 16px", background: moduleDone ? COLORS.greenLight : COLORS.card, border: `1px solid ${moduleDone ? COLORS.green + "44" : COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s", marginBottom: 8 }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green : step.color; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green + "44" : COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : COLORS.accentLight, border: `1px solid ${moduleDone ? COLORS.green : "rgba(192,122,12,0.15)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : COLORS.accentLight, border: `1px solid ${moduleDone ? COLORS.green : "rgba(62,127,199,0.15)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <Icon name={module.icon} size={18} color={moduleDone ? "#fff" : COLORS.accent} />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -2003,68 +2008,127 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
   return (
     <div className="fade-in">
 
-      {/* ── FULL-BLEED PHOTO HERO ── */}
-      <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", marginBottom: 12, height: "clamp(320px, 45vw, 440px)" }}>
-        {/* Background photo */}
-        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }} />
-        {/* Gradient overlay — dark at bottom for text, lighter at top */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,15,22,0.97) 0%, rgba(10,15,22,0.75) 40%, rgba(10,15,22,0.25) 100%)" }} />
-        {/* Top status bar */}
-        <div style={{ position: "absolute", top: 20, left: 22, right: 22, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#78B7FF", boxShadow: "0 0 8px rgba(120,183,255,0.7)" }} />
-            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "rgba(120,183,255,0.9)", fontFamily: "var(--font-body)" }}>
-              {isFirstVisit ? "Welcome to WorshipPilot" : greeting}
-            </span>
-          </div>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-mono)" }}>
-            {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
-          </span>
+      {/* ── GREETING STRIP ── */}
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 20 }}>
+        <div style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 700, color: COLORS.text, letterSpacing: "-0.5px", fontFamily: "var(--font-display)" }}>
+          {isFirstVisit ? "Welcome." : `${greeting}.`}
         </div>
-        {/* Bottom content */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px 24px 24px" }}>
-          {isFirstVisit ? (
-            <>
-              <div style={{ fontSize: "clamp(28px, 5vw, 40px)", fontWeight: 700, color: "#fff", lineHeight: 1.08, letterSpacing: "-0.8px", marginBottom: 10, fontFamily: "var(--font-display)" }}>
-                Most teams don't lack talent.<br />
-                <span style={{ color: "#78B7FF" }}>They lack clarity.</span>
-              </div>
-              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, maxWidth: 460, marginBottom: 22 }}>
-                Playback handles the audio. WorshipPilot handles the leadership.
-              </div>
-            </>
-          ) : (
-            <>
-              <div style={{ fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.6px", marginBottom: 8, fontFamily: "var(--font-display)" }}>
-                {trainingDone ? <>You're trained. <span style={{ color: "#78B7FF" }}>Stay sharp.</span></> : <>Pick up where you left off.</>}
-              </div>
-              {!trainingDone && (
-                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
-                  {`Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase} · ${currentWeek.title}`}
-                </div>
-              )}
-              {!trainingDone && (
-                <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)", overflow: "hidden", maxWidth: 280, marginBottom: 20 }}>
-                  <div style={{ height: "100%", width: `${progressPct}%`, background: "#78B7FF", borderRadius: 3, transition: "width 0.6s ease" }} />
-                </div>
-              )}
-            </>
-          )}
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <button onClick={() => setPage(isFirstVisit ? "starthere" : trainingDone ? "coaching" : "training")}
-              style={{ padding: "11px 22px", borderRadius: 10, border: "none", background: "#78B7FF", color: "#0A0F18", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#A9D2FF"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#78B7FF"; }}>
-              {isFirstVisit ? "Start training →" : trainingDone ? "Practice scenarios →" : "Continue →"}
-            </button>
-            <button onClick={() => setPage("live")}
-              style={{ padding: "11px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.14)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}>
-              ▶ Live Mode
-            </button>
+        <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 16 }}>
+          <div style={{ fontSize: 12, color: COLORS.accent, fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+            {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }).toUpperCase()}
           </div>
         </div>
+      </div>
+
+      {/* ── TOP TWO PHOTO CARDS ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+        {/* Training card */}
+        <button onClick={() => setPage(isFirstVisit ? "starthere" : "training")}
+          style={{ position: "relative", height: 220, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
+          <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.6) 50%, rgba(8,12,18,0.15) 100%)" }} />
+          <div style={{ position: "absolute", top: 16, left: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: COLORS.accent }} />
+              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent }}>
+                {isFirstVisit ? "In Progress" : `Step ${currentStep.step} / ${JOURNEY_STEPS.length}`}
+              </span>
+            </div>
+          </div>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 18px 16px" }}>
+            <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", lineHeight: 1.15, marginBottom: 6, fontFamily: "var(--font-display)" }}>
+              {isFirstVisit ? "Start your MD training." : trainingDone ? "Training complete." : <>Pick up where<br />you left off.</>}
+            </div>
+            {!trainingDone && (
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 12 }}>
+                {isFirstVisit ? "5-module pathway · ~90 min total" : `${currentWeek.title} · ${currentStep.phase} phase`}
+              </div>
+            )}
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <div style={{ padding: "7px 16px", borderRadius: 8, background: COLORS.accent, color: "#0A0F18", fontSize: 12, fontWeight: 700 }}>
+                {isFirstVisit ? "Start training →" : trainingDone ? "Review →" : "Continue training →"}
+              </div>
+              <div style={{ padding: "7px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.75)", fontSize: 12, fontWeight: 600 }}>
+                ▶ Live Mode
+              </div>
+            </div>
+            {!isFirstVisit && !trainingDone && (
+              <div style={{ marginTop: 12 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>Training progress</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: COLORS.accent, fontFamily: "var(--font-mono)" }}>{completedCount}/{MD_MODULES.length}</span>
+                </div>
+                <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accent, borderRadius: 3 }} />
+                </div>
+              </div>
+            )}
+          </div>
+        </button>
+
+        {/* Live Mode card */}
+        <button onClick={() => setPage("live")}
+          style={{ position: "relative", height: 220, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
+          <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 50%, rgba(8,12,18,0.1) 100%)" }} />
+          <div style={{ position: "absolute", top: 16, left: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4CAF7D" }} />
+              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#4CAF7D" }}>Live Mode · Ready</span>
+            </div>
+          </div>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 18px 16px" }}>
+            <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", lineHeight: 1.15, marginBottom: 6, fontFamily: "var(--font-display)" }}>
+              Practice for Sunday.
+            </div>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 14 }}>
+              Beat-accurate countdowns. Section cues.
+            </div>
+            <div style={{ padding: "7px 16px", borderRadius: 8, background: COLORS.accent, color: "#0A0F18", fontSize: 12, fontWeight: 700, display: "inline-block" }}>
+              ▶ Open Live Mode
+            </div>
+          </div>
+        </button>
+      </div>
+
+      {/* ── BOTTOM THREE CARDS ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 28 }}>
+        {/* Cue Language / Vocab */}
+        <button onClick={() => setPage("vocab")}
+          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
+          <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.95) 0%, rgba(8,12,18,0.4) 60%, rgba(8,12,18,0.1) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 12px" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4 }}>Module 02</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>Cue Language</div>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>45+ calls · reference</div>
+          </div>
+        </button>
+
+        {/* Situations */}
+        <button onClick={() => setPage("coaching")}
+          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
+          <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.95) 0%, rgba(8,12,18,0.4) 60%, rgba(8,12,18,0.1) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 12px" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4 }}>Situations</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>Reading the room</div>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>7 real-world scenarios</div>
+          </div>
+        </button>
+
+        {/* Service stats */}
+        <button onClick={() => setPage("services")}
+          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "16px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 8 }}>Service</div>
+          <div style={{ fontSize: 20, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1, marginBottom: 4 }}>Build your set</div>
+          <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 16 }}>Songs · Transitions · Live Mode</div>
+          <div style={{ display: "flex", gap: 2, height: 28, alignItems: "flex-end" }}>
+            {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
+              <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}30` }} />
+            ))}
+          </div>
+        </button>
       </div>
 
       {!pcoConnected && (
@@ -2084,60 +2148,37 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         </button>
       )}
 
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-          <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim }}>Everything else</div>
-          <div style={{ flex: 1, height: 1, background: `linear-gradient(90deg, ${COLORS.border}, transparent 70%)` }} />
+      {/* ── WORKSPACE GRID ── */}
+      <div style={{ marginBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+          <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim }}>//</span>
+          <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.textDim }}>Workspace</span>
+          <div style={{ flex: 1, height: 1, background: COLORS.border }} />
         </div>
-
-        {[
-          {
-            heading: "Reference",
-            items: [
-              { icon: "vocab",    title: "Vocabulary",       sub: "Every standard call",               page: "vocab" },
-              { icon: "manual",   title: "System Manual",    sub: "All 10 MD parts",                   page: "manual" },
-              { icon: "videos",   title: "Video Library",    sub: "40 curated videos",                 page: "videos" },
-              { icon: "coaching", title: "MD Situations",    sub: "7 real scenarios",                  page: "coaching" },
-            ]
-          },
-          {
-            heading: "Prepare",
-            items: [
-              { icon: "builder",    title: "Song Builder",    sub: "Structure songs for Live Mode",     page: "builder" },
-              { icon: "services",   title: "Service Builder", sub: "Assemble a Sunday set",             page: "services" },
-              { icon: "onboarding", title: "Onboarding",      sub: "5-week MD pathway",                 page: "onboarding" },
-              { icon: "pilots",     title: "The Pilots Page", sub: "Arrangements from other MDs",       page: "pilots" },
-            ]
-          },
-          {
-            heading: "Roll it out",
-            items: [
-              { icon: "roadmap", title: "Roadmap", sub: "Implement the system across your team",        page: "roadmap" },
-            ]
-          },
-        ].map((group, gi) => (
-          <div key={gi} style={{ marginBottom: gi < 2 ? 24 : 0 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10, paddingLeft: 2 }}>
-              {group.heading}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              {group.items.map((item, i) => (
-                <button key={i} onClick={() => setPage(item.page)} style={{ display: "flex", alignItems: "center", gap: 14, padding: "11px 14px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 11, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "var(--font-body)", boxShadow: COLORS.shadowXs, transition: "all 0.14s" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(-1px)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadowXs; e.currentTarget.style.transform = "translateY(0)"; }}>
-                  <div style={{ width: 32, height: 32, borderRadius: 9, background: COLORS.surfaceAlt, border: `1px solid ${COLORS.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Icon name={item.icon} size={15} color={COLORS.textMuted} />
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13.5, fontWeight: 600, color: COLORS.navy, lineHeight: 1.25, letterSpacing: "-0.1px" }}>{item.title}</div>
-                    <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.3, marginTop: 2 }}>{item.sub}</div>
-                  </div>
-                  <span style={{ color: COLORS.textFaint, fontSize: 15, flexShrink: 0, fontWeight: 500 }}>›</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 8 }}>
+          {[
+            { icon: "vocab",      title: "Vocabulary",      sub: "45+ calls",         page: "vocab" },
+            { icon: "manual",     title: "Manual",          sub: "10 parts",          page: "manual" },
+            { icon: "videos",     title: "Videos",          sub: "40 clips",          page: "videos" },
+            { icon: "coaching",   title: "Situations",      sub: "7 scenarios",       page: "coaching" },
+            { icon: "builder",    title: "Song Builder",    sub: "4 saved",           page: "builder" },
+            { icon: "services",   title: "Service Builder", sub: "active",            page: "services" },
+            { icon: "onboarding", title: "Onboarding",      sub: "5-week plan",       page: "onboarding" },
+            { icon: "pilots",     title: "Pilots",          sub: "community",         page: "pilots" },
+          ].map((item, i) => (
+            <button key={i} onClick={() => setPage(item.page)}
+              style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0, padding: "14px 14px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "var(--font-body)", transition: "all 0.15s" }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.background = COLORS.surfaceAlt; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; }}>
+              <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 16 }}>
+                <Icon name={item.icon} size={16} color={COLORS.textMuted} />
+                <span style={{ fontSize: 13, color: COLORS.textDim }}>›</span>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.text, marginBottom: 2, letterSpacing: "-0.1px" }}>{item.title}</div>
+              <div style={{ fontSize: 11, color: COLORS.textDim }}>{item.sub}</div>
+            </button>
+          ))}
+        </div>
       </div>
 
       <ScriptureVerse page="dashboard" />
@@ -2154,6 +2195,16 @@ const VocabPage = () => {
 
   return (
     <div className="fade-in">
+      {/* Photo hero */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Reference</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>Vocabulary</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>The standardized calls your band responds to without thinking.</div>
+        </div>
+      </div>
       <div className="page-header">
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
@@ -2200,7 +2251,7 @@ const VocabPage = () => {
 
       <div className="section-label" style={{ marginTop: 32 }}>Nashville Number Quick Reference</div>
       <div className="card" style={{ marginBottom: 24 }}>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 14 }}>All 12 Keys</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 14 }}>All 12 Keys</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px,1fr))", gap: 10 }}>
           {[
             ["C",  "C Dm Em F G Am Bdim"],
@@ -2680,7 +2731,7 @@ const FretboardSection = () => {
 
       {/* Top bar: title + close */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8, flexShrink: 0 }}>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 700, color: "#fff" }}>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "#fff" }}>
           {instrument === "guitar" ? "Guitar" : "Bass"} — Key of {activeKey}
         </div>
         <button onClick={() => setFullscreen(false)}
@@ -2695,7 +2746,7 @@ const FretboardSection = () => {
         <div style={{ display: "flex", gap: 4, flexWrap: "wrap", flex: 1 }}>
           {keys.map(k => (
             <button key={k} onClick={() => setActiveKey(k)}
-              style={{ padding: "3px 9px", borderRadius: 12, border: `1.5px solid ${activeKey === k ? COLORS.accent : "rgba(255,255,255,0.15)"}`, background: activeKey === k ? COLORS.accent : "transparent", color: activeKey === k ? "#fff" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif" }}>
+              style={{ padding: "3px 9px", borderRadius: 12, border: `1.5px solid ${activeKey === k ? COLORS.accent : "rgba(255,255,255,0.15)"}`, background: activeKey === k ? COLORS.accent : "transparent", color: activeKey === k ? "#fff" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)" }}>
               {k}
             </button>
           ))}
@@ -2747,7 +2798,7 @@ const FretboardSection = () => {
       <div ref={sectionRef} className="card" style={{ padding: "20px 20px 24px" }}>
       {/* Header row */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6, flexWrap: "wrap", gap: 10 }}>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 600, color: COLORS.navy }}>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: COLORS.navy }}>
           {instrument === "guitar" ? "Guitar" : "Bass"} Fretboard — Scale Positions
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -2770,7 +2821,7 @@ const FretboardSection = () => {
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
         {keys.map(k => (
           <button key={k} onClick={() => setActiveKey(k)}
-            style={{ padding: "6px 15px", borderRadius: 20, border: `1.5px solid ${activeKey === k ? COLORS.accent : COLORS.border}`, background: activeKey === k ? COLORS.accentLight : COLORS.card, color: activeKey === k ? COLORS.accent : COLORS.textMuted, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Outfit', sans-serif", transition: "all 0.15s" }}>
+            style={{ padding: "6px 15px", borderRadius: 20, border: `1.5px solid ${activeKey === k ? COLORS.accent : COLORS.border}`, background: activeKey === k ? COLORS.accentLight : COLORS.card, color: activeKey === k ? COLORS.accent : COLORS.textMuted, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)", transition: "all 0.15s" }}>
             {k}
           </button>
         ))}
@@ -2864,7 +2915,7 @@ const OnboardingPage = () => {
         <div className="detail-header">
           <div>
             <div style={{ fontSize: 10, color: COLORS.accent, letterSpacing: 2, textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>Week {ONBOARDING_WEEKS[activeWeek].week}</div>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 600, color: COLORS.navy }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: COLORS.navy }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
           </div>
           <span className={`badge ${weekProgress(activeWeek) === 100 ? "badge-green" : "badge-gold"}`}>{weekProgress(activeWeek)}% Complete</span>
         </div>
@@ -2885,7 +2936,7 @@ const OnboardingPage = () => {
               );
             })}
           </div>
-          <div style={{ background: COLORS.accentLight, border: `1px solid rgba(184,114,10,0.2)`, borderRadius: 10, padding: "14px 18px" }}>
+          <div style={{ background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, borderRadius: 10, padding: "14px 18px" }}>
             <div style={{ fontSize: 10, color: COLORS.accent, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>Week Benchmark</div>
             <div style={{ fontSize: 14, color: COLORS.navy, fontWeight: 500 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
           </div>
@@ -2944,11 +2995,16 @@ const CoachingPage = () => {
   if (!selected) {
     return (
       <div className="fade-in">
-        <div className="page-header">
-          <div className="page-eyebrow">MD Reference</div>
-          <div className="page-title">MD Situations</div>
-          <div className="page-sub">Real Sunday situations with the correct MD response and the reasoning behind it. Study these until they're instinct.</div>
+      {/* Photo hero */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>MD Reference</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>MD Situations</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>Real scenarios. Correct responses. Study until instinct.</div>
         </div>
+      </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {SCENARIOS.map(s => (
             <button key={s.id} onClick={() => openScenario(s)}
@@ -2960,7 +3016,7 @@ const CoachingPage = () => {
                   <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: COLORS.textDim, textTransform: "uppercase" }}>{s.category}</span>
                   <span style={{ fontSize: 10, fontWeight: 700, color: difficultyColor(s.difficulty), background: difficultyBg(s.difficulty), padding: "2px 8px", borderRadius: 10 }}>{s.difficulty}</span>
                 </div>
-                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{s.title}</div>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{s.title}</div>
                 <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.prompt}</div>
               </div>
               <span style={{ color: COLORS.textDim, fontSize: 18, flexShrink: 0 }}>›</span>
@@ -2984,7 +3040,7 @@ const CoachingPage = () => {
       {/* Situation card */}
       <div style={{ background: COLORS.navy, borderRadius: 18, padding: "26px 28px", marginBottom: 16 }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>The Situation</div>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 24, fontWeight: 600, color: "#fff", lineHeight: 1.2, marginBottom: 14 }}>{selected.title}</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 600, color: "#fff", lineHeight: 1.2, marginBottom: 14 }}>{selected.title}</div>
         <div style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.75 }}>{selected.prompt}</div>
       </div>
 
@@ -2992,7 +3048,7 @@ const CoachingPage = () => {
       {!revealed ? (
         <button onClick={() => setRevealed(true)}
           style={{ width: "100%", padding: "16px", borderRadius: 14, border: `2px dashed ${COLORS.accent}`, background: COLORS.accentLight, color: COLORS.accent, fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", marginBottom: 16, transition: "all 0.15s" }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#FBE9C9"; }}
+          onMouseEnter={e => { e.currentTarget.style.background = COLORS.accentSoft; }}
           onMouseLeave={e => { e.currentTarget.style.background = COLORS.accentLight; }}>
           Show the correct response →
         </button>
@@ -3056,14 +3112,14 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
           onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-1px)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 11, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={part.icon} size={20} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                 <span className="badge badge-gold">Part {part.id}</span>
               </div>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 6 }}>{part.title}</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 6 }}>{part.title}</div>
               <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.5 }}>{part.summary}</div>
               <div style={{ fontSize: 11, color: COLORS.textDim, marginTop: 8 }}>{part.content.length} questions covered ›</div>
             </div>
@@ -3083,7 +3139,7 @@ const PartDetail = ({ part, setPage }) => (
       <span className="badge badge-gold">Part {part.id}</span>
     </div>
     <div className="page-header">
-      <div style={{ width: 52, height: 52, borderRadius: 16, background: COLORS.accentLight, border: `1px solid rgba(192,122,12,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
+      <div style={{ width: 52, height: 52, borderRadius: 16, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
         <Icon name={part.icon} size={26} color={COLORS.accent} />
       </div>
       <div className="page-title">{part.title}</div>
@@ -3226,7 +3282,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       <div className="fade-in">
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <button onClick={() => setView('browse')} className="btn btn-ghost" style={{ padding: '7px 14px' }}>← Back</button>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.navy }}>Share to The Pilots Page</div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: COLORS.navy }}>Share to The Pilots Page</div>
         </div>
         {!pcoState ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', background: COLORS.card, borderRadius: 16, border: `1px solid ${COLORS.border}` }}>
@@ -3307,8 +3363,8 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
         {/* Song header */}
         <div style={{ background: COLORS.navy, borderRadius: 20, padding: '24px 22px', marginBottom: 16, position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', top: -30, right: -20, width: 160, height: 120, background: 'radial-gradient(ellipse, rgba(192,122,12,0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
-          <div style={{ fontSize: 22, fontWeight: 700, color: '#fff', fontFamily: "'Outfit', sans-serif", marginBottom: 4 }}>{s.song_title}</div>
+          <div style={{ position: 'absolute', top: -30, right: -20, width: 160, height: 120, background: 'radial-gradient(ellipse, rgba(62,127,199,0.2) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ fontSize: 22, fontWeight: 700, color: '#fff', fontFamily: "var(--font-display)", marginBottom: 4 }}>{s.song_title}</div>
           {s.artist && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 10 }}>{s.artist}</div>}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
             {s.key && <span style={{ fontSize: 11, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: COLORS.accentGlow, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {s.key}</span>}
@@ -3377,8 +3433,8 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: 'uppercase', color: COLORS.accent, fontFamily: "'Outfit', sans-serif", marginBottom: 4 }}>Community</div>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 28, fontWeight: 700, color: COLORS.navy, lineHeight: 1.1 }}>The Pilots Page</div>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: 'uppercase', color: COLORS.accent, fontFamily: "var(--font-display)", marginBottom: 4 }}>Community</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, color: COLORS.navy, lineHeight: 1.1 }}>The Pilots Page</div>
             <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>Song arrangements by MDs, for MDs.</div>
           </div>
           <button onClick={() => setView('publish')}
@@ -3416,7 +3472,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       ) : songs.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px 20px', background: COLORS.card, borderRadius: 20, border: `1px solid ${COLORS.border}` }}>
           <div style={{ fontSize: 40, marginBottom: 16 }}>✈️</div>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, fontWeight: 700, color: COLORS.navy, marginBottom: 8 }}>Be the first Pilot.</div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: COLORS.navy, marginBottom: 8 }}>Be the first Pilot.</div>
           <div style={{ fontSize: 13, color: COLORS.textMuted, marginBottom: 20, maxWidth: 300, margin: '0 auto 20px' }}>No arrangements here yet. Share yours and start the community.</div>
           <button onClick={() => setView('publish')} className="btn btn-primary">Share an Arrangement →</button>
         </div>
@@ -3432,7 +3488,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 10 }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif", marginBottom: 2 }}>{song.song_title}</div>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, fontFamily: "var(--font-display)", marginBottom: 2 }}>{song.song_title}</div>
                     {song.artist && <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 6 }}>{song.artist}</div>}
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                       {song.key && <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, background: COLORS.accentLight, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {song.key}</span>}
@@ -3556,7 +3612,7 @@ const RoadmapPage = ({ setPage }) => {
 
       {/* CTA */}
       <div style={{ marginTop: 24, padding: "20px 22px", background: COLORS.navy, borderRadius: 16, textAlign: "center" }}>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 8 }}>Start with the training modules.</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 8 }}>Start with the training modules.</div>
         <div style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 16 }}>The roadmap follows.</div>
         <button onClick={() => setPage("training")} className="btn btn-primary">Begin MD Training →</button>
       </div>
@@ -3933,7 +3989,7 @@ const SongBlock = ({ block, index, song, songLibrary, onSaveSong, onNotesChange,
           <span style={{ fontSize: 10, fontWeight: 800, color: "#fff" }}>{index + 1}</span>
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, fontFamily: "'Outfit', sans-serif" }}>{song?.title || block.pcoTitle || "Unknown Song"}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.navy, fontFamily: "var(--font-display)" }}>{song?.title || block.pcoTitle || "Unknown Song"}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
             {song ? (
               <span style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM</span>
@@ -4008,7 +4064,7 @@ const MomentBlock = ({ block, onUpdate, onNotesChange, onRemove }) => {
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <select value={block.momentType || "Speaking Moment"} onChange={e => onUpdate({ ...block, momentType: e.target.value })}
-            style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy, background: "transparent", border: "none", outline: "none", cursor: "pointer", fontFamily: "'Outfit', sans-serif", width: "100%", padding: 0 }}>
+            style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy, background: "transparent", border: "none", outline: "none", cursor: "pointer", fontFamily: "var(--font-display)", width: "100%", padding: 0 }}>
             {MOMENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
           {block.momentType === "Custom" && (
@@ -4040,7 +4096,7 @@ const JamBlock = ({ block, onUpdate, onNotesChange, onRemove }) => {
       <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px" }}>
         <div style={{ fontSize: 16 }}>🍓</div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.accent, fontFamily: "'Outfit', sans-serif" }}>MC Groove / The Jam</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.accent, fontFamily: "var(--font-display)" }}>MC Groove / The Jam</div>
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
             <select value={key} onChange={e => onUpdate({ ...block, jamKey: e.target.value, jamProgression: "" })}
               style={{ fontSize: 11, fontWeight: 700, color: COLORS.navy, background: "transparent", border: `1px solid ${COLORS.border}`, borderRadius: 6, padding: "2px 6px", fontFamily: "'JetBrains Mono', monospace" }}>
@@ -4053,7 +4109,7 @@ const JamBlock = ({ block, onUpdate, onNotesChange, onRemove }) => {
           </div>
         </div>
         <div style={{ display: "flex", gap: 4 }}>
-          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? "#FBE9C9" : COLORS.card, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.accentLight : COLORS.card, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
             {open ? "Done" : "Notes"}
           </button>
           <button onClick={onRemove} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid rgba(192,57,74,0.2)`, background: COLORS.redLight, color: COLORS.red, fontSize: 12, cursor: "pointer" }}>✕</button>
@@ -4286,10 +4342,15 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
 
   return (
     <div className="fade-in">
-      <div className="page-header">
-        <div className="page-eyebrow">Service Builder</div>
-        <div className="page-title">Build Your Service</div>
-        <div className="page-sub">Assemble your set, add MD notes for each song, then send to your band.</div>
+      {/* Photo hero */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/drummer.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Service Builder</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>Build Your Service</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>Assemble your set, add MD notes, send to your band.</div>
+        </div>
       </div>
       <Hint hintKey="service-builder" text="Build your set here — songs, transitions, moments, and the Jam. Tap Notes on any song to add your MD brief. Hit Copy Notes to send the whole thing to your band in PCO chat." />
 
@@ -4615,10 +4676,10 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   if (!activeService || songs.length === 0) {
     return (
       <div className="fade-in" style={{ maxWidth: 520, margin: "0 auto", paddingTop: 40, textAlign: "center" }}>
-        <div style={{ width: 64, height: 64, borderRadius: 18, background: "linear-gradient(135deg, rgba(192,122,12,0.15) 0%, rgba(232,168,56,0.08) 100%)", border: `1px solid rgba(192,122,12,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 4px 20px rgba(192,122,12,0.15)" }}>
+        <div style={{ width: 64, height: 64, borderRadius: 18, background: "linear-gradient(135deg, rgba(62,127,199,0.15) 0%, rgba(120,183,255,0.08) 100%)", border: `1px solid rgba(62,127,199,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 4px 20px rgba(62,127,199,0.15)" }}>
           <Icon name="live" size={28} color={COLORS.accent} />
         </div>
-        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 28, color: LIVE.text, marginBottom: 8 }}>No Active Service</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 28, color: LIVE.text, marginBottom: 8 }}>No Active Service</div>
         <div style={{ fontSize: 14, color: LIVE.textMuted, marginBottom: 28, lineHeight: 1.6 }}>Build a service in the Service Builder, then launch it here.</div>
         <button onClick={onGoToServiceBuilder}
           style={{ padding: "13px 28px", borderRadius: 12, border: `1px solid ${COLORS.accentDim}`, background: COLORS.accentGlow, color: COLORS.accent, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
@@ -4886,7 +4947,7 @@ Do not add any preamble or explanation — just the bullet points.`;
           <div style={{
             position: "absolute", top: 3, left: "50%",
             width: 2, height: 40,
-            background: `linear-gradient(180deg, ${COLORS.accent}, rgba(192,122,12,0.3))`,
+            background: `linear-gradient(180deg, ${COLORS.accent}, rgba(62,127,199,0.3))`,
             borderRadius: 2,
             transformOrigin: "top center",
             transform: `translateX(-50%) rotate(${angle}deg)`,
@@ -4896,7 +4957,7 @@ Do not add any preamble or explanation — just the bullet points.`;
           <div style={{
             position: "absolute", bottom: 2, left: "50%",
             width: 12, height: 12, borderRadius: "50%",
-            background: beatActive && isPlaying ? (beatCountRef.current % 4 === 1 ? COLORS.accent : `${COLORS.accent}99`) : "rgba(192,122,12,0.3)",
+            background: beatActive && isPlaying ? (beatCountRef.current % 4 === 1 ? COLORS.accent : `${COLORS.accent}99`) : "rgba(62,127,199,0.3)",
             border: `2px solid ${COLORS.accent}`,
             transform: `translateX(-50%) rotate(${angle}deg)`,
             transformOrigin: "top center",
@@ -4978,7 +5039,7 @@ Do not add any preamble or explanation — just the bullet points.`;
         {/* Fullscreen top bar — compact */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexShrink: 0 }}>
           <div>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, fontWeight: 700, color: LIVE.text }}>{song.title}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 13, fontWeight: 700, color: LIVE.text }}>{song.title}</div>
             <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace" }}>Key of {song.key} · {song.bpm} BPM · {song.timeSig || '4/4'} · {songIndex + 1}/{totalSongs}</div>
           </div>
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
@@ -5044,7 +5105,7 @@ Do not add any preamble or explanation — just the bullet points.`;
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: nearingEnd ? COLORS.accent : LIVE.textDim, marginBottom: 2 }}>{nearingEnd ? "⚡ Stand by for" : "Up next"}</div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 7, height: 7, borderRadius: "50%", background: segColor(nextSection.type) }} />
-                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted }}>{nextSection.label}</div>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted }}>{nextSection.label}</div>
               </div>
               {nextSection.note && nearingEnd && (
                 <div style={{ fontSize: 12, color: COLORS.accent, marginTop: 2, paddingLeft: 15 }}>{nextSection.note.split('\n')[0]}</div>
@@ -5092,7 +5153,7 @@ Do not add any preamble or explanation — just the bullet points.`;
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, paddingBottom: 14, borderBottom: `1px solid ${LIVE.border}` }}>
         <button onClick={() => setShowSetlist(o => !o)} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", textAlign: "left", flex: 1, minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 15, fontWeight: 700, color: LIVE.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: LIVE.text, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{song.title}</div>
             <span style={{ fontSize: 9, color: LIVE.textDim }}>{showSetlist ? "▲" : "▼"}</span>
           </div>
           <div style={{ fontSize: 10, color: LIVE.textDim, fontFamily: "'JetBrains Mono', monospace", marginTop: 2 }}>
@@ -5136,7 +5197,7 @@ Do not add any preamble or explanation — just the bullet points.`;
 
         {/* PCO song notice */}
         {!songLibrary.find(s => s.id === songs[songIndex]?.id) && songs[songIndex]?.sections?.[0]?.id?.startsWith('p') && (
-          <div style={{ marginBottom: 12, padding: "7px 12px", borderRadius: 8, background: "rgba(192,122,12,0.08)", border: `1px solid rgba(192,122,12,0.2)`, fontSize: 11, color: COLORS.accent }}>
+          <div style={{ marginBottom: 12, padding: "7px 12px", borderRadius: 8, background: "rgba(62,127,199,0.08)", border: `1px solid rgba(62,127,199,0.2)`, fontSize: 11, color: COLORS.accent }}>
             ⚡ PCO import — bar counts are estimates. Edit in Song Builder before Sunday.
           </div>
         )}
@@ -5212,7 +5273,7 @@ Do not add any preamble or explanation — just the bullet points.`;
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: segColor(nextSection.type) }} />
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted, transition: "all 0.3s" }}>{nextSection.label}</div>
+              <div style={{ fontFamily: "var(--font-display)", fontSize: nearingEnd ? 22 : 16, fontWeight: 600, color: nearingEnd ? LIVE.text : LIVE.textMuted, transition: "all 0.3s" }}>{nextSection.label}</div>
             </div>
             {nextSection.note && nearingEnd && (
               <div style={{ fontSize: 11, color: COLORS.accent, marginTop: 4, paddingLeft: 14 }}>{nextSection.note.split('\n')[0]}</div>
