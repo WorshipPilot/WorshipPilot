@@ -3,58 +3,58 @@ import { createPortal } from "react-dom";
 
 const COLORS = {
   // ── Surfaces ──
-  bg:           "#F4F1EA",
-  surface:      "#FFFFFF",
-  surfaceAlt:   "#EEEAE1",
-  surfaceSunk:  "#E8E3D8",
-  surfaceGlass: "rgba(255,255,255,0.78)",
-  card:         "#FFFFFF",
+  bg:           "#10141B",
+  surface:      "#161B24",
+  surfaceAlt:   "#1B2130",
+  surfaceSunk:  "#20283A",
+  surfaceGlass: "rgba(22,27,36,0.92)",
+  card:         "#161B24",
   // ── Borders ──
-  border:       "#E6E0D4",
-  borderMid:    "#CFC8B9",
-  borderStrong: "#B8AF9E",
+  border:       "#273041",
+  borderMid:    "#344158",
+  borderStrong: "#465773",
   // ── Sidebar ──
-  sidebar:           "#070D18",
-  sidebarBorder:     "#121C2C",
-  sidebarIcon:       "#44607A",
-  sidebarIconHover:  "#7E9CB8",
-  sidebarIconActive: "#E8A838",
-  // ── Brand accent ──
-  accent:         "#B87209",
-  accentDim:      "#8A5208",
-  accentBright:   "#E8A838",
-  accentLight:    "#FBF1DD",
-  accentSoft:     "#FDF7EA",
-  accentGlow:     "rgba(184,114,9,0.11)",
-  accentGradient: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)",
-  // ── Navy ──
-  navy:    "#070D18",
-  navyMid: "#172538",
-  navyLow: "#0D1624",
+  sidebar:           "#0A0F16",
+  sidebarBorder:     "#151C26",
+  sidebarIcon:       "#58708C",
+  sidebarIconHover:  "#8FB7E0",
+  sidebarIconActive: "#78B7FF",
+  // ── Brand accent (ice blue) ──
+  accent:         "#78B7FF",
+  accentDim:      "#3E7FC7",
+  accentBright:   "#A9D2FF",
+  accentLight:    "#0E1A2A",
+  accentSoft:     "#0B141F",
+  accentGlow:     "rgba(120,183,255,0.18)",
+  accentGradient: "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)",
+  // ── Navy (light text) ──
+  navy:    "#DCE7F5",
+  navyMid: "#A9BCD3",
+  navyLow: "#71859D",
   // ── Text ──
-  text:      "#161008",
-  textMuted: "#5E574E",
-  textDim:   "#938B80",
-  textFaint: "#B8AFA3",
+  text:      "#E7EEF8",
+  textMuted: "#93A4BA",
+  textDim:   "#64748B",
+  textFaint: "#3F4E63",
   // ── Semantic ──
-  green:       "#1B6540",
-  greenLight:  "#E4F1EA",
-  red:         "#B02E3C",
-  redLight:    "#FBEBEE",
-  blue:        "#1A5991",
-  blueLight:   "#E5EFF8",
-  purple:      "#5E4A9E",
-  purpleLight: "#ECE8F5",
+  green:       "#2DD4A0",
+  greenLight:  "#0A2218",
+  red:         "#F06B78",
+  redLight:    "#2A1018",
+  blue:        "#60A5E8",
+  blueLight:   "#0A1E30",
+  purple:      "#A78BF5",
+  purpleLight: "#18143A",
   // ── Elevation ──
-  shadowXs: "0 1px 2px rgba(8,15,26,0.04)",
-  shadow:   "0 1px 2px rgba(8,15,26,0.04), 0 2px 8px rgba(8,15,26,0.05)",
-  shadowMd: "0 2px 4px rgba(8,15,26,0.05), 0 8px 20px rgba(8,15,26,0.08), 0 16px 32px rgba(8,15,26,0.04)",
-  shadowLg: "0 4px 8px rgba(8,15,26,0.06), 0 12px 28px rgba(8,15,26,0.10), 0 32px 64px rgba(8,15,26,0.08)",
-  shadowXl: "0 8px 16px rgba(8,15,26,0.08), 0 24px 48px rgba(8,15,26,0.14), 0 56px 112px rgba(8,15,26,0.10)",
-  shadowAccent:   "0 1px 2px rgba(184,114,9,0.15), 0 4px 14px rgba(184,114,9,0.22), 0 8px 28px rgba(184,114,9,0.12)",
-  shadowAccentLg: "0 2px 4px rgba(184,114,9,0.18), 0 8px 22px rgba(184,114,9,0.30), 0 16px 40px rgba(184,114,9,0.15)",
+  shadowXs: "0 1px 2px rgba(0,0,0,0.3)",
+  shadow:   "0 1px 2px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.25)",
+  shadowMd: "0 2px 4px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.28), 0 16px 32px rgba(0,0,0,0.20)",
+  shadowLg: "0 4px 8px rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.35), 0 32px 64px rgba(0,0,0,0.25)",
+  shadowXl: "0 8px 16px rgba(0,0,0,0.40), 0 24px 48px rgba(0,0,0,0.40), 0 56px 112px rgba(0,0,0,0.30)",
+  shadowAccent:   "0 1px 2px rgba(120,183,255,0.15), 0 4px 14px rgba(120,183,255,0.20), 0 8px 28px rgba(120,183,255,0.10)",
+  shadowAccentLg: "0 2px 4px rgba(120,183,255,0.18), 0 8px 22px rgba(120,183,255,0.28), 0 16px 40px rgba(120,183,255,0.14)",
   // ── Focus ring ──
-  ring: "0 0 0 3px rgba(184,114,9,0.18)",
+  ring: "0 0 0 3px rgba(120,183,255,0.25)",
 };
 
 const LIVE = {
@@ -77,12 +77,12 @@ const LIVE = {
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`;
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --font-display: 'Fraunces', 'Outfit', Georgia, serif;
+    --font-display: 'Inter Tight', 'Inter', -apple-system, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
@@ -320,7 +320,7 @@ const styles = `
     position: absolute;
     inset: 0;
     border-radius: 16px;
-    background: linear-gradient(160deg, rgba(255,255,255,0.5) 0%, transparent 55%);
+    background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, transparent 55%);
     pointer-events: none;
   }
   button.card { cursor: pointer; text-align: left; width: 100%; font-family: var(--font-body); }
@@ -391,13 +391,12 @@ const styles = `
   .btn-secondary:hover { filter: brightness(1.12); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(8,15,26,0.20), 0 8px 24px rgba(8,15,26,0.28); }
 
   .btn-ghost {
-    background: ${COLORS.surfaceGlass};
+    background: rgba(255,255,255,0.05);
     color: ${COLORS.textMuted};
     border: 1px solid ${COLORS.border};
     box-shadow: ${COLORS.shadowXs};
-    backdrop-filter: blur(8px);
   }
-  .btn-ghost:hover { color: ${COLORS.text}; border-color: ${COLORS.borderMid}; background: ${COLORS.surface}; box-shadow: ${COLORS.shadow}; }
+  .btn-ghost:hover { color: ${COLORS.text}; border-color: ${COLORS.borderMid}; background: rgba(255,255,255,0.08); box-shadow: ${COLORS.shadow}; }
 
   .section-label {
     font-size: 10.5px;
@@ -446,7 +445,7 @@ const styles = `
   .chat-input::placeholder { color: ${COLORS.textDim}; }
 
   .scenario-card { background: ${COLORS.card}; border: 1px solid ${COLORS.border}; border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.22s ease; box-shadow: ${COLORS.shadow}; position: relative; overflow: hidden; }
-  .scenario-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.5) 0%, transparent 50%); pointer-events: none; }
+  .scenario-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, transparent 50%); pointer-events: none; }
   .scenario-card:hover { border-color: rgba(184,114,9,0.40); box-shadow: ${COLORS.shadowMd}, 0 0 0 1px rgba(184,114,9,0.10); transform: translateY(-3px); }
 
   .ref-table { width: 100%; border-collapse: collapse; }
@@ -472,13 +471,13 @@ const styles = `
   .step-line { width: 1.5px; flex: 1; background: linear-gradient(180deg, ${COLORS.border}, transparent); margin: 4px 0; min-height: 20px; }
 
   .search-overlay { position: fixed; inset: 0; background: rgba(8,15,26,0.55); backdrop-filter: blur(12px) saturate(1.2); -webkit-backdrop-filter: blur(12px) saturate(1.2); z-index: 9500; display: flex; align-items: flex-start; justify-content: center; padding-top: 80px; }
-  .search-modal { background: rgba(255,255,255,0.88); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); border: 1px solid rgba(255,255,255,0.6); border-radius: 18px; width: 100%; max-width: 520px; margin: 0 20px; overflow: hidden; box-shadow: ${COLORS.shadowXl}, 0 0 0 1px rgba(8,15,26,0.04); }
-  .search-input-row { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid rgba(228,223,214,0.7); }
+  .search-modal { background: rgba(14,16,20,0.97); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; width: 100%; max-width: 520px; margin: 0 20px; overflow: hidden; box-shadow: ${COLORS.shadowXl}, 0 0 0 1px rgba(8,15,26,0.04); }
+  .search-input-row { display: flex; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .search-input-field { flex: 1; background: transparent; border: none; outline: none; color: ${COLORS.text}; font-family: var(--font-body); font-size: 16px; font-weight: 400; }
   .search-input-field::placeholder { color: ${COLORS.textDim}; }
   .search-results { max-height: 360px; overflow-y: auto; }
   .search-result-item { display: flex; align-items: center; gap: 12px; padding: 11px 20px; cursor: pointer; transition: background 0.1s; border: none; background: transparent; width: 100%; text-align: left; font-family: var(--font-body); }
-  .search-result-item:hover { background: rgba(240,238,233,0.8); }
+  .search-result-item:hover { background: rgba(255,255,255,0.05); }
   .search-result-item.highlighted { background: ${COLORS.accentLight}; }
   .search-result-icon { width: 34px; height: 34px; border-radius: 9px; background: ${COLORS.surfaceAlt}; border: 1px solid ${COLORS.border}; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
   .search-result-label { font-size: 14px; font-weight: 500; color: ${COLORS.text}; }
@@ -1213,8 +1212,8 @@ const RoleSelector = ({ onSelect }) => {
                 boxShadow: `0 4px 16px rgba(184,114,9,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#E8A838" fillOpacity="0.9"/>
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#E8A838" strokeWidth="0.8" strokeLinejoin="round"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#78B7FF" fillOpacity="0.9"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#78B7FF" strokeWidth="0.8" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -1238,7 +1237,7 @@ const RoleSelector = ({ onSelect }) => {
               fontStyle: "italic",
             }}>
               Lead the band.<br />
-              <span style={{ color: "#E8A838", fontStyle: "normal" }}>Free the room.</span>
+              <span style={{ color: "#78B7FF", fontStyle: "normal" }}>Free the room.</span>
             </div>
 
             <div style={{
@@ -1262,7 +1261,7 @@ const RoleSelector = ({ onSelect }) => {
                 <div key={label}>
                   <div style={{
                     fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
-                    color: "#E8A838", letterSpacing: "-0.5px", lineHeight: 1,
+                    color: "#78B7FF", letterSpacing: "-0.5px", lineHeight: 1,
                   }}>{n}</div>
                   <div style={{
                     fontSize: 10, color: "rgba(240,235,225,0.45)",
@@ -1283,7 +1282,7 @@ const RoleSelector = ({ onSelect }) => {
             padding: "28px 24px",
             boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#E8A838", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 8 }}>
               Get started
             </div>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
@@ -1309,7 +1308,7 @@ const RoleSelector = ({ onSelect }) => {
                       background: isSelected
                         ? "linear-gradient(135deg, rgba(184,114,9,0.22) 0%, rgba(232,168,56,0.08) 100%)"
                         : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
-                      border: `1.5px solid ${isSelected ? "#E8A838" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
+                      border: `1.5px solid ${isSelected ? "#78B7FF" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
                       borderRadius: 12, cursor: "pointer", textAlign: "left",
                       fontFamily: "var(--font-body)",
                       transition: "all 0.18s cubic-bezier(0.2, 0.6, 0.2, 1)",
@@ -1336,8 +1335,8 @@ const RoleSelector = ({ onSelect }) => {
                     </div>
                     <div style={{
                       width: 18, height: 18, borderRadius: "50%",
-                      border: `1.5px solid ${isSelected ? "#E8A838" : "rgba(240,235,225,0.18)"}`,
-                      background: isSelected ? "#E8A838" : "transparent",
+                      border: `1.5px solid ${isSelected ? "#78B7FF" : "rgba(240,235,225,0.18)"}`,
+                      background: isSelected ? "#78B7FF" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, transition: "all 0.18s",
                     }}>
@@ -2007,7 +2006,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         <div className="hero-stage-line" />
         <div className="hero-banner-inner">
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#E8A838", boxShadow: "0 0 8px rgba(232,168,56,0.6)" }} />
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#78B7FF", boxShadow: "0 0 8px rgba(232,168,56,0.6)" }} />
             <div style={{
               fontSize: 10, fontWeight: 700, letterSpacing: 2.5,
               textTransform: "uppercase", color: "rgba(232,168,56,0.85)",
@@ -2027,7 +2026,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
                 letterSpacing: "-0.8px", fontStyle: "italic",
               }}>
                 Most teams don't lack talent.<br />
-                <span style={{ color: "#E8A838", fontStyle: "normal" }}>They lack clarity.</span>
+                <span style={{ color: "#78B7FF", fontStyle: "normal" }}>They lack clarity.</span>
               </div>
               <div style={{ fontSize: 14, color: "rgba(240,235,225,0.62)", lineHeight: 1.65, maxWidth: 480, marginBottom: 26 }}>
                 Playback handles the audio. WorshipPilot handles the leadership — so the band can be confident, and the room can worship.
@@ -2048,7 +2047,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           ) : (
             <>
               <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 400, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 6, letterSpacing: "-0.6px" }}>
-                {trainingDone ? <>You're trained. <span style={{ fontStyle: "italic", color: "#E8A838" }}>Now keep sharp.</span></> : <>Pick up where you left off.</>}
+                {trainingDone ? <>You're trained. <span style={{ fontStyle: "italic", color: "#78B7FF" }}>Now keep sharp.</span></> : <>Pick up where you left off.</>}
               </div>
               <div style={{ fontSize: 13.5, color: "rgba(240,235,225,0.55)", marginBottom: 22, lineHeight: 1.5 }}>
                 {trainingDone ? "All modules complete. Scenarios, Live Mode, and the Manual keep your edge." : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase} · ${currentWeek.title}`}
@@ -2057,7 +2056,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
                 <div style={{ marginBottom: 22 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: "rgba(240,235,225,0.4)" }}>Training progress</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: "#E8A838", fontFamily: "var(--font-mono)" }}>{completedCount}<span style={{ color: "rgba(240,235,225,0.3)" }}> / {MD_MODULES.length}</span></span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#78B7FF", fontFamily: "var(--font-mono)" }}>{completedCount}<span style={{ color: "rgba(240,235,225,0.3)" }}> / {MD_MODULES.length}</span></span>
                   </div>
                   <div style={{ height: 4, borderRadius: 4, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${progressPct}%`, background: "linear-gradient(90deg, #B87209, #E8A838)", borderRadius: 4, transition: "width 0.6s ease", boxShadow: "0 0 8px rgba(232,168,56,0.35)" }} />
@@ -2081,44 +2080,78 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 28 }}>
-        <button onClick={() => setPage("training")} style={{ display: "flex", flexDirection: "column", padding: "22px 20px 20px", background: isFirstVisit || !trainingDone ? COLORS.navy : COLORS.card, border: isFirstVisit || !trainingDone ? "none" : `1px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: isFirstVisit || !trainingDone ? COLORS.shadowMd : COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
-          onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = COLORS.shadowLg; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = isFirstVisit || !trainingDone ? COLORS.shadowMd : COLORS.shadow; }}>
-          {(isFirstVisit || !trainingDone) && (
-            <div style={{ position: "absolute", top: -30, right: -20, width: 140, height: 110, background: "radial-gradient(ellipse, rgba(184,114,9,0.22) 0%, transparent 70%)", pointerEvents: "none" }} />
-          )}
-          <div style={{ width: 34, height: 34, borderRadius: 10, background: isFirstVisit || !trainingDone ? "rgba(184,114,9,0.20)" : "linear-gradient(135deg, #FBF1DD 0%, #FDF7EA 100%)", border: isFirstVisit || !trainingDone ? "1px solid rgba(232,168,56,0.25)" : "1px solid rgba(184,114,9,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-            <Icon name="training" size={17} color={isFirstVisit || !trainingDone ? "#E8A838" : COLORS.accent} />
-          </div>
-          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.2, textTransform: "uppercase", color: isFirstVisit || !trainingDone ? "#E8A838" : COLORS.accent, marginBottom: 4, fontFamily: "var(--font-body)" }}>
-            {isFirstVisit ? "Start here" : trainingDone ? "Complete" : `Step ${currentStep.step}/${JOURNEY_STEPS.length}`}
-          </div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: isFirstVisit || !trainingDone ? "#fff" : COLORS.navy, marginBottom: 4, letterSpacing: "-0.2px", fontFamily: "var(--font-display)" }}>
-            {isFirstVisit ? "MD Training" : trainingDone ? "Review Training" : currentWeek.title}
-          </div>
-          <div style={{ fontSize: 12, lineHeight: 1.5, color: isFirstVisit || !trainingDone ? "rgba(255,255,255,0.48)" : COLORS.textDim }}>
-            {isFirstVisit ? "5-module pathway · ~90 min total" : trainingDone ? "Refresh anytime" : currentWeek.benchmark}
-          </div>
-          {!isFirstVisit && !trainingDone && (
-            <div style={{ marginTop: 12, height: 3, borderRadius: 3, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${progressPct}%`, background: "#E8A838", borderRadius: 3 }} />
+      {/* ── PHOTO HERO CARDS ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+        <button onClick={() => setPage("training")}
+          style={{ position: "relative", height: 200, borderRadius: 18, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
+          <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 16px 14px" }}>
+            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 5, fontFamily: "var(--font-body)" }}>
+              {isFirstVisit ? "Start here" : trainingDone ? "Complete" : `Step ${currentStep.step}/${JOURNEY_STEPS.length}`}
             </div>
-          )}
+            <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", lineHeight: 1.2, marginBottom: 4, fontFamily: "var(--font-display)" }}>
+              {isFirstVisit ? "MD Training" : trainingDone ? "Review Training" : currentWeek.title}
+            </div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.4 }}>
+              {isFirstVisit ? "5-module pathway · ~90 min" : trainingDone ? "Refresh anytime" : currentWeek.benchmark}
+            </div>
+            {!isFirstVisit && !trainingDone && (
+              <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.15)", overflow: "hidden", marginTop: 10 }}>
+                <div style={{ height: "100%", width: `${progressPct}%`, background: "#78B7FF", borderRadius: 3 }} />
+              </div>
+            )}
+          </div>
         </button>
 
-        <button onClick={() => setPage("live")} style={{ display: "flex", flexDirection: "column", padding: "22px 20px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: COLORS.shadow, transition: "all 0.2s", textAlign: "left", position: "relative", overflow: "hidden" }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-2px)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
-          <div style={{ width: 34, height: 34, borderRadius: 10, background: "linear-gradient(135deg, #FBF1DD 0%, #FDF7EA 100%)", border: "1px solid rgba(184,114,9,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-            <Icon name="live" size={17} color={COLORS.accent} />
+        <button onClick={() => setPage("live")}
+          style={{ position: "relative", height: 200, borderRadius: 18, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
+          <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 16px 14px" }}>
+            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 5, fontFamily: "var(--font-body)" }}>Live Mode</div>
+            <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Practice for Sunday</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>Beat-accurate countdowns</div>
           </div>
-          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4, fontFamily: "var(--font-body)" }}>Live Mode</div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 4, letterSpacing: "-0.2px", fontFamily: "var(--font-display)" }}>Practice for Sunday</div>
-          <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.5 }}>Real-time cue engine · Beat-accurate countdowns</div>
-          <div style={{ display: "flex", gap: 2, marginTop: 14, alignItems: "flex-end", height: 18, opacity: 0.35 }}>
+        </button>
+      </div>
+
+      {/* ── SECONDARY PHOTO ROW ── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 28 }}>
+        <button onClick={() => setPage("coaching")}
+          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
+          <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 12px 10px" }}>
+            <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: "#78B7FF", marginBottom: 3, fontFamily: "var(--font-body)" }}>Situations</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Reading the room</div>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>7 real-world scenarios</div>
+          </div>
+        </button>
+
+        <button onClick={() => setPage("vocab")}
+          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
+          <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 12px 10px" }}>
+            <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: "#78B7FF", marginBottom: 3, fontFamily: "var(--font-body)" }}>Cue Language</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Vocabulary</div>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>45+ standard calls</div>
+          </div>
+        </button>
+
+        <button onClick={() => setPage("services")}
+          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "14px" }}>
+          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "var(--font-body)" }}>Service Builder</div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: COLORS.text, fontFamily: "var(--font-mono)", lineHeight: 1 }}>
+            {services.length} service{services.length !== 1 ? "s" : ""}
+          </div>
+          <div style={{ fontSize: 11, color: COLORS.textMuted, marginTop: 4, marginBottom: 10 }}>
+            {activeServiceId ? "Service active" : "No active service"}
+          </div>
+          <div style={{ display: "flex", gap: 2, height: 24, alignItems: "flex-end" }}>
             {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
-              <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 1, background: COLORS.accent }} />
+              <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}35` }} />
             ))}
           </div>
         </button>
@@ -3174,7 +3207,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
   const pcoState = (() => { try { return JSON.parse(localStorage.getItem('wp-pco-connection') || 'null'); } catch { return null; } })();
   const STYLE_TAGS = ['Driving', 'Intimate', 'Building', 'Celebratory', 'Reflective', 'High Energy', 'Acoustic', 'Contemporary', 'Traditional'];
-  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#E8A838",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
+  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#78B7FF",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
 
   const fetchSongs = async () => {
     setLoading(true); setError(null);
@@ -3625,7 +3658,7 @@ const SECTION_TYPES = ["intro","verse","prechorus","chorus","bridge","tag","outr
 
 const TYPE_COLORS = {
   intro: "#4CAF7D", verse: "#6B9FD4", prechorus: "#A07CC5",
-  chorus: "#E8A838", bridge: "#CF6679", tag: "#B8720A",
+  chorus: "#78B7FF", bridge: "#CF6679", tag: "#B8720A",
   outro: "#5A8FA0", turnaround: "#8A9B6A", instrumental: "#4A8AAA",
   breakdown: "#9A6AAA", vamp: "#6A9A6A",
 };
@@ -4828,7 +4861,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const clearAllOverrides = () => { liveLoopRef.current = false; liveExtraRepeatsRef.current = 0; setLiveLoopActive(false); setLiveExtraRepeats(0); setLiveEndingMode(null); };
 
   const sectionColor = (type) => ({
-    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#E8A838",
+    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#78B7FF",
     bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0",turnaround:"#8A9B6A",
     instrumental:"#4A8AAA",breakdown:"#9A6AAA",vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -4908,7 +4941,7 @@ Do not add any preamble or explanation — just the bullet points.`;
 
   const suggestions = getAISuggestions(section.type, sectionIndex, totalSections, song.bpm);
   const segColor = (type) => ({
-    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#E8A838",
+    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#78B7FF",
     bridge:"#CF6679", tag:"#B8720A", outro:"#5A8FA0", turnaround:"#8A9B6A",
     instrumental:"#4A8AAA", breakdown:"#9A6AAA", vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -5788,8 +5821,8 @@ export default function App() {
     aria-label="WorshipPilot — go to dashboard"
   >
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#E8A838" fillOpacity="0.92"/>
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#E8A838" strokeWidth="0.6" strokeLinejoin="round"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#78B7FF" fillOpacity="0.92"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#78B7FF" strokeWidth="0.6" strokeLinejoin="round"/>
     </svg>
     <div className="nav-tooltip">WorshipPilot</div>
   </button>
@@ -5834,3 +5867,4 @@ export default function App() {
     </>
   );
 }
+
