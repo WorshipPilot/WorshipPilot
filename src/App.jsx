@@ -2143,12 +2143,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
         <button onClick={() => setPage("services")}
           style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "14px" }}>
           <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "var(--font-body)" }}>Service Builder</div>
-          <div style={{ fontSize: 20, fontWeight: 800, color: COLORS.text, fontFamily: "var(--font-mono)", lineHeight: 1 }}>
-            {services.length} service{services.length !== 1 ? "s" : ""}
-          </div>
-          <div style={{ fontSize: 11, color: COLORS.textMuted, marginTop: 4, marginBottom: 10 }}>
-            {activeServiceId ? "Service active" : "No active service"}
-          </div>
+          <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.text, lineHeight: 1.2, marginBottom: 4 }}>Build your set</div>
+          <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 10 }}>Songs · Transitions · Live Mode</div>
           <div style={{ display: "flex", gap: 2, height: 24, alignItems: "flex-end" }}>
             {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
               <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}35` }} />
