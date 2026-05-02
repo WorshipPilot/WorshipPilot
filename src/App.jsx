@@ -2002,155 +2002,69 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
 
   return (
     <div className="fade-in">
-      <div className="hero-banner" style={{ marginBottom: 28 }}>
-        <div className="hero-stage-line" />
-        <div className="hero-banner-inner">
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#78B7FF", boxShadow: "0 0 8px rgba(232,168,56,0.6)" }} />
-            <div style={{
-              fontSize: 10, fontWeight: 700, letterSpacing: 2.5,
-              textTransform: "uppercase", color: "rgba(232,168,56,0.85)",
-              fontFamily: "var(--font-body)",
-            }}>
-              {isFirstVisit ? "Welcome to WorshipPilot" : greeting}
-            </div>
-          </div>
 
+      {/* ── FULL-BLEED PHOTO HERO ── */}
+      <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", marginBottom: 12, height: "clamp(320px, 45vw, 440px)" }}>
+        {/* Background photo */}
+        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%" }} />
+        {/* Gradient overlay — dark at bottom for text, lighter at top */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,15,22,0.97) 0%, rgba(10,15,22,0.75) 40%, rgba(10,15,22,0.25) 100%)" }} />
+        {/* Top status bar */}
+        <div style={{ position: "absolute", top: 20, left: 22, right: 22, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#78B7FF", boxShadow: "0 0 8px rgba(120,183,255,0.7)" }} />
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "rgba(120,183,255,0.9)", fontFamily: "var(--font-body)" }}>
+              {isFirstVisit ? "Welcome to WorshipPilot" : greeting}
+            </span>
+          </div>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-mono)" }}>
+            {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
+          </span>
+        </div>
+        {/* Bottom content */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px 24px 24px" }}>
           {isFirstVisit ? (
             <>
-              <div style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(26px, 4vw, 36px)",
-                fontWeight: 400, color: "#F0EBE1",
-                lineHeight: 1.08, marginBottom: 14,
-                letterSpacing: "-0.8px", fontStyle: "italic",
-              }}>
+              <div style={{ fontSize: "clamp(28px, 5vw, 40px)", fontWeight: 700, color: "#fff", lineHeight: 1.08, letterSpacing: "-0.8px", marginBottom: 10, fontFamily: "var(--font-display)" }}>
                 Most teams don't lack talent.<br />
-                <span style={{ color: "#78B7FF", fontStyle: "normal" }}>They lack clarity.</span>
+                <span style={{ color: "#78B7FF" }}>They lack clarity.</span>
               </div>
-              <div style={{ fontSize: 14, color: "rgba(240,235,225,0.62)", lineHeight: 1.65, maxWidth: 480, marginBottom: 26 }}>
-                Playback handles the audio. WorshipPilot handles the leadership — so the band can be confident, and the room can worship.
-              </div>
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage("starthere")} style={{ padding: "12px 22px", borderRadius: 11, border: "none", background: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)", color: "#fff", fontSize: 13.5, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", letterSpacing: 0.2, boxShadow: "0 4px 20px rgba(184,114,9,0.35), 0 1px 3px rgba(184,114,9,0.2)", transition: "all 0.2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.filter = "brightness(1.08)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.filter = "brightness(1)"; }}>
-                  Start training →
-                </button>
-                <button onClick={() => setPage("live")} style={{ padding: "12px 20px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(240,235,225,0.80)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(240,235,225,0.24)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(240,235,225,0.16)"; }}>
-                  ▶ Try Live Mode
-                </button>
+              <div style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, maxWidth: 460, marginBottom: 22 }}>
+                Playback handles the audio. WorshipPilot handles the leadership.
               </div>
             </>
           ) : (
             <>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 3.5vw, 32px)", fontWeight: 400, color: "#F0EBE1", lineHeight: 1.15, marginBottom: 6, letterSpacing: "-0.6px" }}>
-                {trainingDone ? <>You're trained. <span style={{ fontStyle: "italic", color: "#78B7FF" }}>Now keep sharp.</span></> : <>Pick up where you left off.</>}
-              </div>
-              <div style={{ fontSize: 13.5, color: "rgba(240,235,225,0.55)", marginBottom: 22, lineHeight: 1.5 }}>
-                {trainingDone ? "All modules complete. Scenarios, Live Mode, and the Manual keep your edge." : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase} · ${currentWeek.title}`}
+              <div style={{ fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 700, color: "#fff", lineHeight: 1.1, letterSpacing: "-0.6px", marginBottom: 8, fontFamily: "var(--font-display)" }}>
+                {trainingDone ? <>You're trained. <span style={{ color: "#78B7FF" }}>Stay sharp.</span></> : <>Pick up where you left off.</>}
               </div>
               {!trainingDone && (
-                <div style={{ marginBottom: 22 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.8, textTransform: "uppercase", color: "rgba(240,235,225,0.4)" }}>Training progress</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: "#78B7FF", fontFamily: "var(--font-mono)" }}>{completedCount}<span style={{ color: "rgba(240,235,225,0.3)" }}> / {MD_MODULES.length}</span></span>
-                  </div>
-                  <div style={{ height: 4, borderRadius: 4, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${progressPct}%`, background: "linear-gradient(90deg, #B87209, #E8A838)", borderRadius: 4, transition: "width 0.6s ease", boxShadow: "0 0 8px rgba(232,168,56,0.35)" }} />
-                  </div>
+                <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
+                  {`Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase} · ${currentWeek.title}`}
                 </div>
               )}
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                <button onClick={() => setPage(trainingDone ? "coaching" : "training")} style={{ padding: "11px 20px", borderRadius: 11, border: "none", background: "linear-gradient(135deg, #B87209 0%, #E8A838 100%)", color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", boxShadow: "0 4px 16px rgba(184,114,9,0.30)", transition: "all 0.2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.filter = "brightness(1.08)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.filter = "brightness(1)"; }}>
-                  {trainingDone ? "Practice scenarios →" : "Continue →"}
-                </button>
-                <button onClick={() => setPage("live")} style={{ padding: "11px 18px", borderRadius: 11, border: "1px solid rgba(240,235,225,0.16)", background: "rgba(255,255,255,0.05)", color: "rgba(240,235,225,0.80)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}>
-                  ▶ Live Mode
-                </button>
-              </div>
+              {!trainingDone && (
+                <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)", overflow: "hidden", maxWidth: 280, marginBottom: 20 }}>
+                  <div style={{ height: "100%", width: `${progressPct}%`, background: "#78B7FF", borderRadius: 3, transition: "width 0.6s ease" }} />
+                </div>
+              )}
             </>
           )}
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <button onClick={() => setPage(isFirstVisit ? "starthere" : trainingDone ? "coaching" : "training")}
+              style={{ padding: "11px 22px", borderRadius: 10, border: "none", background: "#78B7FF", color: "#0A0F18", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#A9D2FF"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#78B7FF"; }}>
+              {isFirstVisit ? "Start training →" : trainingDone ? "Practice scenarios →" : "Continue →"}
+            </button>
+            <button onClick={() => setPage("live")}
+              style={{ padding: "11px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+              onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.14)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}>
+              ▶ Live Mode
+            </button>
+          </div>
         </div>
-      </div>
-
-      {/* ── PHOTO HERO CARDS ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-        <button onClick={() => setPage("training")}
-          style={{ position: "relative", height: 200, borderRadius: 18, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
-          <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 16px 14px" }}>
-            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 5, fontFamily: "var(--font-body)" }}>
-              {isFirstVisit ? "Start here" : trainingDone ? "Complete" : `Step ${currentStep.step}/${JOURNEY_STEPS.length}`}
-            </div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", lineHeight: 1.2, marginBottom: 4, fontFamily: "var(--font-display)" }}>
-              {isFirstVisit ? "MD Training" : trainingDone ? "Review Training" : currentWeek.title}
-            </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.4 }}>
-              {isFirstVisit ? "5-module pathway · ~90 min" : trainingDone ? "Refresh anytime" : currentWeek.benchmark}
-            </div>
-            {!isFirstVisit && !trainingDone && (
-              <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.15)", overflow: "hidden", marginTop: 10 }}>
-                <div style={{ height: "100%", width: `${progressPct}%`, background: "#78B7FF", borderRadius: 3 }} />
-              </div>
-            )}
-          </div>
-        </button>
-
-        <button onClick={() => setPage("live")}
-          style={{ position: "relative", height: 200, borderRadius: 18, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
-          <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 16px 14px" }}>
-            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 5, fontFamily: "var(--font-body)" }}>Live Mode</div>
-            <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", letterSpacing: "-0.3px", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Practice for Sunday</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>Beat-accurate countdowns</div>
-          </div>
-        </button>
-      </div>
-
-      {/* ── SECONDARY PHOTO ROW ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 28 }}>
-        <button onClick={() => setPage("coaching")}
-          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
-          <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 12px 10px" }}>
-            <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: "#78B7FF", marginBottom: 3, fontFamily: "var(--font-body)" }}>Situations</div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Reading the room</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>7 real-world scenarios</div>
-          </div>
-        </button>
-
-        <button onClick={() => setPage("vocab")}
-          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", background: "#0A0E14", textAlign: "left" }}>
-          <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.4) 60%, transparent 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 12px 10px" }}>
-            <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: "#78B7FF", marginBottom: 3, fontFamily: "var(--font-body)" }}>Cue Language</div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.2, fontFamily: "var(--font-display)" }}>Vocabulary</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>45+ standard calls</div>
-          </div>
-        </button>
-
-        <button onClick={() => setPage("services")}
-          style={{ position: "relative", height: 140, borderRadius: 16, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "14px" }}>
-          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6, fontFamily: "var(--font-body)" }}>Service Builder</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.text, lineHeight: 1.2, marginBottom: 4 }}>Build your set</div>
-          <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 10 }}>Songs · Transitions · Live Mode</div>
-          <div style={{ display: "flex", gap: 2, height: 24, alignItems: "flex-end" }}>
-            {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
-              <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}35` }} />
-            ))}
-          </div>
-        </button>
       </div>
 
       {!pcoConnected && (
