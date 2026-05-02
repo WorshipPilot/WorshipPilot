@@ -1893,7 +1893,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
     <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 200 }}>
-        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+        <img src="/drummer.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Training · 5-week plan</div>
@@ -2095,25 +2095,29 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 28 }}>
         {/* Cue Language / Vocab */}
         <button onClick={() => setPage("vocab")}
-          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
-          <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.95) 0%, rgba(8,12,18,0.4) 60%, rgba(8,12,18,0.1) 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 12px" }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4 }}>Module 02</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>Cue Language</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>45+ calls · reference</div>
+          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.border}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surface }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <Icon name="vocab" size={18} color={COLORS.textMuted} />
+            <span style={{ fontSize: 12, color: COLORS.textDim }}>›</span>
+          </div>
+          <div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>Cue Language</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Vocabulary</div>
+            <div style={{ fontSize: 11, color: COLORS.textMuted }}>45+ standard calls</div>
           </div>
         </button>
 
         {/* Situations */}
         <button onClick={() => setPage("coaching")}
-          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
-          <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.95) 0%, rgba(8,12,18,0.4) 60%, rgba(8,12,18,0.1) 100%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "12px 14px 12px" }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 4 }}>Situations</div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#fff", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>Reading the room</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 3 }}>7 real-world scenarios</div>
+          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.border}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surface }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <Icon name="coaching" size={18} color={COLORS.textMuted} />
+            <span style={{ fontSize: 12, color: COLORS.textDim }}>›</span>
+          </div>
+          <div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>MD Reference</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Situations</div>
+            <div style={{ fontSize: 11, color: COLORS.textMuted }}>7 real-world scenarios</div>
           </div>
         </button>
 
@@ -2197,7 +2201,7 @@ const VocabPage = () => {
     <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+        <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Reference</div>
@@ -2897,10 +2901,14 @@ const OnboardingPage = () => {
 
   return (
     <div className="fade-in">
-      <div className="page-header">
-        <div className="page-eyebrow">Training</div>
-        <div className="page-title">MD Onboarding Pathway</div>
-        <div className="page-sub">A structured pathway — so no one gets thrown into the MD role unprepared. 5-week training program with clear benchmarks at every stage.</div>
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Training</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>MD Onboarding</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>5-week pathway with clear benchmarks at every stage.</div>
+        </div>
       </div>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
@@ -2997,7 +3005,7 @@ const CoachingPage = () => {
       <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>MD Reference</div>
@@ -3100,10 +3108,14 @@ const CoachingPage = () => {
 
 const ManualPage = ({ setSelectedPart, setPage }) => (
   <div className="fade-in">
-    <div className="page-header">
-      <div className="page-eyebrow">System Manual</div>
-      <div className="page-title">All 10 Parts</div>
-      <div className="page-sub">The complete WorshipPilot MD System — tap any part to explore the full content and Q&A.</div>
+    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+      <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
+      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>System Manual</div>
+        <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>All 10 Parts</div>
+        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>The complete WorshipPilot MD System.</div>
+      </div>
     </div>
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {PARTS_DATA.map((part) => (
