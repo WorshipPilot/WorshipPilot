@@ -262,7 +262,6 @@ const styles = `
     overflow-x: hidden;
     padding: 32px 24px;
     background: ${COLORS.bg};
-    background-image: ${NOISE_SVG};
     min-width: 0;
   }
 
@@ -292,16 +291,17 @@ const styles = `
   .page-title {
     font-family: var(--font-display);
     font-size: 38px;
-    font-weight: 700;
-    color: ${COLORS.text};
+    font-weight: 800;
+    color: #FFFFFF;
     line-height: 1.08;
     letter-spacing: -0.8px;
     font-optical-sizing: auto;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
   }
 
   .page-sub {
     font-size: 15px;
-    color: ${COLORS.textMuted};
+    color: #93A4BA;
     margin-top: 12px;
     line-height: 1.6;
     max-width: 580px;
@@ -338,7 +338,7 @@ const styles = `
     margin-bottom: 6px;
     letter-spacing: -0.25px;
   }
-  .card-desc { font-size: 13.5px; color: #4A5568; line-height: 1.55; font-weight: 500; }
+  .card-desc { font-size: 13.5px; color: #111827; line-height: 1.55; font-weight: 500; }
 
   .card-icon {
     width: 44px; height: 44px;
@@ -433,7 +433,7 @@ const styles = `
   .accordion-trigger:hover { color: ${COLORS.accent}; }
   .accordion-chevron { color: ${COLORS.textDim}; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); font-size: 11px; flex-shrink: 0; }
   .accordion-chevron.open { transform: rotate(180deg); color: ${COLORS.accent}; }
-  .accordion-content { padding-bottom: 18px; font-size: 14px; color: #374151; line-height: 1.75; font-weight: 500; }
+  .accordion-content { padding-bottom: 18px; font-size: 14px; color: #111827; line-height: 1.75; font-weight: 500; }
 
   .chat-container { display: flex; flex-direction: column; gap: 14px; max-height: 460px; overflow-y: auto; padding-right: 4px; }
   .chat-bubble { padding: 13px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.65; max-width: 86%; }
@@ -452,7 +452,7 @@ const styles = `
 
   .ref-table { width: 100%; border-collapse: collapse; }
   .ref-table th { text-align: left; padding: 12px 16px; font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: ${COLORS.textDim}; border-bottom: 1px solid ${COLORS.border}; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
-  .ref-table td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid ${COLORS.border}; vertical-align: top; line-height: 1.55; color: #4A5568; font-weight: 500; }
+  .ref-table td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid ${COLORS.border}; vertical-align: top; line-height: 1.55; color: #111827; font-weight: 500; }
   .ref-table tr:last-child td { border-bottom: none; }
   .ref-table tr:hover td { background: ${COLORS.surfaceAlt}; }
   .call-code { font-family: var(--font-mono); color: ${COLORS.accent}; font-size: 12.5px; font-weight: 500; }
@@ -462,7 +462,7 @@ const styles = `
   .phase-number { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; flex-shrink: 0; }
   .phase-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; color: #111827; font-family: var(--font-display); }
   .phase-timing { font-size: 11px; color: ${COLORS.accent}; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
-  .phase-items { font-size: 13px; color: #374151; line-height: 1.9; font-weight: 600; }
+  .phase-items { font-size: 13px; color: #111827; line-height: 1.9; font-weight: 600; }
 
   .onboard-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid ${COLORS.border}; }
   .onboard-step:last-child { border-bottom: none; }
@@ -1748,7 +1748,7 @@ const StartHerePage = ({ setPage }) => {
             <div style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(196,154,60,0.15)", border: `1.5px solid rgba(196,154,60,0.35)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>{step.label}</div>
-              <div style={{ fontSize: 12, color: "#4A5568", fontWeight: 500 }}>{step.desc}</div>
+              <div style={{ fontSize: 12, color: "#111827", fontWeight: 500 }}>{step.desc}</div>
             </div>
             <span style={{ color: COLORS.textDim, fontSize: 18 }}>›</span>
           </button>
@@ -1788,7 +1788,7 @@ const StartHerePage = ({ setPage }) => {
               <Icon name={item.icon} size={19} color={COLORS.accent} />
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{item.label}</div>
-            <div style={{ fontSize: 12, color: "#4A5568", lineHeight: 1.4, fontWeight: 500 }}>{item.desc}</div>
+            <div style={{ fontSize: 12, color: "#111827", lineHeight: 1.4, fontWeight: 500 }}>{item.desc}</div>
           </button>
         ))}
       </div>
@@ -1841,7 +1841,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
           <div key={i} className="card" style={{ marginBottom: 10 }}>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: COLORS.navy, marginBottom: 12 }}>{sec.heading}</div>
             {sec.body.split("\n\n").map((para, j) => (
-              <p key={j} style={{ fontSize: 14, color: "#4A5568", lineHeight: 1.75, marginBottom: 10, fontWeight: 500 }}>
+              <p key={j} style={{ fontSize: 14, color: "#111827", lineHeight: 1.75, marginBottom: 10, fontWeight: 500 }}>
                 {para.startsWith("•") ? (
                   <span style={{ display: "block" }}>
                     {para.split("\n").map((line, k) => {
@@ -2154,7 +2154,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
                 <span style={{ fontSize: 13, color: COLORS.textDim }}>›</span>
               </div>
               <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 2, letterSpacing: "-0.1px" }}>{item.title}</div>
-              <div style={{ fontSize: 11, color: "#4A5568" }}>{item.sub}</div>
+              <div style={{ fontSize: 11, color: "#111827" }}>{item.sub}</div>
             </button>
           ))}
         </div>
@@ -2188,7 +2188,7 @@ const VocabPage = () => {
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
             <div className="page-eyebrow">Reference</div>
-            <div className="page-title" style={{ color: COLORS.text }}>Vocabulary Reference</div>
+            <div className="page-title">Vocabulary Reference</div>
             <div className="page-sub">Every MD team develops its own language — that's normal. Use these calls as a starting point to build your vocabulary, or adopt them as-is to standardize across multiple MDs on your team.</div>
           </div>
           <button
@@ -2220,7 +2220,7 @@ const VocabPage = () => {
             {filtered.map((row, i) => (
               <tr key={i}>
                 <td><span className="call-code">{row.call}</span></td>
-                <td style={{ color: "#374151", fontWeight: 600 }}>{row.meaning}</td>
+                <td style={{ color: "#111827", fontWeight: 600 }}>{row.meaning}</td>
                 <td><span className="badge badge-gold">{row.category}</span></td>
               </tr>
             ))}
@@ -2248,7 +2248,7 @@ const VocabPage = () => {
           ].map(([key, chords]) => (
             <div key={key} style={{ background: COLORS.surfaceAlt, borderRadius: 10, padding: "12px 14px", border: `1px solid ${COLORS.border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", color: COLORS.accent, fontWeight: 600, marginBottom: 6, fontSize: 13 }}>{key} Major</div>
-              <div style={{ fontSize: 11, color: "#4A5568", lineHeight: 1.7, fontWeight: 500 }}>
+              <div style={{ fontSize: 11, color: "#111827", lineHeight: 1.7, fontWeight: 500 }}>
                 {chords.split(" ").map((c, i) => (
                   <span key={i}><span style={{ color: "#111827", fontWeight: 700 }}>{i + 1}</span>={c} </span>
                 ))}
@@ -2921,7 +2921,7 @@ const OnboardingPage = () => {
           </div>
           <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 10, padding: "14px 18px" }}>
             <div style={{ fontSize: 10, color: COLORS.accent, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>Week Benchmark</div>
-            <div style={{ fontSize: 14, color: "#111827", fontWeight: 600 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
+            <div style={{ fontSize: 14, color: "#111827", fontWeight: 700 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
           </div>
           <div className="progress-track" style={{ marginTop: 16 }}>
             <div className="progress-fill" style={{ width: `${weekProgress(activeWeek)}%` }} />
@@ -2942,7 +2942,7 @@ const OnboardingPage = () => {
               </div>
               <div style={{ flex: 1, paddingTop: 4 }}>
                 <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: activeWeek === i ? COLORS.accent : COLORS.navy }}>{w.week}: {w.title}</div>
-                <div style={{ fontSize: 13, color: "#4A5568", fontWeight: 500 }}>{w.benchmark}</div>
+                <div style={{ fontSize: 13, color: "#111827", fontWeight: 500 }}>{w.benchmark}</div>
                 <div className="progress-track" style={{ marginTop: 8, width: "60%" }}>
                   <div className="progress-fill" style={{ width: `${weekProgress(i)}%` }} />
                 </div>
@@ -3102,8 +3102,8 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
                 <span className="badge badge-gold">Part {part.id}</span>
               </div>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 6 }}>{part.title}</div>
-              <div style={{ fontSize: 13, color: "#4A5568", lineHeight: 1.5, fontWeight: 500 }}>{part.summary}</div>
-              <div style={{ fontSize: 11, color: "#64748B", marginTop: 8, fontWeight: 600 }}>{part.content.length} questions covered ›</div>
+              <div style={{ fontSize: 13, color: "#111827", lineHeight: 1.5, fontWeight: 500 }}>{part.summary}</div>
+              <div style={{ fontSize: 11, color: "#111827", marginTop: 8, fontWeight: 600 }}>{part.content.length} questions covered ›</div>
             </div>
           </div>
         </div>
@@ -3574,7 +3574,7 @@ const RoadmapPage = ({ setPage }) => {
     <div className="fade-in">
       <div className="page-header">
         <div className="page-eyebrow">Implementation</div>
-        <div className="page-title" style={{ color: COLORS.text }}>Rollout Roadmap</div>
+        <div className="page-title">Rollout Roadmap</div>
         <div className="page-sub">Four phases. Start at the foundation — don't skip ahead.</div>
       </div>
       <div className="detail-panel">
@@ -3587,7 +3587,7 @@ const RoadmapPage = ({ setPage }) => {
                 <div className="phase-timing">{p.timing}</div>
                 <div className="phase-items">
                   {p.items.map((item, j) => (
-                    <div key={j} style={{ color: item.startsWith("Success") ? COLORS.accent : "#374151", fontWeight: item.startsWith("Success") ? 600 : 400 }}>
+                    <div key={j} style={{ color: item.startsWith("Success") ? COLORS.accent : "#111827", fontWeight: item.startsWith("Success") ? 600 : 400 }}>
                       {item.startsWith("Success") ? "✓ " : "· "}{item}
                     </div>
                   ))}
@@ -4352,7 +4352,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy, marginBottom: 3 }}>Connect Planning Center</div>
-              <div style={{ fontSize: 12, color: "#4A5568", fontWeight: 600 }}>Import your upcoming service plans and song lists directly from PCO.</div>
+              <div style={{ fontSize: 12, color: "#111827", fontWeight: 600 }}>Import your upcoming service plans and song lists directly from PCO.</div>
               {pcoError && <div style={{ fontSize: 11, color: COLORS.red, marginTop: 6 }}>{pcoError}</div>}
             </div>
             <button onClick={connectPCO}
@@ -4470,11 +4470,11 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
           <div className="card" style={{ marginBottom: 16 }}>
             <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: COLORS.textDim, textTransform: "uppercase", marginBottom: 6 }}>Service Title</div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, color: "#64748B", textTransform: "uppercase", marginBottom: 6 }}>Service Title</div>
                 <input value={editTitle} onChange={e => { setEditTitle(e.target.value); save(blocks, e.target.value); }} className="field-input" />
               </div>
               <button onClick={handleCopyNotes}
-                style={{ padding: "10px 16px", borderRadius: 10, border: `1.5px solid ${copied ? COLORS.green : COLORS.accent}`, background: copied ? COLORS.greenLight : COLORS.accentLight, color: copied ? COLORS.green : COLORS.accent, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", flexShrink: 0, transition: "all 0.2s" }}>
+                style={{ padding: "10px 16px", borderRadius: 10, border: `1.5px solid ${copied ? COLORS.green : COLORS.accent}`, background: copied ? COLORS.green : COLORS.accent, color: copied ? "#fff" : "#111827", fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", flexShrink: 0, transition: "all 0.2s" }}>
                 {copied ? "✓ Copied!" : "Copy Notes"}
               </button>
             </div>
