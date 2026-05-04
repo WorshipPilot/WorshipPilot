@@ -462,7 +462,7 @@ const styles = `
   .phase-number { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; flex-shrink: 0; }
   .phase-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; color: #111827; font-family: var(--font-display); }
   .phase-timing { font-size: 11px; color: ${COLORS.accent}; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
-  .phase-items { font-size: 13px; color: #4A5568; line-height: 1.9; font-weight: 500; }
+  .phase-items { font-size: 13px; color: #374151; line-height: 1.9; font-weight: 600; }
 
   .onboard-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid ${COLORS.border}; }
   .onboard-step:last-child { border-bottom: none; }
@@ -1517,7 +1517,7 @@ const Hint = ({ hintKey, text }) => {
   const [visible, dismiss] = useHint(hintKey);
   if (!visible) return null;
   return (
-    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "rgba(196,154,60,0.12)", border: `1px solid rgba(196,154,60,0.3)`, borderRadius: 12, marginBottom: 16 }}>
+    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.35)`, borderRadius: 12, marginBottom: 16 }}>
       <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>💡</span>
       <span style={{ fontSize: 13, color: COLORS.navy, lineHeight: 1.5, flex: 1 }}>{text}</span>
       <button onClick={dismiss} style={{ background: "none", border: "none", color: COLORS.textDim, cursor: "pointer", fontSize: 14, flexShrink: 0, padding: 0, lineHeight: 1 }}>✕</button>
@@ -1549,7 +1549,7 @@ const renderAnswerText = (text) => {
       elements.push(
         <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7, alignItems: "flex-start" }}>
           <span style={{ fontWeight: 700, color: COLORS.accent, fontSize: 13, minWidth: 18, flexShrink: 0, fontFamily: "'JetBrains Mono', monospace", lineHeight: 1.78 }}>{num}.</span>
-          <span style={{ fontSize: 13.5, color: "#4A5568", lineHeight: 1.78, fontWeight: 500 }}>{rest}</span>
+          <span style={{ fontSize: 13.5, color: COLORS.text, lineHeight: 1.78, fontWeight: 500 }}>{rest}</span>
         </div>
       );
     } else if (/^[-•]\s/.test(line)) {
@@ -2188,7 +2188,7 @@ const VocabPage = () => {
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
           <div>
             <div className="page-eyebrow">Reference</div>
-            <div className="page-title">Vocabulary Reference</div>
+            <div className="page-title" style={{ color: COLORS.text }}>Vocabulary Reference</div>
             <div className="page-sub">Every MD team develops its own language — that's normal. Use these calls as a starting point to build your vocabulary, or adopt them as-is to standardize across multiple MDs on your team.</div>
           </div>
           <button
@@ -2220,7 +2220,7 @@ const VocabPage = () => {
             {filtered.map((row, i) => (
               <tr key={i}>
                 <td><span className="call-code">{row.call}</span></td>
-                <td style={{ color: "#4A5568", fontWeight: 500 }}>{row.meaning}</td>
+                <td style={{ color: "#374151", fontWeight: 600 }}>{row.meaning}</td>
                 <td><span className="badge badge-gold">{row.category}</span></td>
               </tr>
             ))}
@@ -2877,7 +2877,7 @@ const OnboardingPage = () => {
   return (
     <div className="fade-in">
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/empty-stage.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <img src="/empty-stage.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 70%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Training</div>
@@ -2898,7 +2898,7 @@ const OnboardingPage = () => {
         <div className="detail-header">
           <div>
             <div style={{ fontSize: 10, color: COLORS.accent, letterSpacing: 2, textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>Week {ONBOARDING_WEEKS[activeWeek].week}</div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: COLORS.navy }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: COLORS.text }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
           </div>
           <span className={`badge ${weekProgress(activeWeek) === 100 ? "badge-green" : "badge-gold"}`}>{weekProgress(activeWeek)}% Complete</span>
         </div>
@@ -2914,14 +2914,14 @@ const OnboardingPage = () => {
                   <div style={{ width: 22, height: 22, borderRadius: 7, border: `1.5px solid ${done ? COLORS.green : COLORS.border}`, background: done ? COLORS.green : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.2s" }}>
                     {done && <span style={{ color: "#fff", fontSize: 12 }}>✓</span>}
                   </div>
-                  <span style={{ fontSize: 14, color: done ? COLORS.textDim : "#111827", fontWeight: done ? 400 : 500, textDecoration: done ? "line-through" : "none" }}>{task}</span>
+                  <span style={{ fontSize: 14, color: done ? "#94A3B8" : "#1E293B", fontWeight: done ? 400 : 600, textDecoration: done ? "line-through" : "none" }}>{task}</span>
                 </div>
               );
             })}
           </div>
           <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 10, padding: "14px 18px" }}>
             <div style={{ fontSize: 10, color: COLORS.accent, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>Week Benchmark</div>
-            <div style={{ fontSize: 14, color: COLORS.navy, fontWeight: 500 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
+            <div style={{ fontSize: 14, color: "#111827", fontWeight: 600 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
           </div>
           <div className="progress-track" style={{ marginTop: 16 }}>
             <div className="progress-fill" style={{ width: `${weekProgress(activeWeek)}%` }} />
@@ -3424,7 +3424,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       {/* Header */}
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
-          <div>
+          <div style={{ display: "none" }}>
           <button onClick={() => setView('publish')}
             style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 11, border: 'none', background: COLORS.accentGradient, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, boxShadow: COLORS.shadowAccent }}>
             <span style={{ fontSize: 16 }}>↑</span> Share an Arrangement
@@ -3574,7 +3574,7 @@ const RoadmapPage = ({ setPage }) => {
     <div className="fade-in">
       <div className="page-header">
         <div className="page-eyebrow">Implementation</div>
-        <div className="page-title">Rollout Roadmap</div>
+        <div className="page-title" style={{ color: COLORS.text }}>Rollout Roadmap</div>
         <div className="page-sub">Four phases. Start at the foundation — don't skip ahead.</div>
       </div>
       <div className="detail-panel">
@@ -3587,7 +3587,7 @@ const RoadmapPage = ({ setPage }) => {
                 <div className="phase-timing">{p.timing}</div>
                 <div className="phase-items">
                   {p.items.map((item, j) => (
-                    <div key={j} style={{ color: item.startsWith("Success") ? COLORS.accent : COLORS.textMuted, fontWeight: item.startsWith("Success") ? 600 : 400 }}>
+                    <div key={j} style={{ color: item.startsWith("Success") ? COLORS.accent : "#374151", fontWeight: item.startsWith("Success") ? 600 : 400 }}>
                       {item.startsWith("Success") ? "✓ " : "· "}{item}
                     </div>
                   ))}
@@ -4352,7 +4352,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy, marginBottom: 3 }}>Connect Planning Center</div>
-              <div style={{ fontSize: 12, color: COLORS.textMuted }}>Import your upcoming service plans and song lists directly from PCO.</div>
+              <div style={{ fontSize: 12, color: "#4A5568", fontWeight: 600 }}>Import your upcoming service plans and song lists directly from PCO.</div>
               {pcoError && <div style={{ fontSize: 11, color: COLORS.red, marginTop: 6 }}>{pcoError}</div>}
             </div>
             <button onClick={connectPCO}
