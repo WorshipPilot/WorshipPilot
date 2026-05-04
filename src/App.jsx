@@ -293,7 +293,7 @@ const styles = `
     font-family: var(--font-display);
     font-size: 38px;
     font-weight: 700;
-    color: ${COLORS.navy};
+    color: ${COLORS.text};
     line-height: 1.08;
     letter-spacing: -0.8px;
     font-optical-sizing: auto;
@@ -305,7 +305,7 @@ const styles = `
     margin-top: 12px;
     line-height: 1.6;
     max-width: 580px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .card {
@@ -338,7 +338,7 @@ const styles = `
     margin-bottom: 6px;
     letter-spacing: -0.25px;
   }
-  .card-desc { font-size: 13.5px; color: ${COLORS.cardMuted || COLORS.textMuted}; line-height: 1.55; font-weight: 500; }
+  .card-desc { font-size: 13.5px; color: #4A5568; line-height: 1.55; font-weight: 500; }
 
   .card-icon {
     width: 44px; height: 44px;
@@ -429,11 +429,11 @@ const styles = `
 
   .accordion-item { border-bottom: 1px solid ${COLORS.border}; }
   .accordion-item:last-child { border-bottom: none; }
-  .accordion-trigger { width: 100%; background: none; border: none; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: ${COLORS.text}; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-align: left; transition: color 0.15s; gap: 12px; }
+  .accordion-trigger { width: 100%; background: none; border: none; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #111827; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-align: left; transition: color 0.15s; gap: 12px; }
   .accordion-trigger:hover { color: ${COLORS.accent}; }
   .accordion-chevron { color: ${COLORS.textDim}; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); font-size: 11px; flex-shrink: 0; }
   .accordion-chevron.open { transform: rotate(180deg); color: ${COLORS.accent}; }
-  .accordion-content { padding-bottom: 18px; font-size: 14px; color: ${COLORS.textMuted}; line-height: 1.75; }
+  .accordion-content { padding-bottom: 18px; font-size: 14px; color: #374151; line-height: 1.75; font-weight: 500; }
 
   .chat-container { display: flex; flex-direction: column; gap: 14px; max-height: 460px; overflow-y: auto; padding-right: 4px; }
   .chat-bubble { padding: 13px 16px; border-radius: 14px; font-size: 13.5px; line-height: 1.65; max-width: 86%; }
@@ -452,7 +452,7 @@ const styles = `
 
   .ref-table { width: 100%; border-collapse: collapse; }
   .ref-table th { text-align: left; padding: 12px 16px; font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: ${COLORS.textDim}; border-bottom: 1px solid ${COLORS.border}; background: linear-gradient(180deg, ${COLORS.surfaceAlt} 0%, ${COLORS.surface} 100%); }
-  .ref-table td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid ${COLORS.border}; vertical-align: top; line-height: 1.55; }
+  .ref-table td { padding: 13px 16px; font-size: 13px; border-bottom: 1px solid ${COLORS.border}; vertical-align: top; line-height: 1.55; color: #4A5568; font-weight: 500; }
   .ref-table tr:last-child td { border-bottom: none; }
   .ref-table tr:hover td { background: ${COLORS.surfaceAlt}; }
   .call-code { font-family: var(--font-mono); color: ${COLORS.accent}; font-size: 12.5px; font-weight: 500; }
@@ -460,9 +460,9 @@ const styles = `
   .roadmap-phase { display: flex; gap: 20px; padding: 22px 0; border-bottom: 1px solid ${COLORS.border}; align-items: flex-start; }
   .roadmap-phase:last-child { border-bottom: none; }
   .phase-number { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; flex-shrink: 0; }
-  .phase-title { font-weight: 600; font-size: 15px; margin-bottom: 3px; color: ${COLORS.navy}; font-family: var(--font-display); }
+  .phase-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; color: #111827; font-family: var(--font-display); }
   .phase-timing { font-size: 11px; color: ${COLORS.accent}; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
-  .phase-items { font-size: 13px; color: ${COLORS.textMuted}; line-height: 1.9; }
+  .phase-items { font-size: 13px; color: #4A5568; line-height: 1.9; font-weight: 500; }
 
   .onboard-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid ${COLORS.border}; }
   .onboard-step:last-child { border-bottom: none; }
@@ -1517,7 +1517,7 @@ const Hint = ({ hintKey, text }) => {
   const [visible, dismiss] = useHint(hintKey);
   if (!visible) return null;
   return (
-    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.25)`, borderRadius: 12, marginBottom: 16 }}>
+    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "rgba(196,154,60,0.12)", border: `1px solid rgba(196,154,60,0.3)`, borderRadius: 12, marginBottom: 16 }}>
       <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>💡</span>
       <span style={{ fontSize: 13, color: COLORS.navy, lineHeight: 1.5, flex: 1 }}>{text}</span>
       <button onClick={dismiss} style={{ background: "none", border: "none", color: COLORS.textDim, cursor: "pointer", fontSize: 14, flexShrink: 0, padding: 0, lineHeight: 1 }}>✕</button>
@@ -1549,7 +1549,7 @@ const renderAnswerText = (text) => {
       elements.push(
         <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7, alignItems: "flex-start" }}>
           <span style={{ fontWeight: 700, color: COLORS.accent, fontSize: 13, minWidth: 18, flexShrink: 0, fontFamily: "'JetBrains Mono', monospace", lineHeight: 1.78 }}>{num}.</span>
-          <span style={{ fontSize: 13.5, color: COLORS.textMuted, lineHeight: 1.78 }}>{rest}</span>
+          <span style={{ fontSize: 13.5, color: "#4A5568", lineHeight: 1.78, fontWeight: 500 }}>{rest}</span>
         </div>
       );
     } else if (/^[-•]\s/.test(line)) {
@@ -1558,7 +1558,7 @@ const renderAnswerText = (text) => {
       elements.push(
         <div key={i} style={{ display: "flex", gap: 9, marginBottom: 5, alignItems: "flex-start", paddingLeft: 4 }}>
           <span style={{ color: COLORS.accent, fontSize: 11, flexShrink: 0, marginTop: 3, lineHeight: 1 }}>·</span>
-          <span style={{ fontSize: 13.5, color: COLORS.textMuted, lineHeight: 1.7 }}>{rest}</span>
+          <span style={{ fontSize: 13.5, color: "#4A5568", lineHeight: 1.7, fontWeight: 500 }}>{rest}</span>
         </div>
       );
     } else if (line.endsWith(":") && line.length < 60 && !line.startsWith("e.g")) {
@@ -1569,7 +1569,7 @@ const renderAnswerText = (text) => {
     } else {
       // Normal paragraph text
       elements.push(
-        <p key={i} style={{ fontSize: 13.5, color: COLORS.textMuted, lineHeight: 1.78, marginBottom: 8 }}>{line}</p>
+        <p key={i} style={{ fontSize: 13.5, color: "#4A5568", lineHeight: 1.78, marginBottom: 8, fontWeight: 500 }}>{line}</p>
       );
     }
     i++;
@@ -1745,10 +1745,10 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 38, height: 38, borderRadius: "50%", background: COLORS.accentLight, border: `1.5px solid rgba(62,127,199,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
+            <div style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(196,154,60,0.15)", border: `1.5px solid rgba(196,154,60,0.35)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>{step.label}</div>
-              <div style={{ fontSize: 12, color: COLORS.textDim }}>{step.desc}</div>
+              <div style={{ fontSize: 12, color: "#4A5568", fontWeight: 500 }}>{step.desc}</div>
             </div>
             <span style={{ color: COLORS.textDim, fontSize: 18 }}>›</span>
           </button>
@@ -1762,7 +1762,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={mod.icon} size={18} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
@@ -1784,11 +1784,11 @@ const StartHerePage = ({ setPage }) => {
             style={{ padding: "18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
               <Icon name={item.icon} size={19} color={COLORS.accent} />
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{item.label}</div>
-            <div style={{ fontSize: 12, color: COLORS.textDim, lineHeight: 1.4 }}>{item.desc}</div>
+            <div style={{ fontSize: 12, color: "#4A5568", lineHeight: 1.4, fontWeight: 500 }}>{item.desc}</div>
           </button>
         ))}
       </div>
@@ -1818,7 +1818,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
 
         <div className="page-header">
           <div className="page-eyebrow">MD Training — Module {MD_MODULES.findIndex(m => m.id === view) + 1} of {MD_MODULES.length}</div>
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
+          <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
             <Icon name={activeModule.icon} size={24} color={COLORS.accent} />
           </div>
           <div className="page-title">{activeModule.title}</div>
@@ -1826,7 +1826,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
         </div>
 
         {/* Outcomes */}
-        <div style={{ background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
+        <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>After this module you'll be able to:</div>
           {activeModule.outcomes.map((o, i) => (
             <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7, fontSize: 13.5, color: COLORS.navy, lineHeight: 1.5 }}>
@@ -1841,7 +1841,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
           <div key={i} className="card" style={{ marginBottom: 10 }}>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, color: COLORS.navy, marginBottom: 12 }}>{sec.heading}</div>
             {sec.body.split("\n\n").map((para, j) => (
-              <p key={j} style={{ fontSize: 14, color: COLORS.textMuted, lineHeight: 1.75, marginBottom: 10 }}>
+              <p key={j} style={{ fontSize: 14, color: "#4A5568", lineHeight: 1.75, marginBottom: 10, fontWeight: 500 }}>
                 {para.startsWith("•") ? (
                   <span style={{ display: "block" }}>
                     {para.split("\n").map((line, k) => {
@@ -1941,23 +1941,23 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: step.color }}>Step {step.step}</div>
                     <div style={{ fontSize: 10, color: COLORS.textDim, letterSpacing: 1, textTransform: "uppercase" }}>{step.phase}</div>
                   </div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{week.title}</div>
-                  <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.55, marginBottom: 12 }}>{step.desc}</div>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700, color: COLORS.text, marginBottom: 4 }}>{week.title}</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.55, marginBottom: 12, fontWeight: 500 }}>{step.desc}</div>
 
                   {/* Module card — if this step has a module */}
                   {module && (
                     <button onClick={() => setView(module.id)}
-                      style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 16px", background: moduleDone ? COLORS.greenLight : COLORS.card, border: `1px solid ${moduleDone ? COLORS.green + "44" : COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s", marginBottom: 8 }}
+                      style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 16px", background: moduleDone ? COLORS.greenLight : COLORS.card, border: `1px solid ${moduleDone ? COLORS.green + "44" : COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowXs, transition: "all 0.15s", marginBottom: 8 }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green : step.color; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green + "44" : COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : COLORS.accentLight, border: `1px solid ${moduleDone ? COLORS.green : "rgba(62,127,199,0.15)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : "rgba(196,154,60,0.15)", border: `1px solid ${moduleDone ? COLORS.green : "rgba(196,154,60,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <Icon name={module.icon} size={18} color={moduleDone ? "#fff" : COLORS.accent} />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: 11, fontWeight: 600, color: moduleDone ? COLORS.green : COLORS.textDim, letterSpacing: 0.5, marginBottom: 2 }}>
                           {moduleDone ? "✓ Complete" : "Study Module"}
                         </div>
-                        <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy }}>{module.title}</div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>{module.title}</div>
                       </div>
                       <span style={{ color: COLORS.textDim, fontSize: 16 }}>›</span>
                     </button>
@@ -2070,7 +2070,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 28 }}>
         {/* Cue Language / Vocab */}
         <button onClick={() => setPage("vocab")}
-          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.border}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surface }}>
+          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.borderMid}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surfaceAlt }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <Icon name="vocab" size={18} color={COLORS.textMuted} />
             <span style={{ fontSize: 12, color: COLORS.textDim }}>›</span>
@@ -2084,7 +2084,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
 
         {/* Situations */}
         <button onClick={() => setPage("coaching")}
-          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.border}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surface }}>
+          style={{ height: 160, borderRadius: 14, border: `1px solid ${COLORS.borderMid}`, cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "16px", background: COLORS.surfaceAlt }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <Icon name="coaching" size={18} color={COLORS.textMuted} />
             <span style={{ fontSize: 12, color: COLORS.textDim }}>›</span>
@@ -2220,7 +2220,7 @@ const VocabPage = () => {
             {filtered.map((row, i) => (
               <tr key={i}>
                 <td><span className="call-code">{row.call}</span></td>
-                <td style={{ color: COLORS.textMuted }}>{row.meaning}</td>
+                <td style={{ color: "#4A5568", fontWeight: 500 }}>{row.meaning}</td>
                 <td><span className="badge badge-gold">{row.category}</span></td>
               </tr>
             ))}
@@ -2230,7 +2230,7 @@ const VocabPage = () => {
 
       <div className="section-label" style={{ marginTop: 32 }}>Nashville Number Quick Reference</div>
       <div className="card" style={{ marginBottom: 24 }}>
-        <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 14 }}>All 12 Keys</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: "#111827", marginBottom: 14 }}>All 12 Keys</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px,1fr))", gap: 10 }}>
           {[
             ["C",  "C Dm Em F G Am Bdim"],
@@ -2248,9 +2248,9 @@ const VocabPage = () => {
           ].map(([key, chords]) => (
             <div key={key} style={{ background: COLORS.surfaceAlt, borderRadius: 10, padding: "12px 14px", border: `1px solid ${COLORS.border}` }}>
               <div style={{ fontFamily: "'JetBrains Mono', monospace", color: COLORS.accent, fontWeight: 600, marginBottom: 6, fontSize: 13 }}>{key} Major</div>
-              <div style={{ fontSize: 11, color: COLORS.textMuted, lineHeight: 1.7 }}>
+              <div style={{ fontSize: 11, color: "#4A5568", lineHeight: 1.7, fontWeight: 500 }}>
                 {chords.split(" ").map((c, i) => (
-                  <span key={i}><span style={{ color: COLORS.navy, fontWeight: 600 }}>{i + 1}</span>={c} </span>
+                  <span key={i}><span style={{ color: "#111827", fontWeight: 700 }}>{i + 1}</span>={c} </span>
                 ))}
               </div>
             </div>
@@ -2914,12 +2914,12 @@ const OnboardingPage = () => {
                   <div style={{ width: 22, height: 22, borderRadius: 7, border: `1.5px solid ${done ? COLORS.green : COLORS.border}`, background: done ? COLORS.green : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.2s" }}>
                     {done && <span style={{ color: "#fff", fontSize: 12 }}>✓</span>}
                   </div>
-                  <span style={{ fontSize: 14, color: done ? COLORS.textDim : COLORS.text, textDecoration: done ? "line-through" : "none" }}>{task}</span>
+                  <span style={{ fontSize: 14, color: done ? COLORS.textDim : "#111827", fontWeight: done ? 400 : 500, textDecoration: done ? "line-through" : "none" }}>{task}</span>
                 </div>
               );
             })}
           </div>
-          <div style={{ background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, borderRadius: 10, padding: "14px 18px" }}>
+          <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 10, padding: "14px 18px" }}>
             <div style={{ fontSize: 10, color: COLORS.accent, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>Week Benchmark</div>
             <div style={{ fontSize: 14, color: COLORS.navy, fontWeight: 500 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
           </div>
@@ -2942,7 +2942,7 @@ const OnboardingPage = () => {
               </div>
               <div style={{ flex: 1, paddingTop: 4 }}>
                 <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 4, color: activeWeek === i ? COLORS.accent : COLORS.navy }}>{w.week}: {w.title}</div>
-                <div style={{ fontSize: 13, color: COLORS.textMuted }}>{w.benchmark}</div>
+                <div style={{ fontSize: 13, color: "#4A5568", fontWeight: 500 }}>{w.benchmark}</div>
                 <div className="progress-track" style={{ marginTop: 8, width: "60%" }}>
                   <div className="progress-fill" style={{ width: `${weekProgress(i)}%` }} />
                 </div>
@@ -3094,7 +3094,7 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
           onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-1px)"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.15)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={part.icon} size={20} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
@@ -3102,8 +3102,8 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
                 <span className="badge badge-gold">Part {part.id}</span>
               </div>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, color: COLORS.navy, marginBottom: 6 }}>{part.title}</div>
-              <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.5 }}>{part.summary}</div>
-              <div style={{ fontSize: 11, color: COLORS.textDim, marginTop: 8 }}>{part.content.length} questions covered ›</div>
+              <div style={{ fontSize: 13, color: "#4A5568", lineHeight: 1.5, fontWeight: 500 }}>{part.summary}</div>
+              <div style={{ fontSize: 11, color: "#64748B", marginTop: 8, fontWeight: 600 }}>{part.content.length} questions covered ›</div>
             </div>
           </div>
         </div>
@@ -3121,7 +3121,7 @@ const PartDetail = ({ part, setPage }) => (
       <span className="badge badge-gold">Part {part.id}</span>
     </div>
     <div className="page-header">
-      <div style={{ width: 52, height: 52, borderRadius: 16, background: COLORS.accentLight, border: `1px solid rgba(62,127,199,0.2)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
+      <div style={{ width: 52, height: 52, borderRadius: 16, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
         <Icon name={part.icon} size={26} color={COLORS.accent} />
       </div>
       <div className="page-title">{part.title}</div>
@@ -3425,10 +3425,6 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 3, textTransform: 'uppercase', color: COLORS.accent, fontFamily: "var(--font-display)", marginBottom: 4 }}>Community</div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, color: COLORS.navy, lineHeight: 1.1 }}>The Pilots Page</div>
-            <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>Song arrangements by MDs, for MDs.</div>
-          </div>
           <button onClick={() => setView('publish')}
             style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 11, border: 'none', background: COLORS.accentGradient, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, boxShadow: COLORS.shadowAccent }}>
             <span style={{ fontSize: 16 }}>↑</span> Share an Arrangement
@@ -3591,7 +3587,7 @@ const RoadmapPage = ({ setPage }) => {
                 <div className="phase-timing">{p.timing}</div>
                 <div className="phase-items">
                   {p.items.map((item, j) => (
-                    <div key={j} style={{ color: item.startsWith("Success") ? p.color : COLORS.textMuted, fontWeight: item.startsWith("Success") ? 600 : 400 }}>
+                    <div key={j} style={{ color: item.startsWith("Success") ? COLORS.accent : COLORS.textMuted, fontWeight: item.startsWith("Success") ? 600 : 400 }}>
                       {item.startsWith("Success") ? "✓ " : "· "}{item}
                     </div>
                   ))}
@@ -4340,7 +4336,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
     <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/stage-wide.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+        <img src="/stage-wide.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 55%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Service Builder</div>
