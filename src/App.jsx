@@ -8,29 +8,29 @@ const COLORS = {
   surfaceAlt:   "#1C2438",
   surfaceSunk:  "#222D44",
   surfaceGlass: "rgba(22,29,43,0.92)",
-  card:         "#161D2B",
+  card:         "#EEE8DC",
   // ── Borders ──
-  border:       "#243045",
-  borderMid:    "#304060",
-  borderStrong: "#425575",
+  border:       "#D8D0C0",
+  borderMid:    "#C4BAA6",
+  borderStrong: "#A89E8A",
   // ── Sidebar ──
   sidebar:           "#090E16",
   sidebarBorder:     "#111A28",
   sidebarIcon:       "#58708C",
   sidebarIconHover:  "#8FB7E0",
-  sidebarIconActive: "#78B7FF",
-  // ── Brand accent (ice blue) ──
-  accent:         "#78B7FF",
-  accentDim:      "#3E7FC7",
-  accentBright:   "#A9D2FF",
-  accentLight:    "#0E1A2A",
-  accentSoft:     "#0B141F",
-  accentGlow:     "rgba(120,183,255,0.18)",
-  accentGradient: "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)",
-  // ── Navy (light text) ──
-  navy:    "#DCE7F5",
-  navyMid: "#A9BCD3",
-  navyLow: "#71859D",
+  sidebarIconActive: "#C9A84C",
+  // ── Brand accent (warm gold) ──
+  accent:         "#C9A84C",
+  accentDim:      "#A07C28",
+  accentBright:   "#DFC06A",
+  accentLight:    "#2A2210",
+  accentSoft:     "#1E1A0C",
+  accentGlow:     "rgba(201,168,76,0.18)",
+  accentGradient: "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)",
+  // ── Navy (dark text on cream cards) ──
+  navy:    "#111827",
+  navyMid: "#1E2D42",
+  navyLow: "#2D3F57",
   // ── Text ──
   text:      "#E7EEF8",
   textMuted: "#93A4BA",
@@ -51,10 +51,10 @@ const COLORS = {
   shadowMd: "0 2px 4px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.28), 0 16px 32px rgba(0,0,0,0.20)",
   shadowLg: "0 4px 8px rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.35), 0 32px 64px rgba(0,0,0,0.25)",
   shadowXl: "0 8px 16px rgba(0,0,0,0.40), 0 24px 48px rgba(0,0,0,0.40), 0 56px 112px rgba(0,0,0,0.30)",
-  shadowAccent:   "0 1px 2px rgba(120,183,255,0.15), 0 4px 14px rgba(120,183,255,0.20), 0 8px 28px rgba(120,183,255,0.10)",
-  shadowAccentLg: "0 2px 4px rgba(120,183,255,0.18), 0 8px 22px rgba(120,183,255,0.28), 0 16px 40px rgba(120,183,255,0.14)",
+  shadowAccent:   "0 1px 2px rgba(201,168,76,0.15), 0 4px 14px rgba(201,168,76,0.20), 0 8px 28px rgba(201,168,76,0.10)",
+  shadowAccentLg: "0 2px 4px rgba(201,168,76,0.18), 0 8px 22px rgba(201,168,76,0.28), 0 16px 40px rgba(201,168,76,0.14)",
   // ── Focus ring ──
-  ring: "0 0 0 3px rgba(120,183,255,0.25)",
+  ring: "0 0 0 3px rgba(201,168,76,0.25)",
 };
 
 const LIVE = {
@@ -320,7 +320,7 @@ const styles = `
     position: absolute;
     inset: 0;
     border-radius: 16px;
-    background: linear-gradient(160deg, rgba(255,255,255,0.03) 0%, transparent 55%);
+    background: linear-gradient(160deg, rgba(255,255,255,0.4) 0%, transparent 55%);
     pointer-events: none;
   }
   button.card { cursor: pointer; text-align: left; width: 100%; font-family: var(--font-body); }
@@ -1169,7 +1169,7 @@ const RoleSelector = ({ onSelect }) => {
       display: "flex", flexDirection: "column",
       overflow: "auto",
     }}>
-      <img src="/empty-stage.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", opacity: 0.18 }} />
+
       <div style={{
         position: "absolute", top: -120, left: -80,
         width: 520, height: 360,
@@ -1213,8 +1213,8 @@ const RoleSelector = ({ onSelect }) => {
                 boxShadow: `0 4px 16px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#78B7FF" fillOpacity="0.9"/>
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#78B7FF" strokeWidth="0.8" strokeLinejoin="round"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C9A84C" fillOpacity="0.9"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C9A84C" strokeWidth="0.8" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -1238,7 +1238,7 @@ const RoleSelector = ({ onSelect }) => {
               fontStyle: "italic",
             }}>
               Lead the band.<br />
-              <span style={{ color: "#78B7FF", fontStyle: "normal" }}>Free the room.</span>
+              <span style={{ color: "#C9A84C", fontStyle: "normal" }}>Free the room.</span>
             </div>
 
             <div style={{
@@ -1262,7 +1262,7 @@ const RoleSelector = ({ onSelect }) => {
                 <div key={label}>
                   <div style={{
                     fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
-                    color: "#78B7FF", letterSpacing: "-0.5px", lineHeight: 1,
+                    color: "#C9A84C", letterSpacing: "-0.5px", lineHeight: 1,
                   }}>{n}</div>
                   <div style={{
                     fontSize: 10, color: "rgba(240,235,225,0.45)",
@@ -1283,7 +1283,7 @@ const RoleSelector = ({ onSelect }) => {
             padding: "28px 24px",
             boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#78B7FF", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#C9A84C", marginBottom: 8 }}>
               Get started
             </div>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
@@ -1309,7 +1309,7 @@ const RoleSelector = ({ onSelect }) => {
                       background: isSelected
                         ? "linear-gradient(135deg, rgba(62,127,199,0.22) 0%, rgba(120,183,255,0.08) 100%)"
                         : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
-                      border: `1.5px solid ${isSelected ? "#78B7FF" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
+                      border: `1.5px solid ${isSelected ? "#C9A84C" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
                       borderRadius: 12, cursor: "pointer", textAlign: "left",
                       fontFamily: "var(--font-body)",
                       transition: "all 0.18s cubic-bezier(0.2, 0.6, 0.2, 1)",
@@ -1317,7 +1317,7 @@ const RoleSelector = ({ onSelect }) => {
                   >
                     <div style={{
                       width: 36, height: 36, borderRadius: 10,
-                      background: isSelected ? "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)" : "rgba(240,235,225,0.06)",
+                      background: isSelected ? "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)" : "rgba(240,235,225,0.06)",
                       border: `1px solid ${isSelected ? "rgba(120,183,255,0.5)" : "rgba(240,235,225,0.10)"}`,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0,
@@ -1336,8 +1336,8 @@ const RoleSelector = ({ onSelect }) => {
                     </div>
                     <div style={{
                       width: 18, height: 18, borderRadius: "50%",
-                      border: `1.5px solid ${isSelected ? "#78B7FF" : "rgba(240,235,225,0.18)"}`,
-                      background: isSelected ? "#78B7FF" : "transparent",
+                      border: `1.5px solid ${isSelected ? "#C9A84C" : "rgba(240,235,225,0.18)"}`,
+                      background: isSelected ? "#C9A84C" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, transition: "all 0.18s",
                     }}>
@@ -1354,7 +1354,7 @@ const RoleSelector = ({ onSelect }) => {
               style={{
                 width: "100%", padding: "14px",
                 borderRadius: 11, border: "none",
-                background: selected ? "linear-gradient(135deg, #3E7FC7 0%, #78B7FF 100%)" : "rgba(240,235,225,0.06)",
+                background: selected ? "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)" : "rgba(240,235,225,0.06)",
                 color: selected ? "#fff" : "rgba(240,235,225,0.35)",
                 fontSize: 14, fontWeight: 700,
                 cursor: selected ? "pointer" : "not-allowed",
@@ -2174,7 +2174,7 @@ const VocabPage = () => {
     <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Reference</div>
@@ -2875,7 +2875,7 @@ const OnboardingPage = () => {
   return (
     <div className="fade-in">
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+        <img src="/empty-stage.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Training</div>
@@ -2978,7 +2978,7 @@ const CoachingPage = () => {
       <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
+        <img src="/guitarist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>MD Reference</div>
@@ -3084,15 +3084,7 @@ const CoachingPage = () => {
 
 const ManualPage = ({ setSelectedPart, setPage }) => (
   <div className="fade-in">
-    <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-      <img src="/keys-woman.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>System Manual</div>
-        <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>All 10 Parts</div>
-        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>The complete WorshipPilot MD System.</div>
-      </div>
-    </div>
+
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {PARTS_DATA.map((part) => (
         <div key={part.id} className="card" style={{ cursor: "pointer" }}
@@ -3161,7 +3153,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
   const pcoState = (() => { try { return JSON.parse(localStorage.getItem('wp-pco-connection') || 'null'); } catch { return null; } })();
   const STYLE_TAGS = ['Driving', 'Intimate', 'Building', 'Celebratory', 'Reflective', 'High Energy', 'Acoustic', 'Contemporary', 'Traditional'];
-  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#78B7FF",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
+  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C9A84C",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
 
   const fetchSongs = async () => {
     setLoading(true); setError(null);
@@ -3622,7 +3614,7 @@ const SECTION_TYPES = ["intro","verse","prechorus","chorus","bridge","tag","outr
 
 const TYPE_COLORS = {
   intro: "#4CAF7D", verse: "#6B9FD4", prechorus: "#A07CC5",
-  chorus: "#78B7FF", bridge: "#CF6679", tag: "#B8720A",
+  chorus: "#C9A84C", bridge: "#CF6679", tag: "#B8720A",
   outro: "#5A8FA0", turnaround: "#8A9B6A", instrumental: "#4A8AAA",
   breakdown: "#9A6AAA", vamp: "#6A9A6A",
 };
@@ -4346,7 +4338,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
     <div className="fade-in">
       {/* Photo hero */}
       <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
-        <img src="/drummer.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
+        <img src="/stage-wide.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.15) 100%)" }} />
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Service Builder</div>
@@ -4679,7 +4671,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
     return (
       <div className="fade-in" style={{ maxWidth: 520, margin: "0 auto", paddingTop: 0, textAlign: "center" }}>
         <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 28, height: 220 }}>
-          <img src="/stage-wide.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+          <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,18,0.97) 0%, rgba(5,10,18,0.5) 60%, rgba(5,10,18,0.15) 100%)" }} />
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px", textAlign: "left" }}>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Live Mode</div>
@@ -4840,7 +4832,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const clearAllOverrides = () => { liveLoopRef.current = false; liveExtraRepeatsRef.current = 0; setLiveLoopActive(false); setLiveExtraRepeats(0); setLiveEndingMode(null); };
 
   const sectionColor = (type) => ({
-    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#78B7FF",
+    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C9A84C",
     bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0",turnaround:"#8A9B6A",
     instrumental:"#4A8AAA",breakdown:"#9A6AAA",vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -4920,7 +4912,7 @@ Do not add any preamble or explanation — just the bullet points.`;
 
   const suggestions = getAISuggestions(section.type, sectionIndex, totalSections, song.bpm);
   const segColor = (type) => ({
-    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#78B7FF",
+    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#C9A84C",
     bridge:"#CF6679", tag:"#B8720A", outro:"#5A8FA0", turnaround:"#8A9B6A",
     instrumental:"#4A8AAA", breakdown:"#9A6AAA", vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -5804,8 +5796,8 @@ export default function App() {
     aria-label="WorshipPilot — go to dashboard"
   >
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#78B7FF" fillOpacity="0.92"/>
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#78B7FF" strokeWidth="0.6" strokeLinejoin="round"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C9A84C" fillOpacity="0.92"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C9A84C" strokeWidth="0.6" strokeLinejoin="round"/>
     </svg>
     <div className="nav-tooltip">WorshipPilot</div>
   </button>
