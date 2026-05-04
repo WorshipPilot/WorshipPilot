@@ -1169,6 +1169,7 @@ const RoleSelector = ({ onSelect }) => {
       display: "flex", flexDirection: "column",
       overflow: "auto",
     }}>
+      <img src="/empty-stage.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", opacity: 0.18 }} />
       <div style={{
         position: "absolute", top: -120, left: -80,
         width: 520, height: 360,
@@ -3018,11 +3019,14 @@ const CoachingPage = () => {
       </div>
 
       {/* Situation card */}
-      <div style={{ background: COLORS.navy, borderRadius: 18, padding: "26px 28px", marginBottom: 16 }}>
+      <div style={{ position: "relative", borderRadius: 18, overflow: "hidden", marginBottom: 16 }}>
+        <img src="/hands-keys.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(8,12,18,0.94) 0%, rgba(8,12,18,0.88) 100%)" }} />
+        <div style={{ position: "relative", zIndex: 1, padding: "26px 28px" }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>The Situation</div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 600, color: "#fff", lineHeight: 1.2, marginBottom: 14 }}>{selected.title}</div>
         <div style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.75 }}>{selected.prompt}</div>
-      </div>
+      </div></div>
 
       {/* Reveal toggle */}
       {!revealed ? (
@@ -3413,6 +3417,16 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
   // ── BROWSE VIEW ──
   return (
     <div className="fade-in">
+      {/* Photo hero */}
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 200 }}>
+        <img src="/band-together.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.1) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Community</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>The Pilots Page</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>Song arrangements by MDs, for MDs.</div>
+        </div>
+      </div>
       {/* Header */}
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
@@ -3752,10 +3766,14 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
 
   return (
     <div className="fade-in">
-      <div className="page-header">
-        <div className="page-eyebrow">Song Builder</div>
-        <div className="page-title">{editing ? "Edit Song" : "New Song"}</div>
-        <div className="page-sub">Build song structures for Live Mode. Each section becomes a cue card on Sunday.</div>
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/guitar-neck.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.1) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Song Builder</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>{editing ? "Edit Song" : "New Song"}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>Build song structures for Live Mode.</div>
+        </div>
       </div>
 
       {songLibrary.length > 0 && (
@@ -4659,9 +4677,15 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
 
   if (!activeService || songs.length === 0) {
     return (
-      <div className="fade-in" style={{ maxWidth: 520, margin: "0 auto", paddingTop: 40, textAlign: "center" }}>
-        <div style={{ width: 64, height: 64, borderRadius: 18, background: "linear-gradient(135deg, rgba(62,127,199,0.15) 0%, rgba(120,183,255,0.08) 100%)", border: `1px solid rgba(62,127,199,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", boxShadow: "0 4px 20px rgba(62,127,199,0.15)" }}>
-          <Icon name="live" size={28} color={COLORS.accent} />
+      <div className="fade-in" style={{ maxWidth: 520, margin: "0 auto", paddingTop: 0, textAlign: "center" }}>
+        <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 28, height: 220 }}>
+          <img src="/stage-wide.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,18,0.97) 0%, rgba(5,10,18,0.5) 60%, rgba(5,10,18,0.15) 100%)" }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px", textAlign: "left" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Live Mode</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>Ready when you are.</div>
+            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>Build a service first, then launch it here.</div>
+          </div>
         </div>
         <div style={{ fontFamily: "var(--font-display)", fontSize: 28, color: LIVE.text, marginBottom: 8 }}>No Active Service</div>
         <div style={{ fontSize: 14, color: LIVE.textMuted, marginBottom: 28, lineHeight: 1.6 }}>Build a service in the Service Builder, then launch it here.</div>
@@ -5449,10 +5473,14 @@ const VideoPage = () => {
 
   return (
     <div className="fade-in">
-      <div className="page-header">
-        <div className="page-eyebrow">Reference Library</div>
-        <div className="page-title">Video Reference</div>
-        <div className="page-sub">{VIDEO_DATA.length} curated videos organized by MD skill area. Tap any video to open in YouTube.</div>
+      <div style={{ position: "relative", borderRadius: 16, overflow: "hidden", marginBottom: 24, height: 180 }}>
+        <img src="/tablet-watch.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 40%" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 55%, rgba(8,12,18,0.1) 100%)" }} />
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "20px 22px 18px" }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 6 }}>Reference Library</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", fontFamily: "var(--font-display)" }}>Video Reference</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>{VIDEO_DATA.length} curated videos by MD skill area.</div>
+        </div>
       </div>
 
       {/* Category filter — prominent cards */}
