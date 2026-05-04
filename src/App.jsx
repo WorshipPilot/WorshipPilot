@@ -2008,87 +2008,59 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
   return (
     <div className="fade-in">
 
-      {/* ── GREETING STRIP ── */}
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 20 }}>
-        <div style={{ fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 700, color: COLORS.text, letterSpacing: "-0.5px", fontFamily: "var(--font-display)" }}>
-          {isFirstVisit ? "Welcome." : `${greeting}.`}
-        </div>
-        <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 16 }}>
-          <div style={{ fontSize: 12, color: COLORS.accent, fontWeight: 600, fontFamily: "var(--font-mono)" }}>
+      {/* ── FULL-BLEED HERO ── */}
+      <div style={{ position: "relative", borderRadius: 18, overflow: "hidden", marginBottom: 10, height: "clamp(340px, 48vw, 460px)" }}>
+        <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 22%" }} />
+        {/* Gradient — dark at bottom for text, fades to transparent at top */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,1) 0%, rgba(8,12,18,0.82) 35%, rgba(8,12,18,0.3) 65%, rgba(8,12,18,0.05) 100%)" }} />
+
+        {/* Top bar — status + date */}
+        <div style={{ position: "absolute", top: 20, left: 22, right: 22, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: COLORS.accent, boxShadow: `0 0 8px ${COLORS.accent}` }} />
+            <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, fontFamily: "var(--font-body)" }}>
+              {isFirstVisit ? "Welcome to WorshipPilot" : `Step ${currentStep.step} of ${JOURNEY_STEPS.length} · ${currentStep.phase}`}
+            </span>
+          </div>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-mono)" }}>
             {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }).toUpperCase()}
+          </span>
+        </div>
+
+        {/* Bottom content */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px 24px 26px" }}>
+          <div style={{ fontSize: "clamp(28px, 5vw, 42px)", fontWeight: 700, color: "#fff", lineHeight: 1.08, letterSpacing: "-0.8px", marginBottom: 10, fontFamily: "var(--font-display)" }}>
+            {isFirstVisit ? <>Most teams don't lack talent.<br /><span style={{ color: COLORS.accent }}>They lack clarity.</span></> : trainingDone ? <>You're trained.<br /><span style={{ color: COLORS.accent }}>Stay sharp.</span></> : <>Pick up where<br />you left off.</>}
+          </div>
+          <div style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", marginBottom: 20, lineHeight: 1.5 }}>
+            {isFirstVisit ? "Playback handles the audio. WorshipPilot handles the leadership." : trainingDone ? "Scenarios, Live Mode, and the Manual keep your edge." : `${currentWeek.title} · ${currentStep.phase} phase · Cue Language module`}
+          </div>
+          {!isFirstVisit && !trainingDone && (
+            <div style={{ marginBottom: 20, maxWidth: 320 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>Training progress</span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: COLORS.accent, fontFamily: "var(--font-mono)" }}>{completedCount} / {MD_MODULES.length}</span>
+              </div>
+              <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accent, borderRadius: 3, transition: "width 0.6s ease" }} />
+              </div>
+            </div>
+          )}
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <button onClick={() => setPage(isFirstVisit ? "starthere" : trainingDone ? "coaching" : "training")}
+              style={{ padding: "12px 22px", borderRadius: 10, border: "none", background: COLORS.accent, color: "#080C12", fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.background = COLORS.accentBright}
+              onMouseLeave={e => e.currentTarget.style.background = COLORS.accent}>
+              {isFirstVisit ? "Start training →" : trainingDone ? "Practice scenarios →" : "Continue training →"}
+            </button>
+            <button onClick={() => setPage("live")}
+              style={{ padding: "12px 18px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "var(--font-body)", transition: "all 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.14)"}
+              onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}>
+              ▶ Live Mode
+            </button>
           </div>
         </div>
-      </div>
-
-      {/* ── TOP TWO PHOTO CARDS ── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
-        {/* Training card */}
-        <button onClick={() => setPage(isFirstVisit ? "starthere" : "training")}
-          style={{ position: "relative", height: 220, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
-          <img src="/keys-man.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.6) 50%, rgba(8,12,18,0.15) 100%)" }} />
-          <div style={{ position: "absolute", top: 16, left: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: COLORS.accent }} />
-              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent }}>
-                {isFirstVisit ? "In Progress" : `Step ${currentStep.step} / ${JOURNEY_STEPS.length}`}
-              </span>
-            </div>
-          </div>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 18px 16px" }}>
-            <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", lineHeight: 1.15, marginBottom: 6, fontFamily: "var(--font-display)" }}>
-              {isFirstVisit ? "Start your MD training." : trainingDone ? "Training complete." : <>Pick up where<br />you left off.</>}
-            </div>
-            {!trainingDone && (
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 12 }}>
-                {isFirstVisit ? "5-module pathway · ~90 min total" : `${currentWeek.title} · ${currentStep.phase} phase`}
-              </div>
-            )}
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <div style={{ padding: "7px 16px", borderRadius: 8, background: COLORS.accent, color: "#0A0F18", fontSize: 12, fontWeight: 700 }}>
-                {isFirstVisit ? "Start training →" : trainingDone ? "Review →" : "Continue training →"}
-              </div>
-              <div style={{ padding: "7px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.75)", fontSize: 12, fontWeight: 600 }}>
-                ▶ Live Mode
-              </div>
-            </div>
-            {!isFirstVisit && !trainingDone && (
-              <div style={{ marginTop: 12 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>Training progress</span>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: COLORS.accent, fontFamily: "var(--font-mono)" }}>{completedCount}/{MD_MODULES.length}</span>
-                </div>
-                <div style={{ height: 3, borderRadius: 3, background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: `${progressPct}%`, background: COLORS.accent, borderRadius: 3 }} />
-                </div>
-              </div>
-            )}
-          </div>
-        </button>
-
-        {/* Live Mode card */}
-        <button onClick={() => setPage("live")}
-          style={{ position: "relative", height: 220, borderRadius: 16, overflow: "hidden", border: "none", cursor: "pointer", textAlign: "left", display: "block" }}>
-          <img src="/bassist.png" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 15%" }} />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,18,0.97) 0%, rgba(8,12,18,0.5) 50%, rgba(8,12,18,0.1) 100%)" }} />
-          <div style={{ position: "absolute", top: 16, left: 16 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4CAF7D" }} />
-              <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#4CAF7D" }}>Live Mode · Ready</span>
-            </div>
-          </div>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "18px 18px 16px" }}>
-            <div style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.4px", lineHeight: 1.15, marginBottom: 6, fontFamily: "var(--font-display)" }}>
-              Practice for Sunday.
-            </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 14 }}>
-              Beat-accurate countdowns. Section cues.
-            </div>
-            <div style={{ padding: "7px 16px", borderRadius: 8, background: COLORS.accent, color: "#0A0F18", fontSize: 12, fontWeight: 700, display: "inline-block" }}>
-              ▶ Open Live Mode
-            </div>
-          </div>
-        </button>
       </div>
 
       {/* ── BOTTOM THREE CARDS ── */}
