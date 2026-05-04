@@ -9,6 +9,8 @@ const COLORS = {
   surfaceSunk:  "#222D44",
   surfaceGlass: "rgba(22,29,43,0.92)",
   card:         "#EEE8DC",
+  cardText:     "#111827",
+  cardMuted:    "#4A5568",
   // ── Borders ──
   border:       "#D8D0C0",
   borderMid:    "#C4BAA6",
@@ -18,15 +20,15 @@ const COLORS = {
   sidebarBorder:     "#111A28",
   sidebarIcon:       "#58708C",
   sidebarIconHover:  "#8FB7E0",
-  sidebarIconActive: "#C9A84C",
+  sidebarIconActive: "#C49A3C",
   // ── Brand accent (warm gold) ──
-  accent:         "#C9A84C",
-  accentDim:      "#A07C28",
-  accentBright:   "#DFC06A",
+  accent:         "#C49A3C",
+  accentDim:      "#8A6418",
+  accentBright:   "#D4A84E",
   accentLight:    "#2A2210",
   accentSoft:     "#1E1A0C",
-  accentGlow:     "rgba(201,168,76,0.18)",
-  accentGradient: "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)",
+  accentGlow:     "rgba(196,154,60,0.18)",
+  accentGradient: "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)",
   // ── Navy (dark text on cream cards) ──
   navy:    "#111827",
   navyMid: "#1E2D42",
@@ -51,10 +53,10 @@ const COLORS = {
   shadowMd: "0 2px 4px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.28), 0 16px 32px rgba(0,0,0,0.20)",
   shadowLg: "0 4px 8px rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.35), 0 32px 64px rgba(0,0,0,0.25)",
   shadowXl: "0 8px 16px rgba(0,0,0,0.40), 0 24px 48px rgba(0,0,0,0.40), 0 56px 112px rgba(0,0,0,0.30)",
-  shadowAccent:   "0 1px 2px rgba(201,168,76,0.15), 0 4px 14px rgba(201,168,76,0.20), 0 8px 28px rgba(201,168,76,0.10)",
-  shadowAccentLg: "0 2px 4px rgba(201,168,76,0.18), 0 8px 22px rgba(201,168,76,0.28), 0 16px 40px rgba(201,168,76,0.14)",
+  shadowAccent:   "0 1px 2px rgba(196,154,60,0.15), 0 4px 14px rgba(196,154,60,0.20), 0 8px 28px rgba(196,154,60,0.10)",
+  shadowAccentLg: "0 2px 4px rgba(196,154,60,0.18), 0 8px 22px rgba(196,154,60,0.28), 0 16px 40px rgba(196,154,60,0.14)",
   // ── Focus ring ──
-  ring: "0 0 0 3px rgba(201,168,76,0.25)",
+  ring: "0 0 0 3px rgba(196,154,60,0.25)",
 };
 
 const LIVE = {
@@ -290,7 +292,7 @@ const styles = `
   .page-title {
     font-family: var(--font-display);
     font-size: 38px;
-    font-weight: 500;
+    font-weight: 700;
     color: ${COLORS.navy};
     line-height: 1.08;
     letter-spacing: -0.8px;
@@ -331,12 +333,12 @@ const styles = `
   .card-title {
     font-family: var(--font-display);
     font-size: 19px;
-    font-weight: 500;
+    font-weight: 700;
     color: ${COLORS.navy};
     margin-bottom: 6px;
     letter-spacing: -0.25px;
   }
-  .card-desc { font-size: 13.5px; color: ${COLORS.textMuted}; line-height: 1.55; }
+  .card-desc { font-size: 13.5px; color: ${COLORS.cardMuted || COLORS.textMuted}; line-height: 1.55; font-weight: 500; }
 
   .card-icon {
     width: 44px; height: 44px;
@@ -1213,8 +1215,8 @@ const RoleSelector = ({ onSelect }) => {
                 boxShadow: `0 4px 16px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C9A84C" fillOpacity="0.9"/>
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C9A84C" strokeWidth="0.8" strokeLinejoin="round"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C49A3C" fillOpacity="0.9"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C49A3C" strokeWidth="0.8" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -1238,7 +1240,7 @@ const RoleSelector = ({ onSelect }) => {
               fontStyle: "italic",
             }}>
               Lead the band.<br />
-              <span style={{ color: "#C9A84C", fontStyle: "normal" }}>Free the room.</span>
+              <span style={{ color: "#C49A3C", fontStyle: "normal" }}>Free the room.</span>
             </div>
 
             <div style={{
@@ -1262,7 +1264,7 @@ const RoleSelector = ({ onSelect }) => {
                 <div key={label}>
                   <div style={{
                     fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
-                    color: "#C9A84C", letterSpacing: "-0.5px", lineHeight: 1,
+                    color: "#C49A3C", letterSpacing: "-0.5px", lineHeight: 1,
                   }}>{n}</div>
                   <div style={{
                     fontSize: 10, color: "rgba(240,235,225,0.45)",
@@ -1283,7 +1285,7 @@ const RoleSelector = ({ onSelect }) => {
             padding: "28px 24px",
             boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#C9A84C", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#C49A3C", marginBottom: 8 }}>
               Get started
             </div>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
@@ -1309,7 +1311,7 @@ const RoleSelector = ({ onSelect }) => {
                       background: isSelected
                         ? "linear-gradient(135deg, rgba(62,127,199,0.22) 0%, rgba(120,183,255,0.08) 100%)"
                         : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
-                      border: `1.5px solid ${isSelected ? "#C9A84C" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
+                      border: `1.5px solid ${isSelected ? "#C49A3C" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
                       borderRadius: 12, cursor: "pointer", textAlign: "left",
                       fontFamily: "var(--font-body)",
                       transition: "all 0.18s cubic-bezier(0.2, 0.6, 0.2, 1)",
@@ -1317,7 +1319,7 @@ const RoleSelector = ({ onSelect }) => {
                   >
                     <div style={{
                       width: 36, height: 36, borderRadius: 10,
-                      background: isSelected ? "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)" : "rgba(240,235,225,0.06)",
+                      background: isSelected ? "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)" : "rgba(240,235,225,0.06)",
                       border: `1px solid ${isSelected ? "rgba(120,183,255,0.5)" : "rgba(240,235,225,0.10)"}`,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0,
@@ -1336,8 +1338,8 @@ const RoleSelector = ({ onSelect }) => {
                     </div>
                     <div style={{
                       width: 18, height: 18, borderRadius: "50%",
-                      border: `1.5px solid ${isSelected ? "#C9A84C" : "rgba(240,235,225,0.18)"}`,
-                      background: isSelected ? "#C9A84C" : "transparent",
+                      border: `1.5px solid ${isSelected ? "#C49A3C" : "rgba(240,235,225,0.18)"}`,
+                      background: isSelected ? "#C49A3C" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, transition: "all 0.18s",
                     }}>
@@ -1354,7 +1356,7 @@ const RoleSelector = ({ onSelect }) => {
               style={{
                 width: "100%", padding: "14px",
                 borderRadius: 11, border: "none",
-                background: selected ? "linear-gradient(135deg, #A07C28 0%, #C9A84C 100%)" : "rgba(240,235,225,0.06)",
+                background: selected ? "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)" : "rgba(240,235,225,0.06)",
                 color: selected ? "#fff" : "rgba(240,235,225,0.35)",
                 fontSize: 14, fontWeight: 700,
                 cursor: selected ? "pointer" : "not-allowed",
@@ -2075,8 +2077,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           </div>
           <div>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>Cue Language</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Vocabulary</div>
-            <div style={{ fontSize: 11, color: COLORS.textMuted }}>45+ standard calls</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Vocabulary</div>
+            <div style={{ fontSize: 11, color: "#4A5568", fontWeight: 500 }}>45+ standard calls</div>
           </div>
         </button>
 
@@ -2089,8 +2091,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           </div>
           <div>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>MD Reference</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Situations</div>
-            <div style={{ fontSize: 11, color: COLORS.textMuted }}>7 real-world scenarios</div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Situations</div>
+            <div style={{ fontSize: 11, color: "#4A5568", fontWeight: 500 }}>7 real-world scenarios</div>
           </div>
         </button>
 
@@ -2148,11 +2150,11 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
               onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.background = COLORS.surfaceAlt; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; }}>
               <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 16 }}>
-                <Icon name={item.icon} size={16} color={COLORS.textMuted} />
+                <Icon name={item.icon} size={16} color="#64748B" />
                 <span style={{ fontSize: 13, color: COLORS.textDim }}>›</span>
               </div>
-              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.text, marginBottom: 2, letterSpacing: "-0.1px" }}>{item.title}</div>
-              <div style={{ fontSize: 11, color: COLORS.textDim }}>{item.sub}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#111827", marginBottom: 2, letterSpacing: "-0.1px" }}>{item.title}</div>
+              <div style={{ fontSize: 11, color: "#4A5568" }}>{item.sub}</div>
             </button>
           ))}
         </div>
@@ -3153,7 +3155,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
   const pcoState = (() => { try { return JSON.parse(localStorage.getItem('wp-pco-connection') || 'null'); } catch { return null; } })();
   const STYLE_TAGS = ['Driving', 'Intimate', 'Building', 'Celebratory', 'Reflective', 'High Energy', 'Acoustic', 'Contemporary', 'Traditional'];
-  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C9A84C",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
+  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C49A3C",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
 
   const fetchSongs = async () => {
     setLoading(true); setError(null);
@@ -3614,7 +3616,7 @@ const SECTION_TYPES = ["intro","verse","prechorus","chorus","bridge","tag","outr
 
 const TYPE_COLORS = {
   intro: "#4CAF7D", verse: "#6B9FD4", prechorus: "#A07CC5",
-  chorus: "#C9A84C", bridge: "#CF6679", tag: "#B8720A",
+  chorus: "#C49A3C", bridge: "#CF6679", tag: "#B8720A",
   outro: "#5A8FA0", turnaround: "#8A9B6A", instrumental: "#4A8AAA",
   breakdown: "#9A6AAA", vamp: "#6A9A6A",
 };
@@ -4832,7 +4834,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const clearAllOverrides = () => { liveLoopRef.current = false; liveExtraRepeatsRef.current = 0; setLiveLoopActive(false); setLiveExtraRepeats(0); setLiveEndingMode(null); };
 
   const sectionColor = (type) => ({
-    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C9A84C",
+    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C49A3C",
     bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0",turnaround:"#8A9B6A",
     instrumental:"#4A8AAA",breakdown:"#9A6AAA",vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -4912,7 +4914,7 @@ Do not add any preamble or explanation — just the bullet points.`;
 
   const suggestions = getAISuggestions(section.type, sectionIndex, totalSections, song.bpm);
   const segColor = (type) => ({
-    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#C9A84C",
+    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#C49A3C",
     bridge:"#CF6679", tag:"#B8720A", outro:"#5A8FA0", turnaround:"#8A9B6A",
     instrumental:"#4A8AAA", breakdown:"#9A6AAA", vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -5631,7 +5633,7 @@ const GlobalSearch = ({ onNavigate, onClose }) => {
             results.map((item, i) => (
               <button key={i} className={`search-result-item ${i === highlighted ? "highlighted" : ""}`} onClick={() => go(item)} onMouseEnter={() => setHighlighted(i)}>
                 <div className="search-result-icon">
-                  <Icon name={item.icon} size={16} color={COLORS.textMuted} />
+                  <Icon name={item.icon} size={16} color="#64748B" />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="search-result-label">{item.label}</div>
@@ -5796,8 +5798,8 @@ export default function App() {
     aria-label="WorshipPilot — go to dashboard"
   >
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C9A84C" fillOpacity="0.92"/>
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C9A84C" strokeWidth="0.6" strokeLinejoin="round"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C49A3C" fillOpacity="0.92"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C49A3C" strokeWidth="0.6" strokeLinejoin="round"/>
     </svg>
     <div className="nav-tooltip">WorshipPilot</div>
   </button>
