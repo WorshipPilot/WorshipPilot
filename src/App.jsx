@@ -1517,9 +1517,9 @@ const Hint = ({ hintKey, text }) => {
   const [visible, dismiss] = useHint(hintKey);
   if (!visible) return null;
   return (
-    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.35)`, borderRadius: 12, marginBottom: 16 }}>
+    <div className="fade-in" style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "12px 14px", background: COLORS.surface, border: `1px solid ${COLORS.borderMid}`, borderRadius: 12, marginBottom: 16 }}>
       <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>💡</span>
-      <span style={{ fontSize: 13, color: COLORS.navy, lineHeight: 1.5, flex: 1 }}>{text}</span>
+      <span style={{ fontSize: 13, color: "#E7EEF8", lineHeight: 1.5, flex: 1 }}>{text}</span>
       <button onClick={dismiss} style={{ background: "none", border: "none", color: COLORS.textDim, cursor: "pointer", fontSize: 14, flexShrink: 0, padding: 0, lineHeight: 1 }}>✕</button>
     </div>
   );
@@ -1728,7 +1728,7 @@ const StartHerePage = ({ setPage }) => {
     <div className="fade-in">
       <div className="page-header">
         <div className="page-eyebrow">WorshipPilot</div>
-        <div className="page-title">Start Here</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 38, fontWeight: 800, color: "#FFFFFF", lineHeight: 1.08, letterSpacing: "-0.8px", marginBottom: 12 }}>Start Here</div>
         <div className="page-sub">New to the MD role? This is your entry point.</div>
       </div>
 
@@ -1821,7 +1821,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
           <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
             <Icon name={activeModule.icon} size={24} color={COLORS.accent} />
           </div>
-          <div className="page-title">{activeModule.title}</div>
+          <div style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 800, color: "#FFFFFF", lineHeight: 1.08, letterSpacing: "-0.6px", marginBottom: 12 }}>{activeModule.title}</div>
           <div className="page-sub">{activeModule.tagline}</div>
         </div>
 
@@ -2077,7 +2077,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           </div>
           <div>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>Cue Language</div>
-            <div style={{ fontSize: 18, fontWeight: 800, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Vocabulary</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#FFFFFF", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Vocabulary</div>
             <div style={{ fontSize: 11, color: "#4A5568", fontWeight: 500 }}>45+ standard calls</div>
           </div>
         </button>
@@ -2090,8 +2090,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
             <span style={{ fontSize: 12, color: COLORS.textDim }}>›</span>
           </div>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 5 }}>MD Reference</div>
-            <div style={{ fontSize: 18, fontWeight: 800, color: "#111827", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Situations</div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accentBright, marginBottom: 5 }}>MD Reference</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: "#FFFFFF", fontFamily: "var(--font-display)", lineHeight: 1.2, marginBottom: 3 }}>Situations</div>
             <div style={{ fontSize: 11, color: "#4A5568", fontWeight: 500 }}>7 real-world scenarios</div>
           </div>
         </button>
@@ -2184,20 +2184,13 @@ const VocabPage = () => {
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginTop: 4 }}>The standardized calls your band responds to without thinking.</div>
         </div>
       </div>
-      <div className="page-header">
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
-          <div>
-            <div className="page-eyebrow">Reference</div>
-            <div className="page-title">Vocabulary Reference</div>
-            <div className="page-sub">Every MD team develops its own language — that's normal. Use these calls as a starting point to build your vocabulary, or adopt them as-is to standardize across multiple MDs on your team.</div>
-          </div>
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16 }}>
           <button
             onClick={() => fretboardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-            style={{ flexShrink: 0, marginTop: 4, padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${COLORS.accent}`, background: COLORS.surfaceSunk, color: COLORS.accent, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
+            style={{ flexShrink: 0, padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${COLORS.accent}`, background: COLORS.surfaceSunk, color: COLORS.accent, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
             <Icon name="builder" size={13} color={COLORS.accent} />
             Fretboard ↓
           </button>
-        </div>
       </div>
 
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
@@ -2898,13 +2891,13 @@ const OnboardingPage = () => {
         <div className="detail-header">
           <div>
             <div style={{ fontSize: 10, color: COLORS.accent, letterSpacing: 2, textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>Week {ONBOARDING_WEEKS[activeWeek].week}</div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: COLORS.text }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700, color: "#FFFFFF" }}>{ONBOARDING_WEEKS[activeWeek].title}</div>
           </div>
           <span className={`badge ${weekProgress(activeWeek) === 100 ? "badge-green" : "badge-gold"}`}>{weekProgress(activeWeek)}% Complete</span>
         </div>
         <div className="detail-body">
           <div style={{ marginBottom: 20 }}>
-            <div style={{ fontSize: 10, color: COLORS.textDim, marginBottom: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>Tasks</div>
+            <div style={{ fontSize: 10, color: "#64748B", marginBottom: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>Tasks</div>
             {ONBOARDING_WEEKS[activeWeek].tasks.map((task, ti) => {
               const key = `${activeWeek}-${ti}`;
               const done = !!completed[key];
@@ -2919,9 +2912,9 @@ const OnboardingPage = () => {
               );
             })}
           </div>
-          <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 10, padding: "14px 18px" }}>
+          <div style={{ background: COLORS.surfaceAlt, border: `1px solid ${COLORS.borderMid}`, borderRadius: 10, padding: "14px 18px" }}>
             <div style={{ fontSize: 10, color: COLORS.accent, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>Week Benchmark</div>
-            <div style={{ fontSize: 14, color: "#111827", fontWeight: 700 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
+            <div style={{ fontSize: 14, color: "#E7EEF8", fontWeight: 700 }}>{ONBOARDING_WEEKS[activeWeek].benchmark}</div>
           </div>
           <div className="progress-track" style={{ marginTop: 16 }}>
             <div className="progress-fill" style={{ width: `${weekProgress(activeWeek)}%` }} />
@@ -3574,7 +3567,7 @@ const RoadmapPage = ({ setPage }) => {
     <div className="fade-in">
       <div className="page-header">
         <div className="page-eyebrow">Implementation</div>
-        <div className="page-title">Rollout Roadmap</div>
+        <div style={{ fontFamily: "var(--font-display)", fontSize: 38, fontWeight: 800, color: "#FFFFFF", lineHeight: 1.08, letterSpacing: "-0.8px", marginBottom: 12 }}>Rollout Roadmap</div>
         <div className="page-sub">Four phases. Start at the foundation — don't skip ahead.</div>
       </div>
       <div className="detail-panel">
