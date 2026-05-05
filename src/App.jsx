@@ -84,7 +84,7 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --font-display: 'Inter Tight', 'Inter', -apple-system, sans-serif;
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
@@ -260,7 +260,7 @@ const styles = `
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 32px 24px;
+    padding: 40px 56px;
     background: ${COLORS.bg};
     min-width: 0;
   }
@@ -504,10 +504,10 @@ const styles = `
   .field-input:focus { border-color: ${COLORS.accent}; box-shadow: ${COLORS.ring}; background: ${COLORS.surface}; }
   .field-input::placeholder { color: ${COLORS.textDim}; }
 
-  .page-content { max-width: 840px; margin: 0 auto; width: 100%; }
+  .page-content { max-width: none; margin: 0; width: 100%; }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  @media (min-width: 1024px) { .main-content { padding: 48px 56px; } .page-title { font-size: 44px; } .two-col { gap: 16px; } }
+  @media (min-width: 1024px) { .main-content { padding: 48px 64px; } .page-title { font-size: 44px; } .two-col { gap: 16px; } }
   @media (min-width: 768px) and (max-width: 1023px) { .main-content { padding: 36px 40px; } }
   @media (max-width: 640px) { .main-content { padding: 22px 16px; } .card-grid { grid-template-columns: 1fr; } .page-title { font-size: 28px; letter-spacing: -0.4px; } .two-col { grid-template-columns: 1fr; } }
 
@@ -1743,8 +1743,8 @@ const StartHerePage = ({ setPage }) => {
         {steps.map((step, i) => (
           <button key={i} onClick={() => setPage(step.page)}
             style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
             <div style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(196,154,60,0.15)", border: `1.5px solid rgba(196,154,60,0.35)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>{step.label}</div>
@@ -1760,8 +1760,8 @@ const StartHerePage = ({ setPage }) => {
         {MD_MODULES.map((mod, i) => (
           <button key={mod.id} onClick={() => setPage("training")}
             style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
             <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={mod.icon} size={18} color={COLORS.accent} />
             </div>
@@ -1782,8 +1782,8 @@ const StartHerePage = ({ setPage }) => {
         ].map((item, i) => (
           <button key={i} onClick={() => setPage(item.page)}
             style={{ padding: "18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
               <Icon name={item.icon} size={19} color={COLORS.accent} />
             </div>
@@ -1948,8 +1948,8 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
                   {module && (
                     <button onClick={() => setView(module.id)}
                       style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 16px", background: moduleDone ? COLORS.greenLight : COLORS.card, border: `1px solid ${moduleDone ? COLORS.green + "44" : COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowXs, transition: "all 0.15s", marginBottom: 8 }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green : step.color; e.currentTarget.style.boxShadow = COLORS.shadowMd; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green + "44" : COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; }}>
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green : COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green + "44" : COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
                       <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : "rgba(196,154,60,0.15)", border: `1px solid ${moduleDone ? COLORS.green : "rgba(196,154,60,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <Icon name={module.icon} size={18} color={moduleDone ? "#fff" : COLORS.accent} />
                       </div>
@@ -2147,8 +2147,8 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           ].map((item, i) => (
             <button key={i} onClick={() => setPage(item.page)}
               style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0, padding: "14px 14px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "var(--font-body)", transition: "all 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.background = COLORS.surfaceAlt; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; }}>
+              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.background = COLORS.surfaceAlt; e.currentTarget.style.color = COLORS.text; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; e.currentTarget.style.color = "#111827"; }}>
               <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 16 }}>
                 <Icon name={item.icon} size={16} color="#64748B" />
                 <span style={{ fontSize: 13, color: COLORS.textDim }}>›</span>
@@ -2985,8 +2985,8 @@ const CoachingPage = () => {
           {SCENARIOS.map(s => (
             <button key={s.id} onClick={() => openScenario(s)}
               style={{ display: "flex", alignItems: "center", gap: 16, padding: "18px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 16, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-1px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
+              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#E8E0D0"; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = COLORS.card; }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                   <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: COLORS.textDim, textTransform: "uppercase" }}>{s.category}</span>
@@ -3084,8 +3084,8 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
       {PARTS_DATA.map((part) => (
         <div key={part.id} className="card" style={{ cursor: "pointer" }}
           onClick={() => { setSelectedPart(part); setPage("part-detail"); }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = "translateY(-1px)"; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; }}>
+          onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#E8E0D0"; }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = COLORS.card; }}>
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
             <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={part.icon} size={20} color={COLORS.accent} />
@@ -3464,7 +3464,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
             return (
               <div key={song.id} style={{ background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: '16px 16px', boxShadow: COLORS.shadow, transition: 'all 0.15s', cursor: 'pointer' }}
                 onClick={() => { setSelectedSong(song); setView('detail'); }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.boxShadow = COLORS.shadowMd; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.transform = 'translateY(-1px)'; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = 'translateY(0)'; }}>
 
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 10 }}>
