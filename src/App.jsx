@@ -3417,7 +3417,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
       {/* Header */}
       <div style={{ marginBottom: 20 }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 4 }}>
-          <div style={{ display: "none" }}>
+          <div style={{ display: "none" }} />
           <button onClick={() => setView('publish')}
             style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 11, border: 'none', background: COLORS.accentGradient, color: '#fff', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, boxShadow: COLORS.shadowAccent }}>
             <span style={{ fontSize: 16 }}>↑</span> Share an Arrangement
