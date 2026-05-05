@@ -112,7 +112,7 @@ const styles = `
   }
   ::-webkit-scrollbar-thumb:hover { background: ${COLORS.textDim}; }
 
-  ::selection { background: ${COLORS.accentLight}; color: ${COLORS.accentDim}; }
+  ::selection { background: ${COLORS.accent}; color: #111827; }
 
   :focus-visible { outline: none; box-shadow: ${COLORS.ring}; border-radius: 8px; }
   button:focus { outline: none; }
@@ -334,7 +334,7 @@ const styles = `
     font-family: var(--font-display);
     font-size: 19px;
     font-weight: 700;
-    color: ${COLORS.navy};
+    color: #111827;
     margin-bottom: 6px;
     letter-spacing: -0.25px;
   }
@@ -342,7 +342,7 @@ const styles = `
 
   .card-icon {
     width: 44px; height: 44px;
-    background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%);
+    background: ${COLORS.accent};
     border: 1px solid rgba(62,127,199,0.18);
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
@@ -414,7 +414,7 @@ const styles = `
   .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, ${COLORS.border}, transparent 70%); }
 
   .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; font-family: var(--font-body); }
-  .badge-gold { background: linear-gradient(135deg, ${COLORS.accentLight} 0%, ${COLORS.accentSoft} 100%); color: ${COLORS.accent}; border: 1px solid rgba(62,127,199,0.22); }
+  .badge-gold { background: ${COLORS.accent}; color: ${COLORS.accent}; border: 1px solid rgba(62,127,199,0.22); }
   .badge-green { background: ${COLORS.greenLight}; color: ${COLORS.green}; border: 1px solid rgba(27,101,64,0.20); }
   .badge-blue { background: ${COLORS.blueLight}; color: ${COLORS.blue}; border: 1px solid rgba(26,89,145,0.20); }
   .badge-red { background: ${COLORS.redLight}; color: ${COLORS.red}; border: 1px solid rgba(176,46,60,0.20); }
@@ -429,7 +429,7 @@ const styles = `
 
   .accordion-item { border-bottom: 1px solid ${COLORS.border}; }
   .accordion-item:last-child { border-bottom: none; }
-  .accordion-trigger { width: 100%; background: none; border: none; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #111827; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-align: left; transition: color 0.15s; gap: 12px; }
+  .accordion-trigger { width: 100%; background: none; border: none; padding: 16px 0; display: flex; align-items: center; justify-content: space-between; cursor: pointer; color: #111827; font-weight: 600; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-align: left; transition: color 0.15s; gap: 12px; }
   .accordion-trigger:hover { color: ${COLORS.accent}; }
   .accordion-chevron { color: ${COLORS.textDim}; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); font-size: 11px; flex-shrink: 0; }
   .accordion-chevron.open { transform: rotate(180deg); color: ${COLORS.accent}; }
@@ -460,7 +460,7 @@ const styles = `
   .roadmap-phase { display: flex; gap: 20px; padding: 22px 0; border-bottom: 1px solid ${COLORS.border}; align-items: flex-start; }
   .roadmap-phase:last-child { border-bottom: none; }
   .phase-number { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; font-weight: 600; flex-shrink: 0; }
-  .phase-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; color: #111827; font-family: var(--font-display); }
+  .phase-title { font-weight: 800; font-size: 16px; margin-bottom: 4px; color: #111827; font-family: var(--font-display); }
   .phase-timing { font-size: 11px; color: ${COLORS.accent}; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 10px; }
   .phase-items { font-size: 13px; color: #111827; line-height: 1.9; font-weight: 600; }
 
@@ -480,7 +480,7 @@ const styles = `
   .search-results { max-height: 360px; overflow-y: auto; }
   .search-result-item { display: flex; align-items: center; gap: 12px; padding: 11px 20px; cursor: pointer; transition: background 0.1s; border: none; background: transparent; width: 100%; text-align: left; font-family: var(--font-body); }
   .search-result-item:hover { background: rgba(255,255,255,0.05); }
-  .search-result-item.highlighted { background: ${COLORS.accentLight}; }
+  .search-result-item.highlighted { background: ${COLORS.surfaceAlt}; }
   .search-result-icon { width: 34px; height: 34px; border-radius: 9px; background: ${COLORS.surfaceAlt}; border: 1px solid ${COLORS.border}; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
   .search-result-label { font-size: 14px; font-weight: 500; color: ${COLORS.text}; }
   .search-result-type { font-size: 11px; color: ${COLORS.textDim}; margin-top: 1px; }
@@ -1478,7 +1478,7 @@ const ModuleQuiz = ({ moduleId, onComplete, onSkip }) => {
           if (answered) {
             if (i === q.correct) { bg = COLORS.greenLight; border = COLORS.green; color = COLORS.green; }
             else if (i === selected) { bg = COLORS.redLight; border = COLORS.red; color = COLORS.red; }
-          } else if (selected === i) { bg = COLORS.accentLight; border = COLORS.accent; }
+          } else if (selected === i) { bg = COLORS.surfaceSunk; border = COLORS.accent; }
           return (
             <button key={i} onClick={() => handleAnswer(i)} disabled={answered}
               style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", background: bg, border: `1.5px solid ${border}`, borderRadius: 10, cursor: answered ? "default" : "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}>
@@ -2101,7 +2101,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "16px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 8 }}>Service</div>
           <div style={{ fontSize: 20, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1, marginBottom: 4 }}>Build your set</div>
-          <div style={{ fontSize: 11, color: COLORS.textMuted, marginBottom: 16 }}>Songs · Transitions · Live Mode</div>
+          <div style={{ fontSize: 11, color: "#374151", fontWeight: 500, marginBottom: 16 }}>Songs · Transitions · Live Mode</div>
           <div style={{ display: "flex", gap: 2, height: 28, alignItems: "flex-end" }}>
             {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
               <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}30` }} />
@@ -2193,7 +2193,7 @@ const VocabPage = () => {
           </div>
           <button
             onClick={() => fretboardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
-            style={{ flexShrink: 0, marginTop: 4, padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${COLORS.accent}`, background: COLORS.accentLight, color: COLORS.accent, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
+            style={{ flexShrink: 0, marginTop: 4, padding: "8px 16px", borderRadius: 20, border: `1.5px solid ${COLORS.accent}`, background: COLORS.surfaceSunk, color: COLORS.accent, fontSize: 12, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 6 }}>
             <Icon name="builder" size={13} color={COLORS.accent} />
             Fretboard ↓
           </button>
@@ -2792,15 +2792,15 @@ const FretboardSection = () => {
         </div>
       </div>
 
-      <div style={{ fontSize: 12, color: COLORS.textMuted, marginBottom: 14, lineHeight: 1.5 }}>
-        All scale tones, frets 0–12. Low string at bottom. Root in amber labeled <span style={{ fontFamily: "'JetBrains Mono', monospace", background: COLORS.accentLight, color: COLORS.accent, padding: "1px 6px", borderRadius: 4, fontSize: 10 }}>1 / note</span>
+      <div style={{ fontSize: 12, color: "#374151", fontWeight: 500, marginBottom: 14, lineHeight: 1.5 }}>
+        All scale tones, frets 0–12. Low string at bottom. Root in amber labeled <span style={{ fontFamily: "'JetBrains Mono', monospace", background: COLORS.surfaceSunk, color: COLORS.accent, padding: "1px 6px", borderRadius: 4, fontSize: 10 }}>1 / note</span>
       </div>
 
       {/* Key selector */}
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 14 }}>
         {keys.map(k => (
           <button key={k} onClick={() => setActiveKey(k)}
-            style={{ padding: "6px 15px", borderRadius: 20, border: `1.5px solid ${activeKey === k ? COLORS.accent : COLORS.border}`, background: activeKey === k ? COLORS.accentLight : COLORS.card, color: activeKey === k ? COLORS.accent : COLORS.textMuted, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)", transition: "all 0.15s" }}>
+            style={{ padding: "6px 15px", borderRadius: 20, border: `1.5px solid ${activeKey === k ? COLORS.accent : COLORS.border}`, background: activeKey === k ? COLORS.surfaceSunk : COLORS.card, color: activeKey === k ? COLORS.accent : COLORS.textMuted, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)", transition: "all 0.15s" }}>
             {k}
           </button>
         ))}
@@ -2811,12 +2811,12 @@ const FretboardSection = () => {
         {[{c:"#C07A0C",l:"1 — Root"},{c:"#4A90D9",l:"2, 3"},{c:"#7B68C8",l:"4, 5"},{c:"#2E9E6A",l:"6, 7"}].map(({ c, l }) => (
           <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <div style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />
-            <span style={{ fontSize: 11, color: COLORS.textMuted }}>{l}</span>
+            <span style={{ fontSize: 11, color: "#374151", fontWeight: 500 }}>{l}</span>
           </div>
         ))}
         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
           <div style={{ width: 10, height: 10, borderRadius: "50%", border: `1.5px solid #2A4060`, background: "transparent" }} />
-          <span style={{ fontSize: 11, color: COLORS.textMuted }}>Open (not in scale)</span>
+          <span style={{ fontSize: 11, color: "#374151", fontWeight: 500 }}>Open (not in scale)</span>
         </div>
       </div>
 
@@ -2963,7 +2963,7 @@ const CoachingPage = () => {
   const [revealed, setRevealed] = useState(false);
 
   const difficultyColor = (d) => d === "High" ? COLORS.red : d === "Medium" ? COLORS.accent : COLORS.green;
-  const difficultyBg    = (d) => d === "High" ? COLORS.redLight : d === "Medium" ? COLORS.accentLight : COLORS.greenLight;
+  const difficultyBg    = (d) => d === "High" ? COLORS.redLight : d === "Medium" ? COLORS.surfaceSunk : COLORS.greenLight;
 
   const openScenario = (s) => { setSelected(s); setRevealed(false); };
   const reset = () => { setSelected(null); setRevealed(false); };
@@ -3000,7 +3000,7 @@ const CoachingPage = () => {
                   <span style={{ fontSize: 10, fontWeight: 700, color: difficultyColor(s.difficulty), background: difficultyBg(s.difficulty), padding: "2px 8px", borderRadius: 10 }}>{s.difficulty}</span>
                 </div>
                 <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{s.title}</div>
-                <div style={{ fontSize: 13, color: COLORS.textMuted, lineHeight: 1.5, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.prompt}</div>
+                <div style={{ fontSize: 13, color: "#374151", lineHeight: 1.5, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{s.prompt}</div>
               </div>
               <span style={{ color: COLORS.textDim, fontSize: 18, flexShrink: 0 }}>›</span>
             </button>
@@ -3033,9 +3033,9 @@ const CoachingPage = () => {
       {/* Reveal toggle */}
       {!revealed ? (
         <button onClick={() => setRevealed(true)}
-          style={{ width: "100%", padding: "16px", borderRadius: 14, border: `2px dashed ${COLORS.accent}`, background: COLORS.accentLight, color: COLORS.accent, fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", marginBottom: 16, transition: "all 0.15s" }}
+          style={{ width: "100%", padding: "16px", borderRadius: 14, border: `2px dashed ${COLORS.accent}`, background: COLORS.surfaceSunk, color: COLORS.accent, fontSize: 15, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", marginBottom: 16, transition: "all 0.15s" }}
           onMouseEnter={e => { e.currentTarget.style.background = COLORS.accentSoft; }}
-          onMouseLeave={e => { e.currentTarget.style.background = COLORS.accentLight; }}>
+          onMouseLeave={e => { e.currentTarget.style.background = COLORS.surface; }}>
           Show the correct response →
         </button>
       ) : (
@@ -3280,7 +3280,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ padding: '14px 16px', background: COLORS.accentLight, borderRadius: 12, border: `1px solid ${COLORS.accentDim}` }}>
+            <div style={{ padding: '14px 16px', background: COLORS.surfaceSunk, borderRadius: 12, border: `1px solid ${COLORS.accentDim}` }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.accent, marginBottom: 2 }}>Publishing as</div>
               <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy }}>{pcoState.pcoName || 'Worship MD'} · {pcoState.pcoOrg !== 'My Church' ? pcoState.pcoOrg : 'Your Church'}</div>
             </div>
@@ -3292,7 +3292,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
                   <div style={{ fontSize: 13, color: COLORS.textMuted, padding: '12px', textAlign: 'center' }}>No songs with sections yet — build one in Song Builder first.</div>
                 ) : publishableSongs.map(s => (
                   <button key={s.id} onClick={() => setPublishSongId(s.id)}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', background: publishSongId === s.id ? COLORS.accentLight : COLORS.card, border: `1.5px solid ${publishSongId === s.id ? COLORS.accent : COLORS.border}`, borderRadius: 12, cursor: 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.15s' }}>
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', background: publishSongId === s.id ? COLORS.surfaceSunk : COLORS.card, border: `1.5px solid ${publishSongId === s.id ? COLORS.accent : COLORS.border}`, borderRadius: 12, cursor: 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.15s' }}>
                     <div style={{ textAlign: 'left' }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.navy }}>{s.title}</div>
                       <div style={{ fontSize: 11, color: COLORS.textDim }}>Key of {s.key} · {s.bpm} BPM · {s.sections?.length} sections</div>
@@ -3316,7 +3316,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                     {STYLE_TAGS.map(tag => (
                       <button key={tag} onClick={() => setPublishTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])}
-                        style={{ padding: '5px 12px', borderRadius: 20, border: `1px solid ${publishTags.includes(tag) ? COLORS.accent : COLORS.border}`, background: publishTags.includes(tag) ? COLORS.accentLight : COLORS.card, color: publishTags.includes(tag) ? COLORS.accent : COLORS.textDim, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
+                        style={{ padding: '5px 12px', borderRadius: 20, border: `1px solid ${publishTags.includes(tag) ? COLORS.accent : COLORS.border}`, background: publishTags.includes(tag) ? COLORS.surfaceSunk : COLORS.card, color: publishTags.includes(tag) ? COLORS.accent : COLORS.textDim, fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: "'Inter', sans-serif" }}>
                         {tag}
                       </button>
                     ))}
@@ -3396,7 +3396,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
         {/* Action buttons */}
         <div style={{ display: 'flex', gap: 10 }}>
           <button onClick={() => handleImport(s)} disabled={importing === s.id || alreadyImported}
-            style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: alreadyImported ? COLORS.green : COLORS.accent, color: '#fff', fontSize: 14, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>
+            style={{ flex: 1, padding: '13px', borderRadius: 12, border: 'none', background: alreadyImported ? COLORS.green : '#111827', color: '#fff', fontSize: 14, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", transition: 'all 0.2s' }}>
             {importing === s.id ? 'Importing…' : alreadyImported ? '✓ In Your Library' : '↓ Import to Library'}
           </button>
           <button onClick={() => handleFlag(s.id)} disabled={flagging === s.id}
@@ -3479,7 +3479,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
                     <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.navy, fontFamily: "var(--font-display)", marginBottom: 2 }}>{song.song_title}</div>
                     {song.artist && <div style={{ fontSize: 11, color: COLORS.textDim, marginBottom: 6 }}>{song.artist}</div>}
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                      {song.key && <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, background: COLORS.accentLight, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {song.key}</span>}
+                      {song.key && <span style={{ fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceSunk, color: COLORS.accent, border: `1px solid ${COLORS.accentDim}` }}>Key of {song.key}</span>}
                       {song.bpm && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{song.bpm} BPM</span>}
                       {song.time_sig && song.time_sig !== '4/4' && <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{song.time_sig}</span>}
                       {(song.style_tags || []).slice(0, 2).map(t => <span key={t} style={{ fontSize: 10, padding: '2px 8px', borderRadius: 20, background: COLORS.surfaceAlt, color: COLORS.textDim }}>{t}</span>)}
@@ -3521,7 +3521,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
                   <button
                     onClick={e => { e.stopPropagation(); handleImport(song); }}
                     disabled={importing === song.id || alreadyImported}
-                    style={{ padding: '6px 14px', borderRadius: 9, border: `1px solid ${alreadyImported ? COLORS.green : COLORS.accent}`, background: alreadyImported ? COLORS.greenLight : COLORS.accentLight, color: alreadyImported ? COLORS.green : COLORS.accent, fontSize: 11, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, transition: 'all 0.15s' }}>
+                    style={{ padding: '6px 14px', borderRadius: 9, border: `1px solid ${alreadyImported ? COLORS.green : COLORS.accent}`, background: alreadyImported ? COLORS.greenLight : COLORS.accent, color: alreadyImported ? COLORS.green : COLORS.accent, fontSize: 11, fontWeight: 700, cursor: alreadyImported ? 'default' : 'pointer', fontFamily: "'Inter', sans-serif", flexShrink: 0, transition: 'all 0.15s' }}>
                     {importing === song.id ? '…' : alreadyImported ? '✓ Imported' : '↓ Import'}
                   </button>
                 </div>
@@ -3639,7 +3639,7 @@ const SectionRow = ({ section, onChange, onDelete, onMoveUp, onMoveDown, isFirst
           <div style={{ fontSize: 10, color, marginTop: 2, textTransform: "uppercase", letterSpacing: 1, fontWeight: 600 }}>{section.type}</div>
         </div>
         <button onClick={() => setExpanded(e => !e)}
-          style={{ width: 30, height: 30, borderRadius: 8, border: `1px solid ${expanded ? COLORS.accent : COLORS.border}`, background: expanded ? COLORS.accentLight : COLORS.surfaceAlt, color: expanded ? COLORS.accent : COLORS.textDim, fontSize: 11, cursor: "pointer", flexShrink: 0 }}>
+          style={{ width: 30, height: 30, borderRadius: 8, border: `1px solid ${expanded ? COLORS.accent : COLORS.border}`, background: expanded ? COLORS.surfaceSunk : COLORS.surfaceAlt, color: expanded ? COLORS.accent : COLORS.textDim, fontSize: 11, cursor: "pointer", flexShrink: 0 }}>
           {expanded ? "▲" : "▼"}
         </button>
         <button onClick={onDelete}
@@ -3687,7 +3687,7 @@ const SectionRow = ({ section, onChange, onDelete, onMoveUp, onMoveDown, isFirst
             <div style={{ display: "flex", gap: 5 }}>
               {[2, 4, 8, 12, 16].map(n => (
                 <button key={n} onClick={() => onChange({ ...section, bars: n })}
-                  style={{ padding: "5px 11px", borderRadius: 7, border: `1px solid ${section.bars === n ? COLORS.accent : COLORS.border}`, background: section.bars === n ? COLORS.accentLight : COLORS.surface, color: section.bars === n ? COLORS.accent : COLORS.textMuted, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                  style={{ padding: "5px 11px", borderRadius: 7, border: `1px solid ${section.bars === n ? COLORS.accent : COLORS.border}`, background: section.bars === n ? COLORS.surfaceSunk : COLORS.surface, color: section.bars === n ? COLORS.accent : COLORS.textMuted, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
                   {n}
                 </button>
               ))}
@@ -3716,7 +3716,7 @@ const SectionRow = ({ section, onChange, onDelete, onMoveUp, onMoveDown, isFirst
               <div style={{ display: "flex", gap: 5 }}>
                 {[1, 2, 4].map(n => (
                   <button key={n} onClick={() => onChange({ ...section, headsUpBarsBefore: n })}
-                    style={{ padding: "4px 10px", borderRadius: 6, border: `1px solid ${(section.headsUpBarsBefore ?? 2) === n ? COLORS.accent : COLORS.border}`, background: (section.headsUpBarsBefore ?? 2) === n ? COLORS.accentLight : COLORS.surface, color: (section.headsUpBarsBefore ?? 2) === n ? COLORS.accent : COLORS.textMuted, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+                    style={{ padding: "4px 10px", borderRadius: 6, border: `1px solid ${(section.headsUpBarsBefore ?? 2) === n ? COLORS.accent : COLORS.border}`, background: (section.headsUpBarsBefore ?? 2) === n ? COLORS.surfaceSunk : COLORS.surface, color: (section.headsUpBarsBefore ?? 2) === n ? COLORS.accent : COLORS.textMuted, fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
                     {n}
                   </button>
                 ))}
@@ -3854,7 +3854,7 @@ const SongBuilderPage = ({ songLibrary, onSaveSong, onDuplicateSong, editSongId,
       )}
 
       <button onClick={handleSave}
-        style={{ width: "100%", padding: "14px", borderRadius: 12, border: `1px solid ${saved ? COLORS.green : COLORS.accent}`, background: saved ? COLORS.green : COLORS.accentLight, color: saved ? "#fff" : COLORS.accent, fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", transition: "all 0.3s" }}>
+        style={{ width: "100%", padding: "14px", borderRadius: 12, border: `1px solid ${saved ? COLORS.green : COLORS.accent}`, background: saved ? COLORS.green : COLORS.accent, color: saved ? "#fff" : "#111827", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", transition: "all 0.3s" }}>
         {saved ? "✓ Saved" : editing ? "Save Changes" : "Save to Song Library"}
       </button>
       {saved && (
@@ -3994,7 +3994,7 @@ const SongBlock = ({ block, index, song, songLibrary, onSaveSong, onNotesChange,
                   defaultValue={block.pcoBpm || 120}
                   onBlur={e => { const bpm = parseInt(e.target.value) || 120; onNotesChange({ ...block.notes, _pcoBpm: bpm }); }}
                   onClick={e => e.stopPropagation()}
-                  style={{ width: 52, fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: COLORS.accent, background: COLORS.accentLight, border: `1px solid ${COLORS.accentDim}`, borderRadius: 5, padding: "1px 5px", textAlign: "center", outline: "none" }}
+                  style={{ width: 52, fontSize: 11, fontFamily: "'JetBrains Mono', monospace", color: COLORS.accent, background: COLORS.surfaceSunk, border: `1px solid ${COLORS.accentDim}`, borderRadius: 5, padding: "1px 5px", textAlign: "center", outline: "none" }}
                 />
                 <span style={{ fontSize: 11, color: COLORS.textDim, fontFamily: "'JetBrains Mono', monospace" }}>BPM · from PCO</span>
               </>
@@ -4005,13 +4005,13 @@ const SongBlock = ({ block, index, song, songLibrary, onSaveSong, onNotesChange,
         <div style={{ display: "flex", gap: 3, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
           {isPcoOnly && (
             <button onClick={handleAddToLibrary}
-              style={{ padding: "4px 9px", borderRadius: 8, border: `1px solid ${savedToLib ? COLORS.green : COLORS.accentDim}`, background: savedToLib ? COLORS.greenLight : COLORS.accentLight, color: savedToLib ? COLORS.green : COLORS.accent, fontSize: 10, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>
+              style={{ padding: "4px 9px", borderRadius: 8, border: `1px solid ${savedToLib ? COLORS.green : COLORS.accentDim}`, background: savedToLib ? COLORS.greenLight : COLORS.surfaceSunk, color: savedToLib ? COLORS.green : COLORS.accent, fontSize: 10, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif", whiteSpace: "nowrap" }}>
               {savedToLib ? "✓ Saved" : "+ Library"}
             </button>
           )}
           <button onClick={() => onMoveUp()} disabled={isFirst} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${COLORS.border}`, background: COLORS.surfaceAlt, color: COLORS.textMuted, fontSize: 11, cursor: isFirst ? "default" : "pointer", opacity: isFirst ? 0.3 : 1 }}>↑</button>
           <button onClick={() => onMoveDown()} disabled={isLast} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid ${COLORS.border}`, background: COLORS.surfaceAlt, color: COLORS.textMuted, fontSize: 11, cursor: isLast ? "default" : "pointer", opacity: isLast ? 0.3 : 1 }}>↓</button>
-          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.accentLight : COLORS.surfaceAlt, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.surfaceSunk : COLORS.surfaceAlt, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
             {open ? "Done" : "Notes"}
           </button>
           <button onClick={() => onRemove()} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid rgba(192,57,74,0.2)`, background: COLORS.redLight, color: COLORS.red, fontSize: 12, cursor: "pointer" }}>✕</button>
@@ -4027,7 +4027,7 @@ const TransitionBlock = ({ block, onNotesChange, onRemove }) => {
   const hasNotes = Object.values(block.notes || {}).some(v => v?.trim());
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <div style={{ flex: 1, borderRadius: 10, border: `1px dashed ${hasNotes ? COLORS.accent : COLORS.border}`, background: hasNotes ? COLORS.accentLight : "transparent", overflow: "hidden" }}>
+      <div style={{ flex: 1, borderRadius: 10, border: `1px dashed ${hasNotes ? COLORS.accent : COLORS.border}`, background: hasNotes ? COLORS.surface : "transparent", overflow: "hidden" }}>
         <button onClick={() => setOpen(o => !o)} style={{ width: "100%", padding: "8px 14px", background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, textAlign: "left" }}>
           <div style={{ flex: 1, height: 1, background: hasNotes ? COLORS.accent : COLORS.border, opacity: 0.4 }} />
           <span style={{ fontSize: 10, fontWeight: 700, color: hasNotes ? COLORS.accent : COLORS.textDim, letterSpacing: 1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
@@ -4084,7 +4084,7 @@ const JamBlock = ({ block, onUpdate, onNotesChange, onRemove }) => {
   const bpm = block.jamBpm || 96;
   const defaultProg = JAM_PROGRESSIONS[key] || "1, 4, 6m, 5";
   return (
-    <div style={{ borderRadius: 14, border: `1px solid ${COLORS.accent}`, background: COLORS.accentLight, boxShadow: COLORS.shadow, overflow: "hidden" }}>
+    <div style={{ borderRadius: 14, border: `1px solid ${COLORS.accent}`, background: COLORS.surfaceSunk, boxShadow: COLORS.shadow, overflow: "hidden" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 14px" }}>
         <div style={{ fontSize: 16 }}>🍓</div>
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -4101,7 +4101,7 @@ const JamBlock = ({ block, onUpdate, onNotesChange, onRemove }) => {
           </div>
         </div>
         <div style={{ display: "flex", gap: 4 }}>
-          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.accentLight : COLORS.card, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
+          <button onClick={() => setOpen(o => !o)} style={{ padding: "4px 10px", borderRadius: 8, border: `1px solid ${open ? COLORS.accent : COLORS.border}`, background: open ? COLORS.surfaceSunk : COLORS.card, color: open ? COLORS.accent : COLORS.textMuted, fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>
             {open ? "Done" : "Notes"}
           </button>
           <button onClick={onRemove} style={{ width: 24, height: 24, borderRadius: 6, border: `1px solid rgba(192,57,74,0.2)`, background: COLORS.redLight, color: COLORS.red, fontSize: 12, cursor: "pointer" }}>✕</button>
@@ -4347,7 +4347,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
       <Hint hintKey="service-builder" text="Build your set here — songs, transitions, moments, and the Jam. Tap Notes on any song to add your MD brief. Hit Copy Notes to send the whole thing to your band in PCO chat." />
 
       {/* ── PCO INTEGRATION PANEL ── */}
-      <div style={{ marginBottom: 24, padding: "18px 20px", background: pcoState ? COLORS.accentLight : COLORS.card, border: `1.5px solid ${pcoState ? COLORS.accent : COLORS.border}`, borderRadius: 16, boxShadow: COLORS.shadow }}>
+      <div style={{ marginBottom: 24, padding: "18px 20px", background: pcoState ? COLORS.surface : COLORS.card, border: `1px solid ${pcoState ? COLORS.borderMid : COLORS.border}`, borderRadius: 16, boxShadow: COLORS.shadow }}>
         {!pcoState ? (
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
             <div>
@@ -4540,7 +4540,7 @@ const ServiceBuilderPage = ({ services, songLibrary, activeServiceId, onSaveServ
             </select>
             <button onClick={addSongBlock} className="btn btn-primary" style={{ flexShrink: 0 }}>+ Song</button>
             <button onClick={addMoment} className="btn btn-ghost" style={{ flexShrink: 0 }}>+ Moment</button>
-            <button onClick={addJam} style={{ flexShrink: 0, padding: "10px 14px", borderRadius: 10, border: `1.5px solid ${COLORS.accent}`, background: COLORS.accentLight, color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>🍓 Jam</button>
+            <button onClick={addJam} style={{ flexShrink: 0, padding: "10px 14px", borderRadius: 10, border: `1.5px solid ${COLORS.accent}`, background: COLORS.surfaceSunk, color: COLORS.accent, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Inter', sans-serif" }}>🍓 Jam</button>
           </div>
 
           {/* Launch controls */}
