@@ -84,8 +84,8 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --font-display: 'Montserrat', system-ui, sans-serif;
-    --font-body: 'Montserrat', 'Inter', system-ui, sans-serif;
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
 
@@ -414,7 +414,7 @@ const styles = `
   .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, ${COLORS.border}, transparent 70%); }
 
   .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; font-family: var(--font-body); }
-  .badge-gold { background: ${COLORS.accent}; color: ${COLORS.accent}; border: 1px solid rgba(62,127,199,0.22); }
+  .badge-gold { background: ${COLORS.accent}; color: #111827; border: none; font-weight: 700; }
   .badge-green { background: ${COLORS.greenLight}; color: ${COLORS.green}; border: 1px solid rgba(27,101,64,0.20); }
   .badge-blue { background: ${COLORS.blueLight}; color: ${COLORS.blue}; border: 1px solid rgba(26,89,145,0.20); }
   .badge-red { background: ${COLORS.redLight}; color: ${COLORS.red}; border: 1px solid rgba(176,46,60,0.20); }
@@ -2147,8 +2147,16 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           ].map((item, i) => (
             <button key={i} onClick={() => setPage(item.page)}
               style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0, padding: "14px 14px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "var(--font-body)", transition: "all 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.background = COLORS.surfaceAlt; e.currentTarget.style.color = "#FFFFFF"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; e.currentTarget.style.color = "#111827"; }}>
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = COLORS.accent;
+                e.currentTarget.style.background = COLORS.surfaceAlt;
+                e.currentTarget.querySelectorAll('div').forEach(el => { el.style.color = "#E7EEF8"; });
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = COLORS.border;
+                e.currentTarget.style.background = COLORS.card;
+                e.currentTarget.querySelectorAll('div').forEach(el => { el.style.color = ""; });
+              }}>
               <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 16 }}>
                 <Icon name={item.icon} size={16} color="#64748B" />
                 <span style={{ fontSize: 13, color: COLORS.textDim }}>›</span>
