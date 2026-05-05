@@ -84,7 +84,7 @@ const styles = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-display: 'Montserrat', system-ui, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
