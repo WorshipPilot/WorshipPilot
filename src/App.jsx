@@ -20,15 +20,15 @@ const COLORS = {
   sidebarBorder:     "#111A28",
   sidebarIcon:       "#58708C",
   sidebarIconHover:  "#8FB7E0",
-  sidebarIconActive: "#C49A3C",
+  sidebarIconActive: "#F7BD3B",
   // ── Brand accent (warm gold) ──
-  accent:         "#C49A3C",
-  accentDim:      "#8A6418",
-  accentBright:   "#D4A84E",
+  accent:         "#F7BD3B",
+  accentDim:      "#C4891A",
+  accentBright:   "#FAD166",
   accentLight:    "#2A2210",
   accentSoft:     "#1E1A0C",
-  accentGlow:     "rgba(196,154,60,0.18)",
-  accentGradient: "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)",
+  accentGlow:     "rgba(247,189,59,0.18)",
+  accentGradient: "linear-gradient(135deg, #C4891A 0%, #F7BD3B 100%)",
   // ── Navy (dark text on cream cards) ──
   navy:    "#111827",
   navyMid: "#1E2D42",
@@ -53,10 +53,10 @@ const COLORS = {
   shadowMd: "0 2px 4px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.28), 0 16px 32px rgba(0,0,0,0.20)",
   shadowLg: "0 4px 8px rgba(0,0,0,0.35), 0 12px 28px rgba(0,0,0,0.35), 0 32px 64px rgba(0,0,0,0.25)",
   shadowXl: "0 8px 16px rgba(0,0,0,0.40), 0 24px 48px rgba(0,0,0,0.40), 0 56px 112px rgba(0,0,0,0.30)",
-  shadowAccent:   "0 1px 2px rgba(196,154,60,0.15), 0 4px 14px rgba(196,154,60,0.20), 0 8px 28px rgba(196,154,60,0.10)",
-  shadowAccentLg: "0 2px 4px rgba(196,154,60,0.18), 0 8px 22px rgba(196,154,60,0.28), 0 16px 40px rgba(196,154,60,0.14)",
+  shadowAccent:   "0 1px 2px rgba(247,189,59,0.15), 0 4px 14px rgba(247,189,59,0.20), 0 8px 28px rgba(247,189,59,0.10)",
+  shadowAccentLg: "0 2px 4px rgba(247,189,59,0.18), 0 8px 22px rgba(247,189,59,0.28), 0 16px 40px rgba(247,189,59,0.14)",
   // ── Focus ring ──
-  ring: "0 0 0 3px rgba(196,154,60,0.25)",
+  ring: "0 0 0 3px rgba(247,189,59,0.25)",
 };
 
 const LIVE = {
@@ -79,7 +79,7 @@ const LIVE = {
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`;
 
 const styles = `
-  /* Font loaded via index.html link tag */
+  /* Font loaded via index.html link tag — Plus Jakarta Sans */
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1215,8 +1215,8 @@ const RoleSelector = ({ onSelect }) => {
                 boxShadow: `0 4px 16px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C49A3C" fillOpacity="0.9"/>
-                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C49A3C" strokeWidth="0.8" strokeLinejoin="round"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#F7BD3B" fillOpacity="0.9"/>
+                  <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#F7BD3B" strokeWidth="0.8" strokeLinejoin="round"/>
                 </svg>
               </div>
               <div>
@@ -1240,7 +1240,7 @@ const RoleSelector = ({ onSelect }) => {
               fontStyle: "italic",
             }}>
               Lead the band.<br />
-              <span style={{ color: "#C49A3C", fontStyle: "normal" }}>Free the room.</span>
+              <span style={{ color: "#F7BD3B", fontStyle: "normal" }}>Free the room.</span>
             </div>
 
             <div style={{
@@ -1264,7 +1264,7 @@ const RoleSelector = ({ onSelect }) => {
                 <div key={label}>
                   <div style={{
                     fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
-                    color: "#C49A3C", letterSpacing: "-0.5px", lineHeight: 1,
+                    color: "#F7BD3B", letterSpacing: "-0.5px", lineHeight: 1,
                   }}>{n}</div>
                   <div style={{
                     fontSize: 10, color: "rgba(240,235,225,0.45)",
@@ -1285,7 +1285,7 @@ const RoleSelector = ({ onSelect }) => {
             padding: "28px 24px",
             boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#C49A3C", marginBottom: 8 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#F7BD3B", marginBottom: 8 }}>
               Get started
             </div>
             <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
@@ -1311,7 +1311,7 @@ const RoleSelector = ({ onSelect }) => {
                       background: isSelected
                         ? "linear-gradient(135deg, rgba(62,127,199,0.22) 0%, rgba(120,183,255,0.08) 100%)"
                         : isHovered ? "rgba(240,235,225,0.04)" : "transparent",
-                      border: `1.5px solid ${isSelected ? "#C49A3C" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
+                      border: `1.5px solid ${isSelected ? "#F7BD3B" : isHovered ? "rgba(240,235,225,0.15)" : "rgba(240,235,225,0.08)"}`,
                       borderRadius: 12, cursor: "pointer", textAlign: "left",
                       fontFamily: "var(--font-body)",
                       transition: "all 0.18s cubic-bezier(0.2, 0.6, 0.2, 1)",
@@ -1338,8 +1338,8 @@ const RoleSelector = ({ onSelect }) => {
                     </div>
                     <div style={{
                       width: 18, height: 18, borderRadius: "50%",
-                      border: `1.5px solid ${isSelected ? "#C49A3C" : "rgba(240,235,225,0.18)"}`,
-                      background: isSelected ? "#C49A3C" : "transparent",
+                      border: `1.5px solid ${isSelected ? "#F7BD3B" : "rgba(240,235,225,0.18)"}`,
+                      background: isSelected ? "#F7BD3B" : "transparent",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0, transition: "all 0.18s",
                     }}>
@@ -1633,28 +1633,28 @@ const IllustrationMic = () => (
   <div style={{ width: "100%", display: "flex", justifyContent: "flex-end", paddingRight: 8, marginBottom: -160, pointerEvents: "none", userSelect: "none", opacity: 0.07 }}>
     <svg viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" width="160" height="272">
       {/* Mic capsule */}
-      <rect x="65" y="10" width="70" height="110" rx="35" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      <rect x="65" y="10" width="70" height="110" rx="35" fill="none" stroke="#C4891A" strokeWidth="5"/>
       {/* Mic grille lines */}
-      <line x1="65" y1="38" x2="135" y2="38" stroke="#C07A0C" strokeWidth="2.5"/>
-      <line x1="65" y1="55" x2="135" y2="55" stroke="#C07A0C" strokeWidth="2.5"/>
-      <line x1="65" y1="72" x2="135" y2="72" stroke="#C07A0C" strokeWidth="2.5"/>
-      <line x1="67" y1="89" x2="133" y2="89" stroke="#C07A0C" strokeWidth="2.5"/>
-      <line x1="73" y1="104" x2="127" y2="104" stroke="#C07A0C" strokeWidth="2.5"/>
+      <line x1="65" y1="38" x2="135" y2="38" stroke="#C4891A" strokeWidth="2.5"/>
+      <line x1="65" y1="55" x2="135" y2="55" stroke="#C4891A" strokeWidth="2.5"/>
+      <line x1="65" y1="72" x2="135" y2="72" stroke="#C4891A" strokeWidth="2.5"/>
+      <line x1="67" y1="89" x2="133" y2="89" stroke="#C4891A" strokeWidth="2.5"/>
+      <line x1="73" y1="104" x2="127" y2="104" stroke="#C4891A" strokeWidth="2.5"/>
       {/* Mic body */}
-      <rect x="88" y="120" width="24" height="60" rx="4" fill="none" stroke="#C07A0C" strokeWidth="4"/>
+      <rect x="88" y="120" width="24" height="60" rx="4" fill="none" stroke="#C4891A" strokeWidth="4"/>
       {/* Stand pole */}
-      <line x1="100" y1="180" x2="100" y2="270" stroke="#C07A0C" strokeWidth="5"/>
+      <line x1="100" y1="180" x2="100" y2="270" stroke="#C4891A" strokeWidth="5"/>
       {/* Stand base tripod */}
-      <ellipse cx="100" cy="275" rx="55" ry="12" fill="none" stroke="#C07A0C" strokeWidth="4"/>
-      <line x1="45" y1="275" x2="22" y2="310" stroke="#C07A0C" strokeWidth="4"/>
-      <line x1="155" y1="275" x2="178" y2="310" stroke="#C07A0C" strokeWidth="4"/>
-      <line x1="100" y1="275" x2="100" y2="320" stroke="#C07A0C" strokeWidth="4"/>
+      <ellipse cx="100" cy="275" rx="55" ry="12" fill="none" stroke="#C4891A" strokeWidth="4"/>
+      <line x1="45" y1="275" x2="22" y2="310" stroke="#C4891A" strokeWidth="4"/>
+      <line x1="155" y1="275" x2="178" y2="310" stroke="#C4891A" strokeWidth="4"/>
+      <line x1="100" y1="275" x2="100" y2="320" stroke="#C4891A" strokeWidth="4"/>
       {/* Sound waves right */}
-      <path d="M148 42 Q165 65 148 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
-      <path d="M158 30 Q182 65 158 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+      <path d="M148 42 Q165 65 148 88" fill="none" stroke="#C4891A" strokeWidth="3.5"/>
+      <path d="M158 30 Q182 65 158 100" fill="none" stroke="#C4891A" strokeWidth="2.5"/>
       {/* Sound waves left */}
-      <path d="M52 42 Q35 65 52 88" fill="none" stroke="#C07A0C" strokeWidth="3.5"/>
-      <path d="M42 30 Q18 65 42 100" fill="none" stroke="#C07A0C" strokeWidth="2.5"/>
+      <path d="M52 42 Q35 65 52 88" fill="none" stroke="#C4891A" strokeWidth="3.5"/>
+      <path d="M42 30 Q18 65 42 100" fill="none" stroke="#C4891A" strokeWidth="2.5"/>
     </svg>
   </div>
 );
@@ -1663,17 +1663,17 @@ const IllustrationStageLight = () => (
   <div style={{ width: "100%", display: "flex", justifyContent: "center", marginBottom: -8, pointerEvents: "none", userSelect: "none", opacity: 0.06, overflow: "hidden" }}>
     <svg viewBox="0 0 500 160" xmlns="http://www.w3.org/2000/svg" width="100%" style={{ maxWidth: 540 }}>
       {/* Rigging bar */}
-      <line x1="20" y1="12" x2="480" y2="12" stroke="#C07A0C" strokeWidth="7"/>
-      <line x1="20" y1="4" x2="20" y2="20" stroke="#C07A0C" strokeWidth="5"/>
-      <line x1="480" y1="4" x2="480" y2="20" stroke="#C07A0C" strokeWidth="5"/>
+      <line x1="20" y1="12" x2="480" y2="12" stroke="#C4891A" strokeWidth="7"/>
+      <line x1="20" y1="4" x2="20" y2="20" stroke="#C4891A" strokeWidth="5"/>
+      <line x1="480" y1="4" x2="480" y2="20" stroke="#C4891A" strokeWidth="5"/>
       {/* Light fixture circles */}
-      <circle cx="150" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
-      <circle cx="250" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
-      <circle cx="350" cy="12" r="14" fill="none" stroke="#C07A0C" strokeWidth="5"/>
+      <circle cx="150" cy="12" r="14" fill="none" stroke="#C4891A" strokeWidth="5"/>
+      <circle cx="250" cy="12" r="14" fill="none" stroke="#C4891A" strokeWidth="5"/>
+      <circle cx="350" cy="12" r="14" fill="none" stroke="#C4891A" strokeWidth="5"/>
       {/* Light beams */}
-      <polygon points="150,26 90,155 210,155" fill="#C07A0C" opacity="0.6"/>
-      <polygon points="250,26 170,155 330,155" fill="#C07A0C" opacity="0.7"/>
-      <polygon points="350,26 290,155 410,155" fill="#C07A0C" opacity="0.6"/>
+      <polygon points="150,26 90,155 210,155" fill="#C4891A" opacity="0.6"/>
+      <polygon points="250,26 170,155 330,155" fill="#C4891A" opacity="0.7"/>
+      <polygon points="350,26 290,155 410,155" fill="#C4891A" opacity="0.6"/>
     </svg>
   </div>
 );
@@ -1745,7 +1745,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
-            <div style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(196,154,60,0.15)", border: `1.5px solid rgba(196,154,60,0.35)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
+            <div style={{ width: 38, height: 38, borderRadius: "50%", background: "rgba(247,189,59,0.15)", border: `1.5px solid rgba(247,189,59,0.35)`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: COLORS.accent, flexShrink: 0 }}>{step.num}</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.navy, marginBottom: 2 }}>{step.label}</div>
               <div style={{ fontSize: 12, color: "#111827", fontWeight: 500 }}>{step.desc}</div>
@@ -1762,7 +1762,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, boxShadow: COLORS.shadow, cursor: "pointer", textAlign: "left", width: "100%", fontFamily: "'Inter', sans-serif", transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
-            <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(247,189,59,0.15)", border: `1px solid rgba(247,189,59,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={mod.icon} size={18} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
@@ -1784,7 +1784,7 @@ const StartHerePage = ({ setPage }) => {
             style={{ padding: "18px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 14, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadow, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(247,189,59,0.15)", border: `1px solid rgba(247,189,59,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
               <Icon name={item.icon} size={19} color={COLORS.accent} />
             </div>
             <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.navy, marginBottom: 4 }}>{item.label}</div>
@@ -1818,7 +1818,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
 
         <div className="page-header">
           <div className="page-eyebrow">MD Training — Module {MD_MODULES.findIndex(m => m.id === view) + 1} of {MD_MODULES.length}</div>
-          <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
+          <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(247,189,59,0.15)", border: `1px solid rgba(247,189,59,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10, marginTop: 6 }}>
             <Icon name={activeModule.icon} size={24} color={COLORS.accent} />
           </div>
           <div style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 800, color: "#FFFFFF", lineHeight: 1.08, letterSpacing: "-0.6px", marginBottom: 12 }}>{activeModule.title}</div>
@@ -1826,7 +1826,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
         </div>
 
         {/* Outcomes */}
-        <div style={{ background: "rgba(196,154,60,0.1)", border: `1px solid rgba(196,154,60,0.25)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
+        <div style={{ background: "rgba(247,189,59,0.1)", border: `1px solid rgba(247,189,59,0.25)`, borderRadius: 14, padding: "18px 22px", marginBottom: 20 }}>
           <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: COLORS.accent, marginBottom: 10 }}>After this module you'll be able to:</div>
           {activeModule.outcomes.map((o, i) => (
             <div key={i} style={{ display: "flex", gap: 10, marginBottom: 7, fontSize: 13.5, color: COLORS.navy, lineHeight: 1.5 }}>
@@ -1950,7 +1950,7 @@ const TrainingPage = ({ setPage, moduleProgress, onCompleteModule }) => {
                       style={{ display: "flex", alignItems: "center", gap: 12, width: "100%", padding: "12px 16px", background: moduleDone ? COLORS.greenLight : COLORS.card, border: `1px solid ${moduleDone ? COLORS.green + "44" : COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "'Inter', sans-serif", boxShadow: COLORS.shadowXs, transition: "all 0.15s", marginBottom: 8 }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green : COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.background = "#E8E0D0"; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = moduleDone ? COLORS.green + "44" : COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.background = COLORS.card; }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : "rgba(196,154,60,0.15)", border: `1px solid ${moduleDone ? COLORS.green : "rgba(196,154,60,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: moduleDone ? COLORS.green : "rgba(247,189,59,0.15)", border: `1px solid ${moduleDone ? COLORS.green : "rgba(247,189,59,0.25)"}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                         <Icon name={module.icon} size={18} color={moduleDone ? "#fff" : COLORS.accent} />
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
@@ -2147,7 +2147,7 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
           ].map((item, i) => (
             <button key={i} onClick={() => setPage(item.page)}
               style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0, padding: "14px 14px 12px", background: COLORS.card, border: `1px solid ${COLORS.border}`, borderRadius: 12, cursor: "pointer", textAlign: "left", fontFamily: "var(--font-body)", transition: "all 0.15s" }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.borderMid; e.currentTarget.style.background = COLORS.surfaceAlt; e.currentTarget.style.color = COLORS.text; }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.background = COLORS.surfaceAlt; e.currentTarget.style.color = "#FFFFFF"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.background = COLORS.card; e.currentTarget.style.color = "#111827"; }}>
               <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: 16 }}>
                 <Icon name={item.icon} size={16} color="#64748B" />
@@ -2421,7 +2421,7 @@ const FRETBOARD_DATA = {
   ]}
 };;
 
-const DEGREE_COLORS = {1:"#C07A0C",2:"#4A90D9",3:"#4A90D9",4:"#7B68C8",5:"#7B68C8",6:"#2E9E6A",7:"#2E9E6A"};
+const DEGREE_COLORS = {1:"#C4891A",2:"#4A90D9",3:"#4A90D9",4:"#7B68C8",5:"#7B68C8",6:"#2E9E6A",7:"#2E9E6A"};
 
 // Portrait fullscreen fretboard — axes swapped so neck runs top→bottom on a phone screen.
 // Strings = columns (low E left, high e right). Frets = rows (open top, 12 bottom).
@@ -2746,7 +2746,7 @@ const FretboardSection = () => {
           ))}
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          {[{c:"#C07A0C",l:"Root"},{c:"#4A90D9",l:"2,3"},{c:"#7B68C8",l:"4,5"},{c:"#2E9E6A",l:"6,7"}].map(({ c, l }) => (
+          {[{c:"#C4891A",l:"Root"},{c:"#4A90D9",l:"2,3"},{c:"#7B68C8",l:"4,5"},{c:"#2E9E6A",l:"6,7"}].map(({ c, l }) => (
             <div key={l} style={{ display: "flex", alignItems: "center", gap: 3 }}>
               <div style={{ width: 7, height: 7, borderRadius: "50%", background: c }} />
               <span style={{ fontSize: 9, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif" }}>{l}</span>
@@ -2801,7 +2801,7 @@ const FretboardSection = () => {
 
       {/* Legend */}
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 14 }}>
-        {[{c:"#C07A0C",l:"1 — Root"},{c:"#4A90D9",l:"2, 3"},{c:"#7B68C8",l:"4, 5"},{c:"#2E9E6A",l:"6, 7"}].map(({ c, l }) => (
+        {[{c:"#C4891A",l:"1 — Root"},{c:"#4A90D9",l:"2, 3"},{c:"#7B68C8",l:"4, 5"},{c:"#2E9E6A",l:"6, 7"}].map(({ c, l }) => (
           <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <div style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />
             <span style={{ fontSize: 11, color: "#374151", fontWeight: 500 }}>{l}</span>
@@ -3087,7 +3087,7 @@ const ManualPage = ({ setSelectedPart, setPage }) => (
           onMouseEnter={e => { e.currentTarget.style.borderColor = COLORS.accent; e.currentTarget.style.boxShadow = COLORS.shadowAccent; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#E8E0D0"; }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = COLORS.border; e.currentTarget.style.boxShadow = COLORS.shadow; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.background = COLORS.card; }}>
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-            <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 11, background: "rgba(247,189,59,0.15)", border: `1px solid rgba(247,189,59,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
               <Icon name={part.icon} size={20} color={COLORS.accent} />
             </div>
             <div style={{ flex: 1 }}>
@@ -3114,7 +3114,7 @@ const PartDetail = ({ part, setPage }) => (
       <span className="badge badge-gold">Part {part.id}</span>
     </div>
     <div className="page-header">
-      <div style={{ width: 52, height: 52, borderRadius: 16, background: "rgba(196,154,60,0.15)", border: `1px solid rgba(196,154,60,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
+      <div style={{ width: 52, height: 52, borderRadius: 16, background: "rgba(247,189,59,0.15)", border: `1px solid rgba(247,189,59,0.25)`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 10 }}>
         <Icon name={part.icon} size={26} color={COLORS.accent} />
       </div>
       <div className="page-title">{part.title}</div>
@@ -3148,7 +3148,7 @@ const PilotsPage = ({ setPage, songLibrary, onSaveSong }) => {
 
   const pcoState = (() => { try { return JSON.parse(localStorage.getItem('wp-pco-connection') || 'null'); } catch { return null; } })();
   const STYLE_TAGS = ['Driving', 'Intimate', 'Building', 'Celebratory', 'Reflective', 'High Energy', 'Acoustic', 'Contemporary', 'Traditional'];
-  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C49A3C",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
+  const TYPE_C = { intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#F7BD3B",bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0" };
 
   const fetchSongs = async () => {
     setLoading(true); setError(null);
@@ -3605,7 +3605,7 @@ const SECTION_TYPES = ["intro","verse","prechorus","chorus","bridge","tag","outr
 
 const TYPE_COLORS = {
   intro: "#4CAF7D", verse: "#6B9FD4", prechorus: "#A07CC5",
-  chorus: "#C49A3C", bridge: "#CF6679", tag: "#B8720A",
+  chorus: "#F7BD3B", bridge: "#CF6679", tag: "#B8720A",
   outro: "#5A8FA0", turnaround: "#8A9B6A", instrumental: "#4A8AAA",
   breakdown: "#9A6AAA", vamp: "#6A9A6A",
 };
@@ -4823,7 +4823,7 @@ const LiveModePage = ({ activeService, songLibrary, onGoToServiceBuilder }) => {
   const clearAllOverrides = () => { liveLoopRef.current = false; liveExtraRepeatsRef.current = 0; setLiveLoopActive(false); setLiveExtraRepeats(0); setLiveEndingMode(null); };
 
   const sectionColor = (type) => ({
-    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#C49A3C",
+    intro:"#4CAF7D",verse:"#6B9FD4",prechorus:"#A07CC5",chorus:"#F7BD3B",
     bridge:"#CF6679",tag:"#B8720A",outro:"#5A8FA0",turnaround:"#8A9B6A",
     instrumental:"#4A8AAA",breakdown:"#9A6AAA",vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -4903,7 +4903,7 @@ Do not add any preamble or explanation — just the bullet points.`;
 
   const suggestions = getAISuggestions(section.type, sectionIndex, totalSections, song.bpm);
   const segColor = (type) => ({
-    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#C49A3C",
+    intro:"#4CAF7D", verse:"#6B9FD4", prechorus:"#A07CC5", chorus:"#F7BD3B",
     bridge:"#CF6679", tag:"#B8720A", outro:"#5A8FA0", turnaround:"#8A9B6A",
     instrumental:"#4A8AAA", breakdown:"#9A6AAA", vamp:"#6A9A6A"
   }[type] || "#6B9FD4");
@@ -5443,7 +5443,7 @@ const VideoPage = () => {
     "Transitions":          "#7B68C8",
     "Spontaneous Worship":  "#2E9E6A",
     "Track Failures":       "#B83040",
-    "Dynamics":             "#C07A0C",
+    "Dynamics":             "#C4891A",
     "Unrehearsed Songs":    "#5A8FA0",
     "Rehearsal Leadership": "#2E6EA6",
     "WL/MD Communication":  "#6B5CA5",
@@ -5679,10 +5679,8 @@ export default function App() {
   }, []);
 
   // Role selector — shown once on first open
-  const [role, setRole] = useState(() => {
-    try { return localStorage.getItem("wp-role") || null; } catch { return null; }
-  });
-  const [showRoleSelector, setShowRoleSelector] = useState(!role);
+  const [role, setRole] = useState(null); // Always null on refresh — role selector always shows
+  const [showRoleSelector, setShowRoleSelector] = useState(true); // Always show on refresh
 
   const handleRoleSelect = (selectedRole) => {
     try { localStorage.setItem("wp-role", selectedRole); } catch {}
@@ -5787,8 +5785,8 @@ export default function App() {
     aria-label="WorshipPilot — go to dashboard"
   >
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#C49A3C" fillOpacity="0.92"/>
-      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#C49A3C" strokeWidth="0.6" strokeLinejoin="round"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#F7BD3B" fillOpacity="0.92"/>
+      <path d="M12 3L19 20L12 16L5 20L12 3Z" stroke="#F7BD3B" strokeWidth="0.6" strokeLinejoin="round"/>
     </svg>
     <div className="nav-tooltip">WorshipPilot</div>
   </button>
