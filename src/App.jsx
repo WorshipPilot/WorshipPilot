@@ -1193,26 +1193,27 @@ const RoleSelector = ({ onSelect }) => {
       <div style={{
         position: "relative", zIndex: 2,
         flex: 1, display: "flex",
-        alignItems: "center",
-        padding: "48px 64px",
+        alignItems: "center", justifyContent: "center",
+        padding: "48px 8vw",
         width: "100%",
       }}>
         <div style={{
           width: "100%",
+          maxWidth: 1200,
           display: "grid",
           gridTemplateColumns: "minmax(0, 1fr)",
-          gap: 64,
+          gap: 56,
         }}
         className="role-selector-grid">
 
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 36 }}>
+            {/* Logo */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 48 }}>
               <div style={{
                 width: 44, height: 44, borderRadius: 13,
-                background: `linear-gradient(135deg, rgba(62,127,199,0.25) 0%, rgba(120,183,255,0.10) 100%)`,
-                border: `1px solid rgba(62,127,199,0.40)`,
+                background: "linear-gradient(135deg, rgba(62,127,199,0.25) 0%, rgba(120,183,255,0.10) 100%)",
+                border: "1px solid rgba(62,127,199,0.40)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: `0 4px 16px rgba(62,127,199,0.20), inset 0 1px 0 rgba(255,255,255,0.08)`,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                   <path d="M12 3L19 20L12 16L5 20L12 3Z" fill="#F7BD3B" fillOpacity="0.9"/>
@@ -1220,57 +1221,41 @@ const RoleSelector = ({ onSelect }) => {
                 </svg>
               </div>
               <div>
-                <div style={{
-                  fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 800,
-                  color: "#F0EBE1", lineHeight: 1, letterSpacing: "-0.3px",
-                }}>WorshipPilot</div>
-                <div style={{
-                  fontSize: 10, fontWeight: 700, letterSpacing: 2,
-                  textTransform: "uppercase", color: "rgba(120,183,255,0.75)",
-                  marginTop: 3,
-                }}>MD System · Built for Sunday</div>
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 800, color: "#F0EBE1", lineHeight: 1, letterSpacing: "-0.3px" }}>WorshipPilot</div>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "rgba(120,183,255,0.75)", marginTop: 3 }}>MD System · Built for Sunday</div>
               </div>
             </div>
 
+            {/* Headline */}
             <div style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(32px, 5vw, 46px)", fontWeight: 400,
-              color: "#F0EBE1", lineHeight: 1.05,
-              letterSpacing: "-1.2px", marginBottom: 20,
-              fontStyle: "italic",
+              fontSize: "clamp(36px, 4.5vw, 54px)", fontWeight: 800,
+              color: "#F0EBE1", lineHeight: 1.08,
+              letterSpacing: "-1.5px", marginBottom: 20,
             }}>
               Lead the band.<br />
-              <span style={{ color: "#F7BD3B", fontStyle: "normal" }}>Free the room.</span>
+              <span style={{ color: "#F7BD3B" }}>Free the room.</span>
             </div>
 
-            <div style={{
-              fontSize: 15, color: "rgba(240,235,225,0.62)",
-              lineHeight: 1.65, maxWidth: 420, marginBottom: 32,
-            }}>
+            {/* Subtext */}
+            <div style={{ fontSize: 16, color: "rgba(240,235,225,0.60)", lineHeight: 1.7, maxWidth: 480, marginBottom: 40 }}>
               A training and execution system for worship Music Directors.
-              Playback handles the audio. WorshipPilot handles the leadership —
-              so the band can be confident, and the congregation can encounter Jesus.
+              Playback handles the audio. WorshipPilot handles the leadership.
             </div>
 
-            <div style={{
-              display: "flex", gap: 24, flexWrap: "wrap",
-              paddingTop: 24, borderTop: "1px solid rgba(240,235,225,0.08)",
-            }}>
+            {/* Stats */}
+            <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
               {[
                 { n: "10", label: "Manual parts" },
                 { n: "45+", label: "Standard calls" },
                 { n: "5 Week", label: "Onboarding path" },
-              ].map(({ n, label }) => (
-                <div key={label}>
-                  <div style={{
-                    fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 800,
-                    color: "#F7BD3B", letterSpacing: "-0.5px", lineHeight: 1,
-                  }}>{n}</div>
-                  <div style={{
-                    fontSize: 10, color: "rgba(240,235,225,0.45)",
-                    letterSpacing: 1.5, textTransform: "uppercase",
-                    marginTop: 4, fontWeight: 600,
-                  }}>{label}</div>
+              ].map(({ n, label }, i) => (
+                <div key={label} style={{ display: "flex", alignItems: "center", gap: i < 2 ? 40 : 0 }}>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800, color: "#F7BD3B", letterSpacing: "-0.5px", lineHeight: 1 }}>{n}</div>
+                    <div style={{ fontSize: 10, color: "rgba(240,235,225,0.40)", letterSpacing: 1.5, textTransform: "uppercase", marginTop: 5, fontWeight: 600 }}>{label}</div>
+                  </div>
+                  {i < 2 && <div style={{ width: 1, height: 32, background: "rgba(240,235,225,0.10)", marginLeft: 40 }} />}
                 </div>
               ))}
             </div>
@@ -1386,9 +1371,14 @@ const RoleSelector = ({ onSelect }) => {
       <style>{`
         @media (min-width: 860px) {
           .role-selector-grid {
-            grid-template-columns: 1.2fr 1fr !important;
-            gap: 80px !important;
+            grid-template-columns: 1.1fr 0.9fr !important;
+            gap: 64px !important;
             align-items: center;
+          }
+        }
+        @media (max-width: 859px) {
+          .role-selector-grid {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>
@@ -2098,10 +2088,10 @@ const Dashboard = ({ setPage, setSelectedPart, moduleProgress }) => {
 
         {/* Service stats */}
         <button onClick={() => setPage("services")}
-          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.border}`, cursor: "pointer", background: COLORS.surface, textAlign: "left", padding: "16px" }}>
+          style={{ position: "relative", height: 160, borderRadius: 14, overflow: "hidden", border: `1px solid ${COLORS.borderMid}`, cursor: "pointer", background: COLORS.surfaceAlt, textAlign: "left", padding: "16px" }}>
           <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: COLORS.accent, marginBottom: 8 }}>Service</div>
           <div style={{ fontSize: 20, fontWeight: 700, color: COLORS.text, fontFamily: "var(--font-display)", lineHeight: 1, marginBottom: 4 }}>Build your set</div>
-          <div style={{ fontSize: 11, color: "#374151", fontWeight: 500, marginBottom: 16 }}>Songs · Transitions · Live Mode</div>
+          <div style={{ fontSize: 11, color: "#93A4BA", fontWeight: 500, marginBottom: 16 }}>Songs · Transitions · Live Mode</div>
           <div style={{ display: "flex", gap: 2, height: 28, alignItems: "flex-end" }}>
             {[30,55,80,65,45,75,90,70,40,65,85,55,35,60].map((h, i) => (
               <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 2, background: i === 10 ? COLORS.accent : `${COLORS.accent}30` }} />
