@@ -85,7 +85,7 @@ const styles = `
 
   :root {
     --font-display: 'Montserrat', system-ui, sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Montserrat', 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
 
