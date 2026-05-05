@@ -1192,16 +1192,16 @@ const RoleSelector = ({ onSelect }) => {
 
       <div style={{
         position: "relative", zIndex: 2,
-        flex: 1, display: "grid",
-        gridTemplateColumns: "minmax(0, 1fr)",
-        alignItems: "center", justifyItems: "center",
-        padding: "48px 24px",
+        flex: 1, display: "flex",
+        alignItems: "center",
+        padding: "48px 64px",
+        width: "100%",
       }}>
         <div style={{
-          width: "100%", maxWidth: 960,
+          width: "100%",
           display: "grid",
           gridTemplateColumns: "minmax(0, 1fr)",
-          gap: 40,
+          gap: 64,
         }}
         className="role-selector-grid">
 
@@ -1221,7 +1221,7 @@ const RoleSelector = ({ onSelect }) => {
               </div>
               <div>
                 <div style={{
-                  fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
+                  fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 800,
                   color: "#F0EBE1", lineHeight: 1, letterSpacing: "-0.3px",
                 }}>WorshipPilot</div>
                 <div style={{
@@ -1259,11 +1259,11 @@ const RoleSelector = ({ onSelect }) => {
               {[
                 { n: "10", label: "Manual parts" },
                 { n: "45+", label: "Standard calls" },
-                { n: "5-wk", label: "Onboarding path" },
+                { n: "5 Week", label: "Onboarding path" },
               ].map(({ n, label }) => (
                 <div key={label}>
                   <div style={{
-                    fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500,
+                    fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 800,
                     color: "#F7BD3B", letterSpacing: "-0.5px", lineHeight: 1,
                   }}>{n}</div>
                   <div style={{
@@ -1282,13 +1282,13 @@ const RoleSelector = ({ onSelect }) => {
             WebkitBackdropFilter: "blur(24px) saturate(1.3)",
             border: "1px solid rgba(240,235,225,0.10)",
             borderRadius: 20,
-            padding: "28px 24px",
+            padding: "40px 36px",
             boxShadow: "0 24px 80px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
           }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2.5, textTransform: "uppercase", color: "#F7BD3B", marginBottom: 8 }}>
               Get started
             </div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 500, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
+            <div style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, color: "#F0EBE1", lineHeight: 1.2, letterSpacing: "-0.4px", marginBottom: 6 }}>
               What brings you here?
             </div>
             <div style={{ fontSize: 13, color: "rgba(240,235,225,0.55)", lineHeight: 1.55, marginBottom: 22 }}>
@@ -1319,14 +1319,14 @@ const RoleSelector = ({ onSelect }) => {
                   >
                     <div style={{
                       width: 36, height: 36, borderRadius: 10,
-                      background: isSelected ? "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)" : "rgba(240,235,225,0.06)",
+                      background: isSelected ? "#F7BD3B" : "rgba(240,235,225,0.06)",
                       border: `1px solid ${isSelected ? "rgba(120,183,255,0.5)" : "rgba(240,235,225,0.10)"}`,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       flexShrink: 0,
                       boxShadow: isSelected ? "0 4px 14px rgba(62,127,199,0.3)" : "none",
                       transition: "all 0.18s",
                     }}>
-                      <Icon name={role.icon} size={17} color={isSelected ? "#fff" : "rgba(240,235,225,0.65)"} />
+                      <Icon name={role.icon} size={17} color={isSelected ? "#111827" : "rgba(240,235,225,0.65)"} />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 14, fontWeight: 600, color: isSelected ? "#F0EBE1" : "rgba(240,235,225,0.88)", marginBottom: 1, letterSpacing: "-0.1px" }}>
@@ -1356,8 +1356,8 @@ const RoleSelector = ({ onSelect }) => {
               style={{
                 width: "100%", padding: "14px",
                 borderRadius: 11, border: "none",
-                background: selected ? "linear-gradient(135deg, #8A6418 0%, #C49A3C 100%)" : "rgba(240,235,225,0.06)",
-                color: selected ? "#fff" : "rgba(240,235,225,0.35)",
+                background: selected ? "#F7BD3B" : "rgba(240,235,225,0.06)",
+                color: selected ? "#111827" : "rgba(240,235,225,0.35)",
                 fontSize: 14, fontWeight: 700,
                 cursor: selected ? "pointer" : "not-allowed",
                 fontFamily: "var(--font-body)", letterSpacing: 0.2,
@@ -1386,8 +1386,8 @@ const RoleSelector = ({ onSelect }) => {
       <style>{`
         @media (min-width: 860px) {
           .role-selector-grid {
-            grid-template-columns: 1.1fr 1fr !important;
-            gap: 64px !important;
+            grid-template-columns: 1.2fr 1fr !important;
+            gap: 80px !important;
             align-items: center;
           }
         }
